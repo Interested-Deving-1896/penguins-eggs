@@ -22,6 +22,7 @@ import Alpine from './pacman.d/alpine.js'
 import Archlinux from './pacman.d/archlinux.js'
 import Debian from './pacman.d/debian.js'
 import Fedora from './pacman.d/fedora.js'
+import Gentoo from './pacman.d/gentoo.js'
 import Openmamba from './pacman.d/openmamba.js'
 import Opensuse from './pacman.d/opensuse.js'
 import Voidlinux from './pacman.d/voidlinux.js'
@@ -86,6 +87,8 @@ export default class Pacman {
         await Debian.calamaresInstall(verbose)
       } else if (familyId === 'fedora') {
         await Fedora.calamaresInstall(verbose)
+      } else if (familyId === 'gentoo') {
+        await Gentoo.calamaresInstall(verbose)
       } else if (familyId === 'openmamba') {
         await Openmamba.calamaresInstall(verbose)
       } else if (familyId === 'opensuse') {
@@ -111,6 +114,8 @@ export default class Pacman {
       await Debian.calamaresPolicies(verbose)
     } else if (familyId === 'fedora') {
       await Fedora.calamaresPolicies(verbose)
+    } else if (familyId === 'gentoo') {
+      await Gentoo.calamaresPolicies(verbose)
     } else if (familyId === 'openmamba') {
       await Openmamba.calamaresPolicies(verbose)
     } else if (familyId === 'opensuse') {
@@ -138,6 +143,8 @@ export default class Pacman {
       retVal = await Debian.calamaresRemove(verbose)
     } else if (familyId === 'fedora') {
       retVal = await Fedora.calamaresRemove(verbose)
+    } else if (familyId === 'gentoo') {
+      retVal = await Gentoo.calamaresRemove(verbose)
     } else if (familyId === 'openmamba') {
       retVal = await Openmamba.calamaresRemove(verbose)
     } else if (familyId === 'opensuse') {
@@ -455,6 +462,14 @@ export default class Pacman {
       await exec(`cp -r ${fedora} ${dest}`, echo)
 
       /***********************************************************************************
+      * Gentoo
+      **********************************************************************************/
+    } else if (codenameLikeId === 'gentoo') {
+      const dest = '/etc/penguins-eggs.d/distros/gentoo/'
+      const gentoo = `${rootPen}/conf/distros/gentoo/*`
+      await exec(`cp -r ${gentoo} ${dest}`, echo)
+
+      /***********************************************************************************
       * openmamba
       **********************************************************************************/
     } else if (codenameLikeId === 'openmamba') {
@@ -584,6 +599,10 @@ export default class Pacman {
       if (Fedora.packageIsInstalled('xorg-x11-server-Xwayland*')) {
         installed = true
       }
+    } else if (familyId === 'gentoo') {
+      if (Gentoo.packageIsInstalled('x11-base/xwayland')) {
+        installed = true
+      }
     } else if (familyId === 'openmamba') {
       if (Openmamba.packageIsInstalled('wayland')) {
         installed = true
@@ -627,6 +646,10 @@ export default class Pacman {
       }
     } else if (familyId === 'fedora') {
       if (Fedora.packageIsInstalled('xorg-x11-server-Xorg.x86_64')) {
+        installed = true
+      }
+    } else if (familyId === 'gentoo') {
+      if (Gentoo.packageIsInstalled('x11-base/xorg-server')) {
         installed = true
       }
     } else if (familyId === 'openmamba') {
@@ -741,6 +764,8 @@ export default class Pacman {
       retVal = await Debian.packageInstall(packageName)
     } else if (familyId === 'fedora') {
       retVal = await Fedora.packageInstall(packageName)
+    } else if (familyId === 'gentoo') {
+      retVal = await Gentoo.packageInstall(packageName)
     } else if (familyId === 'openmamba') {
       retVal = await Openmamba.packageInstall(packageName)
     } else if (familyId === 'opensuse') {
@@ -769,6 +794,8 @@ export default class Pacman {
       installed = Debian.packageIsInstalled(packageName)
     } else if (familyId === 'fedora') {
       installed = Fedora.packageIsInstalled(packageName)
+    } else if (familyId === 'gentoo') {
+      installed = Gentoo.packageIsInstalled(packageName)
     } else if (familyId === 'openmamba') {
       installed = Openmamba.packageIsInstalled(packageName)
     } else if (familyId === 'opensuse') {

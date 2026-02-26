@@ -212,6 +212,7 @@ export async function produce(this: Ovary, clone = false, cryptedclone = false, 
                 await this.initrdDebian()
             } else if (this.familyId === 'aldos' ||
                 this.familyId === 'fedora' ||
+                this.familyId === 'gentoo' ||
                 this.familyId === 'openmamba' ||
                 this.familyId === 'opensuse' ||
                 this.familyId === 'voidlinux') {

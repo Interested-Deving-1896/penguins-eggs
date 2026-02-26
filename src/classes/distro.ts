@@ -135,6 +135,16 @@ class Distro implements IDistro {
       this.liveMediumPath = '/run/initramfs/live/' // check
 
       /**
+       * Gentoo compatible
+       */
+    } else if (this.distroId === 'Gentoo') {
+      this.familyId = 'gentoo'
+      this.distroLike = 'Gentoo'
+      this.codenameId = 'rolling'
+      this.codenameLikeId = this.familyId // per krill
+      this.liveMediumPath = '/run/initramfs/live/'
+
+      /**
        * voidlinux compatible
        */
     } else if (this.distroId === 'Voidlinux') {
@@ -355,6 +365,8 @@ class Distro implements IDistro {
      */
     if (this.familyId === "debian") {
       this.usrLibPath = '/usr/lib/' + Utils.usrLibPath()
+    } else if (this.familyId === "gentoo") {
+      this.usrLibPath = '/usr/lib64/'
     } else if (this.familyId === "opensuse") {
       this.usrLibPath = '/usr/lib64/'
     }

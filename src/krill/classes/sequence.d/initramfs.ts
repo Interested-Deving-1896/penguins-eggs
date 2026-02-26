@@ -48,6 +48,13 @@ export default async function initramfs(this: Sequence) {
     let cmd=`chroot ${this.installTarget} dracut -f`
     await exec(cmd, this.echo)
 
+  } else if (this.distro.familyId === 'gentoo') {    
+    /**
+     * Gentoo
+     */
+    let cmd=`chroot ${this.installTarget} dracut -f`
+    await exec(cmd, this.echo)
+
   } else if (this.distro.familyId === 'opensuse') {    
     /**
      * Opensuse

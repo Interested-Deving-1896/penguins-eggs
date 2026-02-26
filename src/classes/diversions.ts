@@ -41,6 +41,7 @@ export default class Diversions {
     if (familyId === 'aldos' ||
       familyId === 'archlinux' ||
       familyId === 'fedora' ||
+      familyId === 'gentoo' ||
       familyId === 'openmamba' ||
       familyId === 'opensuse' ||
       familyId === 'voidlinux') {
@@ -107,6 +108,8 @@ export default class Diversions {
       kp += `boot=live components locales=${process.env.LANG} cow_spacesize=2G`
     } else if (familyId === 'fedora') {
       kp += `root=live:CDLABEL=${volid} rd.live.image rd.live.dir=/live rd.live.squashimg=filesystem.squashfs selinux=0`
+    } else if (familyId === 'gentoo') {
+      kp += `root=live:CDLABEL=${volid} rd.live.image rd.live.dir=/live rd.live.squashimg=filesystem.squashfs`
     } else if (familyId === 'openmamba') {
       kp += `root=live:CDLABEL=${volid} rd.live.image rd.live.dir=/live rd.live.squashimg=filesystem.squashfs selinux=0`
     } else if (familyId === 'opensuse') {

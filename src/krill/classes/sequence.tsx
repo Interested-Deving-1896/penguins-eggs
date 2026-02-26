@@ -434,7 +434,8 @@ export default class Sequence {
             try {
                if (this.distro.familyId === 'alpine' ||
                   this.distro.familyId === 'archlinux' ||
-                  this.distro.familyId === 'debian') {
+                  this.distro.familyId === 'debian' ||
+                  this.distro.familyId === 'gentoo') {
 
                   await this.locale()
                }
@@ -455,7 +456,8 @@ export default class Sequence {
 
             // NOT_CLONE: localeCfg
             if (this.distro.familyId === 'archlinux' ||
-               this.distro.familyId === 'debian') {
+               this.distro.familyId === 'debian' ||
+               this.distro.familyId === 'gentoo') {
                message = "Locale Configuration"
                redraw(<Install message={message} percent={72} spinner={this.spinner} />)
                try {
