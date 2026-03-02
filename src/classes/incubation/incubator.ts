@@ -25,6 +25,7 @@ import { branding } from './branding.js'
 import { customizePartitions } from './customize/customize-partitions.js'
 // incubator.d
 import { Alpine } from './incubator.d/alpine.js'
+import { Android } from './incubator.d/android.js'
 import { Archlinux } from './incubator.d/archlinux.js'
 import { Buster } from './incubator.d/buster.js'
 import { Fedora } from './incubator.d/fedora.js'
@@ -92,9 +93,12 @@ export default class Incubator {
           const alpine = new Alpine(this.installer, this.remix, this.distro, this.user_opt, release, this.theme, this.isClone, this.verbose)
           await alpine.create()
 
-          /**
-           * Archlinux
-           */
+          break
+        }
+
+        case 'android': {
+          const android = new Android(this.installer, this.remix, this.distro, this.user_opt, release, this.theme, this.isClone, this.verbose)
+          await android.create()
 
           break
         }
@@ -249,6 +253,14 @@ export default class Incubator {
         case 'trixie': {
           const trixie = new Trixie(this.installer, this.remix, this.distro, this.user_opt, release, this.theme, this.isClone, this.verbose)
           await trixie.create()
+
+          break
+        }
+
+        case 'chromiumos': {
+          // ChromiumOS uses dracut-based templates like Fedora
+          const chromiumos = new Fedora(this.installer, this.remix, this.distro, this.user_opt, release, this.theme, this.isClone, this.verbose)
+          await chromiumos.create()
 
           break
         }

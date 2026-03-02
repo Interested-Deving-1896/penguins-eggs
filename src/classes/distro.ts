@@ -20,6 +20,19 @@ import Utils from './utils.js'
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 /**
+ * Map Android API levels to version codenames
+ */
+const androidCodenames: Record<string, string> = {
+  '30': 'r',          // Android 11
+  '31': 's',          // Android 12
+  '32': 's-v2',       // Android 12L
+  '33': 'tiramisu',   // Android 13
+  '34': 'upside-down-cake', // Android 14
+  '35': 'vanilla-ice-cream', // Android 15
+  '36': 'baklava',    // Android 16
+}
+
+/**
  * Classe
  */
 class Distro implements IDistro {
@@ -122,6 +135,16 @@ class Distro implements IDistro {
         break
       }
 
+      case 'Gentoo': {
+        this.familyId = 'gentoo'
+        this.distroLike = 'Gentoo'
+        this.codenameId = 'rolling'
+        this.distroUniqueId = this.familyId
+        this.liveMediumPath = '/run/initramfs/live/'
+
+        break
+      }
+
       case 'Openmamba': {
         this.familyId = 'openmamba'
         this.distroLike = 'Openmamba'
@@ -132,6 +155,54 @@ class Distro implements IDistro {
         /**
          * opensuse compatible
          */
+
+        break
+      }
+
+      /**
+       * ChromiumOS family: ChromiumOS, ChromeOS, FydeOS/openFyde,
+       * ThoriumOS, WayneOS, Brunch, and derivatives.
+       * ChromiumOS is Gentoo-derived; uses Portage + Chromebrew.
+       */
+      case 'Chromiumos':
+      case 'ChromiumOS':
+      case 'Chromeos':
+      case 'ChromeOS':
+      case 'Fydeos':
+      case 'FydeOS':
+      case 'Openfyde':
+      case 'openFyde':
+      case 'Thoriumos':
+      case 'ThoriumOS':
+      case 'Wayneos':
+      case 'WayneOS':
+      case 'Brunch': {
+        this.familyId = 'chromiumos'
+        this.distroLike = 'ChromiumOS'
+        this.codenameId = 'rolling'
+        this.distroUniqueId = 'chromiumos'
+        this.liveMediumPath = '/run/initramfs/live/'
+        this.usrLibPath = '/usr/lib64/'
+        this.isCalamaresAvailable = false // krill is the primary installer
+
+        break
+      }
+
+      case 'Android':
+      case 'BlissOS':
+      case 'LineageOS':
+      case 'GrapheneOS':
+      case 'BassOS': {
+        /**
+         * Android/AOSP family
+         */
+        this.familyId = 'android'
+        this.distroLike = 'Android'
+        this.codenameId = this.getAndroidCodename()
+        this.distroUniqueId = 'android'
+        this.isCalamaresAvailable = false
+        this.liveMediumPath = '/mnt/runtime/'
+        this.squashfs = 'system.sfs'
 
         break
       }
@@ -396,6 +467,31 @@ class Distro implements IDistro {
                 }
               }
 
+              /**
+               * derivatives: family chromiumos
+               */
+              if (!found) {
+                let chromiumosDerivatives = path.resolve(__dirname, '../../conf/derivatives_chromiumos.yaml')
+                if (fs.existsSync('/etc/penguins-eggs.d/derivatives_chromiumos.yaml')) {
+                  chromiumosDerivatives = '/etc/penguins-eggs.d/derivatives_chromiumos.yaml'
+                }
+
+                if (fs.existsSync(chromiumosDerivatives)) {
+                  const content = fs.readFileSync(chromiumosDerivatives, 'utf8')
+                  const elem = yaml.load(content) as string[]
+                  if (elem.includes(this.distroId)) {
+                    this.familyId = 'chromiumos'
+                    this.distroLike = 'ChromiumOS'
+                    this.codenameId = 'rolling'
+                    this.distroUniqueId = 'chromiumos'
+                    this.liveMediumPath = '/run/initramfs/live/'
+                    this.usrLibPath = '/usr/lib64/'
+                    this.isCalamaresAvailable = false
+                    found = true
+                  }
+                }
+              }
+
               if (!found) {
                 console.log(`This distro ${this.distroId}/${this.codenameId} is not yet recognized!`)
                 console.log('')
@@ -412,6 +508,23 @@ class Distro implements IDistro {
     }
 
     /**
+     * ChromiumOS fallback detection via /etc/lsb-release
+     * ChromiumOS may not set ID in /etc/os-release the standard way.
+     */
+    if (this.familyId === 'debian' && fs.existsSync('/etc/lsb-release')) {
+      const lsbContent = fs.readFileSync('/etc/lsb-release', 'utf8')
+      if (lsbContent.includes('CHROMEOS_RELEASE') || lsbContent.includes('CHROMEOS_AUSERVER')) {
+        this.familyId = 'chromiumos'
+        this.distroLike = 'ChromiumOS'
+        this.codenameId = 'rolling'
+        this.distroUniqueId = 'chromiumos'
+        this.liveMediumPath = '/run/initramfs/live/'
+        this.usrLibPath = '/usr/lib64/'
+        this.isCalamaresAvailable = false
+      }
+    }
+
+    /**
      * Ultimi ritocchi
      */
 
@@ -421,7 +534,7 @@ class Distro implements IDistro {
      */
     if (this.familyId === 'debian') {
       this.usrLibPath = '/usr/lib/' + Utils.usrLibPath()
-    } else if (this.familyId === 'opensuse') {
+    } else if (this.familyId === 'gentoo' || this.familyId === 'chromiumos' || this.familyId === 'opensuse') {
       this.usrLibPath = '/usr/lib64/'
     }
 
@@ -433,6 +546,21 @@ class Distro implements IDistro {
       this.squashfs = 'manjaro/x86_64/livefs.sfs'
       this.codenameId = shx.exec(`lsb_release -cs`, { silent: true }).stdout.toString().trim()
       this.distroUniqueId = 'manjaro'
+    }
+
+    /**
+     * Fallback: detect Android environment via build.prop or Waydroid
+     * if os-release didn't identify it
+     */
+    if (this.familyId !== 'android' && Distro.isAndroidEnvironment()) {
+      this.familyId = 'android'
+      this.distroLike = 'Android'
+      this.distroId = Distro.detectAndroidDistroId()
+      this.codenameId = this.getAndroidCodename()
+      this.distroUniqueId = 'android'
+      this.isCalamaresAvailable = false
+      this.liveMediumPath = '/mnt/runtime/'
+      this.squashfs = 'system.sfs'
     }
 
     /**
@@ -457,6 +585,101 @@ class Distro implements IDistro {
         }
       }
     }
+  }
+
+  /**
+   * Read a property from Android's build.prop files
+   */
+  static readBuildProp(key: string): string {
+    const buildPropPaths = [
+      '/system/build.prop',
+      '/vendor/build.prop',
+      '/system/system/build.prop',
+      '/var/lib/waydroid/overlay/system/build.prop',
+    ]
+
+    for (const propPath of buildPropPaths) {
+      if (fs.existsSync(propPath)) {
+        try {
+          const data = fs.readFileSync(propPath, 'utf8')
+          for (const line of data.split('\n')) {
+            const trimmed = line.trim()
+            if (trimmed.startsWith(key + '=')) {
+              return trimmed.slice(key.length + 1)
+            }
+          }
+        } catch {
+          // permission denied or other read error, try next
+        }
+      }
+    }
+
+    return ''
+  }
+
+  /**
+   * Detect if we're running in an Android environment
+   * Checks: build.prop, Waydroid config, /proc/cmdline androidboot params
+   */
+  static isAndroidEnvironment(): boolean {
+    // Check for Android build.prop
+    if (fs.existsSync('/system/build.prop')) {
+      return true
+    }
+
+    // Check for Waydroid
+    if (fs.existsSync('/var/lib/waydroid/waydroid.cfg')) {
+      return true
+    }
+
+    // Check for androidboot in kernel cmdline
+    try {
+      if (fs.existsSync('/proc/cmdline')) {
+        const cmdline = fs.readFileSync('/proc/cmdline', 'utf8')
+        if (cmdline.includes('androidboot')) {
+          return true
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    return false
+  }
+
+  /**
+   * Detect the Android distribution name from build.prop
+   */
+  static detectAndroidDistroId(): string {
+    const displayId = Distro.readBuildProp('ro.build.display.id').toLowerCase()
+    const brand = Distro.readBuildProp('ro.product.brand').toLowerCase()
+
+    if (displayId.includes('bliss') || brand.includes('bliss')) return 'BlissOS'
+    if (displayId.includes('bass')) return 'BassOS'
+    if (displayId.includes('lineage') || brand.includes('lineage')) return 'LineageOS'
+    if (displayId.includes('graphene') || brand.includes('graphene')) return 'GrapheneOS'
+
+    // Check for Waydroid specifically
+    if (fs.existsSync('/var/lib/waydroid/waydroid.cfg')) return 'Waydroid'
+
+    return 'Android'
+  }
+
+  /**
+   * Get Android version codename from build.prop SDK level
+   */
+  private getAndroidCodename(): string {
+    const sdkVersion = Distro.readBuildProp('ro.build.version.sdk')
+    if (sdkVersion && androidCodenames[sdkVersion]) {
+      return androidCodenames[sdkVersion]
+    }
+
+    const versionRelease = Distro.readBuildProp('ro.build.version.release')
+    if (versionRelease) {
+      return `android-${versionRelease}`
+    }
+
+    return 'android'
   }
 }
 

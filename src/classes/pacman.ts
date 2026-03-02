@@ -15,9 +15,12 @@ import { exec, execSync, shx } from '../lib/utils.js'
 import Distro from './distro.js'
 import Diversions from './diversions.js'
 import Alpine from './pacman.d/alpine.js'
+import Android from './pacman.d/android.js'
 import Archlinux from './pacman.d/archlinux.js'
+import ChromiumOS from './pacman.d/chromiumos.js'
 import Debian from './pacman.d/debian.js'
 import Fedora from './pacman.d/fedora.js'
+import Gentoo from './pacman.d/gentoo.js'
 import Openmamba from './pacman.d/openmamba.js'
 import Opensuse from './pacman.d/opensuse.js'
 import Settings from './settings.js'
@@ -101,6 +104,12 @@ export default class Pacman {
           break
         }
 
+        case 'gentoo': {
+          await Gentoo.calamaresInstall(verbose)
+
+          break
+        }
+
         case 'openmamba': {
           await Openmamba.calamaresInstall(verbose)
 
@@ -110,6 +119,17 @@ export default class Pacman {
         case 'opensuse': {
           await Opensuse.calamaresInstall(verbose)
 
+          break
+        }
+
+        case 'chromiumos': {
+          await ChromiumOS.calamaresInstall(verbose)
+
+          break
+        }
+
+        case 'android': {
+          // Android: no-op (Calamares not supported, use krill)
           break
         }
         // No default
@@ -147,6 +167,12 @@ export default class Pacman {
         break
       }
 
+      case 'gentoo': {
+        await Gentoo.calamaresPolicies(verbose)
+
+        break
+      }
+
       case 'openmamba': {
         await Openmamba.calamaresPolicies(verbose)
 
@@ -156,6 +182,17 @@ export default class Pacman {
       case 'opensuse': {
         await Opensuse.calamaresPolicies(verbose)
 
+        break
+      }
+
+      case 'chromiumos': {
+        await ChromiumOS.calamaresPolicies(verbose)
+
+        break
+      }
+
+      case 'android': {
+        // Android: no-op (Calamares not supported, use krill)
         break
       }
       // No default
@@ -194,6 +231,12 @@ export default class Pacman {
         break
       }
 
+      case 'gentoo': {
+        retVal = await Gentoo.calamaresRemove(verbose)
+
+        break
+      }
+
       case 'openmamba': {
         retVal = await Openmamba.calamaresRemove(verbose)
 
@@ -203,6 +246,17 @@ export default class Pacman {
       case 'opensuse': {
         retVal = await Opensuse.calamaresRemove(verbose)
 
+        break
+      }
+
+      case 'chromiumos': {
+        retVal = await ChromiumOS.calamaresRemove(verbose)
+
+        break
+      }
+
+      case 'android': {
+        // Android: no-op (Calamares not supported, use krill)
         break
       }
       // No default
@@ -288,6 +342,7 @@ export default class Pacman {
     execSync(`mkdir -p ${init}`)
     shx.cp(path.resolve(__dirname, '../../conf/README.md'), confRoot)
     shx.cp(path.resolve(__dirname, '../../conf/derivatives.yaml'), confRoot)
+    shx.cp(path.resolve(__dirname, '../../conf/derivatives_chromiumos.yaml'), confRoot)
     shx.cp(path.resolve(__dirname, '../../conf/derivatives_fedora.yaml'), confRoot)
     shx.cp(path.resolve(__dirname, '../../conf/krill.yaml'), confRoot)
     shx.cp(path.resolve(__dirname, '../../conf/love.yaml'), confRoot)
@@ -474,9 +529,13 @@ export default class Pacman {
         const fedora = `${rootPen}/conf/distros/fedora/*`
         await exec(`cp -r ${fedora} ${dest}`, echo)
 
-        /***********************************************************************************
-         * openmamba
-         **********************************************************************************/
+        break
+      }
+
+      case 'gentoo': {
+        const dest = '/etc/penguins-eggs.d/distros/gentoo/'
+        const gentoo = `${rootPen}/conf/distros/gentoo/*`
+        await exec(`cp -r ${gentoo} ${dest}`, echo)
 
         break
       }
@@ -577,6 +636,14 @@ export default class Pacman {
         break
       }
 
+      case 'chromiumos': {
+        const dest = '/etc/penguins-eggs.d/distros/chromiumos/'
+        const chromiumos = `${rootPen}/conf/distros/chromiumos/*`
+        await exec(`cp -r ${chromiumos} ${dest}`, echo)
+
+        break
+      }
+
       default: {
         if (this.distro().distroUniqueId === 'noble') {
           const dest = '/etc/penguins-eggs.d/distros/noble'
@@ -658,6 +725,14 @@ export default class Pacman {
         break
       }
 
+      case 'gentoo': {
+        if (Gentoo.packageIsInstalled('x11-base/xwayland')) {
+          installed = true
+        }
+
+        break
+      }
+
       case 'openmamba': {
         if (Openmamba.packageIsInstalled('wayland')) {
           installed = true
@@ -671,6 +746,19 @@ export default class Pacman {
           installed = true
         }
 
+        break
+      }
+
+      case 'chromiumos': {
+        if (ChromiumOS.isInstalledWayland()) {
+          installed = true
+        }
+
+        break
+      }
+
+      case 'android': {
+        // Android: no-op (Calamares not supported, use krill)
         break
       }
       // No default
@@ -720,6 +808,14 @@ export default class Pacman {
         break
       }
 
+      case 'gentoo': {
+        if (Gentoo.packageIsInstalled('x11-base/xorg-server')) {
+          installed = true
+        }
+
+        break
+      }
+
       case 'openmamba': {
         if (Openmamba.packageIsInstalled('xorg-server')) {
           installed = true
@@ -733,6 +829,19 @@ export default class Pacman {
           installed = true
         }
 
+        break
+      }
+
+      case 'chromiumos': {
+        if (ChromiumOS.isInstalledXorg()) {
+          installed = true
+        }
+
+        break
+      }
+
+      case 'android': {
+        // Android: no-op (Calamares not supported, use krill)
         break
       }
       // No default
@@ -860,6 +969,12 @@ export default class Pacman {
         break
       }
 
+      case 'gentoo': {
+        retVal = await Gentoo.packageInstall(packageName)
+
+        break
+      }
+
       case 'openmamba': {
         retVal = await Openmamba.packageInstall(packageName)
 
@@ -869,6 +984,17 @@ export default class Pacman {
       case 'opensuse': {
         retVal = await Opensuse.packageInstall(packageName)
 
+        break
+      }
+
+      case 'chromiumos': {
+        retVal = await ChromiumOS.packageInstall(packageName)
+
+        break
+      }
+
+      case 'android': {
+        // Android: no-op (Calamares not supported, use krill)
         break
       }
       // No default
@@ -910,6 +1036,12 @@ export default class Pacman {
         break
       }
 
+      case 'gentoo': {
+        installed = Gentoo.packageIsInstalled(packageName)
+
+        break
+      }
+
       case 'openmamba': {
         installed = Openmamba.packageIsInstalled(packageName)
 
@@ -918,6 +1050,12 @@ export default class Pacman {
 
       case 'opensuse': {
         installed = Opensuse.packageIsInstalled(packageName)
+
+        break
+      }
+
+      case 'chromiumos': {
+        installed = ChromiumOS.packageIsInstalled(packageName)
 
         break
       }
