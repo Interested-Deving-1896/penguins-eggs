@@ -36,7 +36,8 @@ concurrency:
 permissions:
   contents: write
   pull-requests: read  # Added permission to read pull requests
-  actions: read       # Added permission to read actions
+  actions: read  # Added permission to read actions
+  repositories: read  # Added permission to list repositories
 
 jobs:
   create:
