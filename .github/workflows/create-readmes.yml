@@ -37,7 +37,7 @@ permissions:
   contents: write
   pull-requests: read  # Added permission to read pull requests
   actions: read  # Added permission to read actions
-  repositories: read  # Added permission to list repositories
+  repositories: write  # Changed permission to write to allow listing repositories
 
 jobs:
   create:
