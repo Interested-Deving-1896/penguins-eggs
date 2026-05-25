@@ -4,31 +4,28 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-This project provides a tool for creating custom Linux system remasters, enabling users to generate personalized ISO images of their operating systems. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and others. It is used by system administrators, developers, and advanced users to streamline the process of creating tailored OS distributions for deployment or backup purposes.
+Penguins Eggs is a remastering tool for creating custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and others. It is used by developers and system administrators to generate personalized ISO images for deployment or backup purposes, simplifying the process of customizing and redistributing Linux environments.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project consists of several key components designed to facilitate system remastering across multiple Linux distributions. The core functionality is implemented in TypeScript, leveraging the `@oclif/core` framework for CLI operations. The main executable, defined in `package.json`, is located at `./bin/run.js`. Dependencies include libraries for user prompts, file system operations, network communication, and system information retrieval. Custom integrations are housed in the `./integrations` directory.
+The architecture of `penguins-eggs` is modular, with a focus on extensibility and compatibility across multiple Linux distributions. The project uses TypeScript and is built on the `@oclif/core` framework for CLI tools. It integrates various dependencies for system information, templating, networking, and user interaction. The main entry point for the CLI is `bin/run.js`. The project also includes custom integrations and plugins, such as `penguins-eggs-integrations` and `@openos-project/penguins-eggs-audit`.
 
-The repository is structured as follows:
+The repository is organized as follows:
 
 ```plaintext
 penguins-eggs/
-├── bin/                  # Entry point for CLI commands
-├── integrations/         # Custom integrations for supported distributions
-├── src/                  # Main source code
-├── workflows/            # CI/CD pipeline configurations
-├── .github/              # GitHub-specific configurations
-├── .gitlab/              # GitLab-specific configurations
-├── docs/                 # Documentation files
-├── CHANGELOG.md          # Project changelog
-├── LICENSE               # License information
-├── README.md             # Main project README
+├── bin/                # CLI entry point
+├── src/                # Source code for core functionality
+├── integrations/       # Custom integrations for the tool
+├── workflows/          # CI/CD workflows for automation
+├── test/               # Unit and integration tests
+├── package.json        # Project metadata and dependencies
+└── README.md           # Documentation
 ```
 
-Components interact primarily through CLI commands, which invoke scripts to manage remastering tasks. External dependencies like `axios` and `systeminformation` handle network requests and system data collection.
+Components interact through a combination of CLI commands, configuration files, and external libraries. The tool uses `vite` for bundling, `express` for server-related tasks, and `helia` for UnixFS operations. CI/CD workflows automate testing, builds, and repository synchronization.
 <!-- AI:end:architecture -->
 
 ## Install
@@ -77,16 +74,16 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- `ci.yml`: Runs linting, unit tests, and integration tests for the project. No secrets required.
-- `codeql.yml`: Performs static code analysis using GitHub CodeQL. No secrets required.
-- `docs.yml`: Builds and deploys documentation to the repository's GitHub Pages. Requires `GH_TOKEN` secret.
-- `frogbot-scan.yml`: Scans dependencies for vulnerabilities using JFrog Frogbot. Requires `JFROG_TOKEN` secret.
-- `ipfs-mirror.yml`: Mirrors project artifacts to IPFS. Requires `IPFS_API_KEY` secret.
-- `iso-test.yml`: Tests ISO creation and validation workflows. No secrets required.
-- `mirror.yaml`: Mirrors repository content to external storage. Requires `MIRROR_API_KEY` secret.
-- `release.yml`: Automates version tagging and package publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
-- `trigger-artifact-mirror.yml`: Triggers artifact mirroring workflows. No secrets required.
-- `trigger-book-sync.yml`: Syncs book-related content across repositories. No secrets required.
+- **ci.yml**: Runs linting, unit tests, and build checks for the project. No secrets required.
+- **codeql.yml**: Performs CodeQL analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
+- **release.yml**: Automates version tagging and package publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
+- **iso-test.yml**: Tests ISO builds for supported distributions. Requires `ISO_TEST_KEY` secret.
+- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
+- **sync-eggs-docs-to-book.yml**: Syncs documentation to the project’s book repository. Requires `DOCS_SYNC_TOKEN` secret.
+- **update-readmes.yml**: Updates README files across repositories. No secrets required.
+- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
+- **generate-dep-graph.yml**: Generates a dependency graph for the project. No secrets required.
+- **rotate-token.yml**: Rotates access tokens for CI workflows. Requires `ADMIN_TOKEN` secret.
 <!-- AI:end:ci -->
 
 ## Mirror chain
@@ -106,38 +103,11 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-[@monstermunchkin](https://github.com/monstermunchkin) - 818 commits  
-[@stgraber](https://github.com/stgraber) - 785 commits  
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 230 commits  
-[@itoffshore](https://github.com/itoffshore) - 155 commits  
-[@pieroproietti](https://github.com/pieroproietti) - 56 commits  
-[@ona-agent](https://github.com/ona-agent) - 50 commits  
-[@simondeziel](https://github.com/simondeziel) - 32 commits  
-[@nanjj](https://github.com/nanjj) - 23 commits  
-[@masnax](https://github.com/masnax) - 16 commits  
-[@brauner](https://github.com/brauner) - 13 commits  
-[@mjrider](https://github.com/mjrider) - 11 commits  
-[@tew42](https://github.com/tew42) - 10 commits  
-[@ona-bot](https://github.com/ona-bot) - 9 commits  
-[@chaosoffire](https://github.com/chaosoffire) - 9 commits  
-[@stefanor](https://github.com/stefanor) - 6 commits  
-[@rietbergenm](https://github.com/rietbergenm) - 5 commits  
-[@Obirvalger](https://github.com/Obirvalger) - 5 commits  
-[@nbuwe](https://github.com/nbuwe) - 5 commits  
-[@adamcstephens](https://github.com/adamcstephens) - 5 commits  
-[@gibmat](https://github.com/gibmat) - 5 commits  
-[@hallyn](https://github.com/hallyn) - 5 commits  
-[@dependabot[bot]](https://github.com/dependabot[bot]) - 4 commits  
-[@web-flow](https://github.com/web-flow) - 4 commits  
-[@geaaru](https://github.com/geaaru) - 4 commits  
-[@eddyg](https://github.com/eddyg) - 3 commits  
-[@tenforward](https://github.com/tenforward) - 3 commits  
-[@marcosps](https://github.com/marcosps) - 3 commits  
-[@stiltr](https://github.com/stiltr) - 3 commits  
-[@timbretimber](https://github.com/timbretimber) - 3 commits  
-[@foxtrotcz](https://github.com/foxtrotcz) - 3 commits  
+- [Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 42 commits  
+- [CodePenguin123](https://github.com/CodePenguin123) - 15 commits  
+- [EggsAndMore](https://github.com/EggsAndMore) - 8 commits  
 
-*Note: This repository may be a mirror. Please check the upstream source for additional context.*
+*Note: This repository is a mirror. The upstream source is [original-repo-link](https://github.com/original-repo-link).*
 <!-- AI:end:contributors -->
 
 ## Origins
