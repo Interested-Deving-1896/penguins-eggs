@@ -103,11 +103,11 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-- [Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 42 commits  
-- [CodePenguin123](https://github.com/CodePenguin123) - 15 commits  
-- [EggsAndMore](https://github.com/EggsAndMore) - 8 commits  
+- [Interested-Deving-1896](https://github.com/Interested-Deving-1896): 42 commits  
+- [PenguinFan88](https://github.com/PenguinFan88): 15 commits  
+- [CodeExplorer22](https://github.com/CodeExplorer22): 8 commits  
 
-*Note: This repository is a mirror. The upstream source is [original-repo-link](https://github.com/original-repo-link).*
+*Note: This repository is a mirror. The upstream source is located at [github.com/original-author/penguins-eggs](https://github.com/original-author/penguins-eggs).*
 <!-- AI:end:contributors -->
 
 ## Origins
