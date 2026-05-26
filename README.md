@@ -10,22 +10,32 @@ This project provides a remastering tool for creating custom Linux distributions
 ## Architecture
 
 <!-- AI:start:architecture -->
-The architecture of `penguins-eggs` is modular, with a focus on extensibility and compatibility across multiple Linux distributions. The project uses TypeScript and is built on the `@oclif/core` framework for CLI tools. It integrates various dependencies for system information, templating, networking, and user interaction. The main entry point for the CLI is `bin/run.js`. The project also includes custom integrations and plugins, such as `penguins-eggs-integrations` and `@openos-project/penguins-eggs-audit`.
+The project consists of a modular architecture designed to facilitate system remastering across multiple Linux distributions. The core components include:
 
-The repository is organized as follows:
+1. **CLI Tool**: The entry point is defined in `package.json` under the `bin` key, pointing to `./bin/run.js`. This CLI is built using the `@oclif/core` framework and provides commands for remastering tasks.
+2. **Integrations**: Custom integrations are located in the `integrations` directory and are referenced as a local dependency in `package.json`.
+3. **Frontend**: Built with `React` and `Ink`, the frontend provides a terminal-based user interface for interacting with the tool.
+4. **Backend**: The backend leverages `Express` for API handling and `axios` for external HTTP requests. It also uses `systeminformation` for system-level data collection.
+5. **Utilities**: Various utilities include YAML parsing (`js-yaml`), templating (`mustache`), and file system operations (`helia` and `@helia/unixfs`).
+
+The directory structure is as follows:
 
 ```plaintext
-penguins-eggs/
-├── bin/                # CLI entry point
-├── src/                # Source code for core functionality
-├── integrations/       # Custom integrations for the tool
-├── workflows/          # CI/CD workflows for automation
-├── test/               # Unit and integration tests
-├── package.json        # Project metadata and dependencies
-└── README.md           # Documentation
+.
+├── bin/                 # CLI entry point
+├── integrations/        # Custom integrations
+├── src/                 # Source code
+│   ├── commands/        # CLI commands
+│   ├── components/      # React/Ink components
+│   ├── utils/           # Utility functions
+│   └── services/        # Backend services
+├── workflows/           # CI/CD workflows
+├── docs/                # Documentation files
+├── tests/               # Test cases
+└── package.json         # Project metadata and dependencies
 ```
 
-Components interact through a combination of CLI commands, configuration files, and external libraries. The tool uses `vite` for bundling, `express` for server-related tasks, and `helia` for UnixFS operations. CI/CD workflows automate testing, builds, and repository synchronization.
+Components interact through a combination of CLI commands, API endpoints, and shared utilities, enabling modularity and extensibility.
 <!-- AI:end:architecture -->
 
 ## Install
@@ -74,16 +84,16 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- **ci.yml**: Runs linting, unit tests, and build checks for the project. No secrets required.
-- **codeql.yml**: Performs CodeQL analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
-- **release.yml**: Automates version tagging and package publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
-- **iso-test.yml**: Tests ISO builds for supported distributions. Requires `ISO_TEST_KEY` secret.
+- **ci.yml**: Runs the main continuous integration pipeline, including linting, testing, and building the project. No secrets required.
+- **codeql.yml**: Performs CodeQL analysis to identify potential security vulnerabilities. Requires the `GH_TOKEN` secret for authentication.
+- **release.yml**: Automates the release process, including version tagging and publishing artifacts. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
+- **iso-test.yml**: Tests ISO builds for compatibility and functionality. No secrets required.
 - **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
-- **sync-eggs-docs-to-book.yml**: Syncs documentation to the project’s book repository. Requires `DOCS_SYNC_TOKEN` secret.
+- **cleanup-branches.yml**: Deletes stale branches in the repository. Requires `GH_TOKEN` secret.
+- **sync-to-gitlab.yml**: Syncs repository changes to a GitLab mirror. Requires `GITLAB_TOKEN` secret.
 - **update-readmes.yml**: Updates README files across repositories. No secrets required.
+- **docs.yml**: Builds and deploys project documentation. Requires `GH_TOKEN` secret.
 - **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
-- **generate-dep-graph.yml**: Generates a dependency graph for the project. No secrets required.
-- **rotate-token.yml**: Rotates access tokens for CI workflows. Requires `ADMIN_TOKEN` secret.
 <!-- AI:end:ci -->
 
 ## Mirror chain
