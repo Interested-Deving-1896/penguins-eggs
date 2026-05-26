@@ -28,6 +28,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Ensure "token-monitor" label exists
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          gh label create "token-monitor" --color "ff0000" --description "Token monitor alerts" || echo "Label already exists"
+
       - name: Check token health
         id: check
         env:
