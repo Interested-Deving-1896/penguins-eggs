@@ -103,11 +103,38 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-- [Interested-Deving-1896](https://github.com/Interested-Deving-1896): 42 commits  
-- [PenguinFan88](https://github.com/PenguinFan88): 15 commits  
-- [CodeExplorer22](https://github.com/CodeExplorer22): 8 commits  
+[@monstermunchkin](https://github.com/monstermunchkin) (818 commits)  
+[@stgraber](https://github.com/stgraber) (785 commits)  
+[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) (296 commits)  
+[@itoffshore](https://github.com/itoffshore) (155 commits)  
+[@pieroproietti](https://github.com/pieroproietti) (56 commits)  
+[@ona-agent](https://github.com/ona-agent) (50 commits)  
+[@simondeziel](https://github.com/simondeziel) (32 commits)  
+[@nanjj](https://github.com/nanjj) (23 commits)  
+[@masnax](https://github.com/masnax) (16 commits)  
+[@brauner](https://github.com/brauner) (13 commits)  
+[@mjrider](https://github.com/mjrider) (11 commits)  
+[@tew42](https://github.com/tew42) (10 commits)  
+[@ona-bot](https://github.com/ona-bot) (9 commits)  
+[@chaosoffire](https://github.com/chaosoffire) (9 commits)  
+[@stefanor](https://github.com/stefanor) (6 commits)  
+[@rietbergenm](https://github.com/rietbergenm) (5 commits)  
+[@Obirvalger](https://github.com/Obirvalger) (5 commits)  
+[@nbuwe](https://github.com/nbuwe) (5 commits)  
+[@adamcstephens](https://github.com/adamcstephens) (5 commits)  
+[@gibmat](https://github.com/gibmat) (5 commits)  
+[@hallyn](https://github.com/hallyn) (5 commits)  
+[@dependabot[bot]](https://github.com/dependabot[bot]) (4 commits)  
+[@web-flow](https://github.com/web-flow) (4 commits)  
+[@geaaru](https://github.com/geaaru) (4 commits)  
+[@eddyg](https://github.com/eddyg) (3 commits)  
+[@tenforward](https://github.com/tenforward) (3 commits)  
+[@marcosps](https://github.com/marcosps) (3 commits)  
+[@stiltr](https://github.com/stiltr) (3 commits)  
+[@timbretimber](https://github.com/timbretimber) (3 commits)  
+[@foxtrotcz](https://github.com/foxtrotcz) (3 commits)  
 
-*Note: This repository is a mirror. The upstream source is located at [github.com/original-author/penguins-eggs](https://github.com/original-author/penguins-eggs).*
+*This repository is a mirror. Please refer to the upstream source for additional contributions.*
 <!-- AI:end:contributors -->
 
 ## Origins
