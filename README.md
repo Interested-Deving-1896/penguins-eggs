@@ -4,7 +4,7 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-Penguins Eggs is a remastering tool for creating custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and others. It is used by developers and system administrators to generate personalized ISO images for deployment or backup purposes, simplifying the process of customizing and redistributing Linux environments.
+This project provides a remastering tool for creating custom Linux distributions and live systems. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by system administrators, developers, and enthusiasts to create tailored operating system images for deployment or personal use.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
