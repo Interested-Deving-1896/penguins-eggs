@@ -4,7 +4,7 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-This project provides a remastering tool for creating custom Linux distributions and live systems. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by system administrators, developers, and enthusiasts to create tailored operating system images for deployment or personal use.
+This project provides a remastering tool for creating custom Linux distributions and live systems. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by system administrators, developers, and enthusiasts to generate ISO images tailored to specific needs or environments.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
@@ -85,15 +85,24 @@ sudo eggs produce
 
 <!-- AI:start:ci -->
 - **ci.yml**: Runs the main continuous integration pipeline, including linting, testing, and building the project. No secrets required.
-- **codeql.yml**: Performs CodeQL analysis to identify potential security vulnerabilities. Requires the `GH_TOKEN` secret for authentication.
-- **release.yml**: Automates the release process, including version tagging and publishing artifacts. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
-- **iso-test.yml**: Tests ISO builds for compatibility and functionality. No secrets required.
-- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
-- **cleanup-branches.yml**: Deletes stale branches in the repository. Requires `GH_TOKEN` secret.
-- **sync-to-gitlab.yml**: Syncs repository changes to a GitLab mirror. Requires `GITLAB_TOKEN` secret.
-- **update-readmes.yml**: Updates README files across repositories. No secrets required.
-- **docs.yml**: Builds and deploys project documentation. Requires `GH_TOKEN` secret.
-- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
+
+- **codeql.yml**: Performs static code analysis using GitHub's CodeQL to identify vulnerabilities. No secrets required.
+
+- **release.yml**: Automates the release process, including version tagging and publishing. Requires `NPM_TOKEN` for publishing to npm.
+
+- **iso-test.yml**: Tests the ISO generation process for supported distributions. No secrets required.
+
+- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` for authentication.
+
+- **docs.yml**: Builds and deploys project documentation. Requires `DOCS_DEPLOY_KEY` for deployment.
+
+- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` for access.
+
+- **sync-eggs-docs-to-book.yml**: Synchronizes documentation with the book repository. Requires `BOOK_SYNC_TOKEN`.
+
+- **rotate-token.yml**: Rotates API tokens used in workflows. Requires `ADMIN_TOKEN` for token management.
+
+- **validate-config.yml**: Validates configuration files for syntax and consistency. No secrets required.
 <!-- AI:end:ci -->
 
 ## Mirror chain
