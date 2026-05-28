@@ -34,7 +34,8 @@ export async function bindLiveFs(this: Ovary) {
   /**
    * dirs = readdirsync /
    */
-  const dirs = fs.readdirSync('/')
+  const sourceRoot = this.sourceRoot  // '/' normally; stage3 rootfs path when --stage3
+  const dirs = fs.readdirSync(sourceRoot)
   const startLine = '#############################################################'
   const endLine = '#\n'
 
@@ -43,23 +44,26 @@ export async function bindLiveFs(this: Ovary) {
   const cmds: string[] = []
   cmds.push('# NOTE: cdrom, dev, live, media, mnt, proc, run, sys and tmp', `#       need just a mkdir in ${this.settings.work_dir.merged}`)
   cmds.push(`# host: ${os.hostname()} user: ${await Utils.getPrimaryUser()}\n`)
+  if (sourceRoot !== '/') {
+    cmds.push(`# stage3 source root: ${sourceRoot}`)
+  }
 
   for (const dir of dirs) {
     cmds.push(startLine)
-    const statDir = fs.lstatSync(`/${dir}`)
+    const statDir = fs.lstatSync(`${sourceRoot}/${dir}`)
 
     if (statDir.isSymbolicLink()) {
       /**
        * Link
        */
       cmds.push(`# /${dir} is a symbolic link to /${lnkDest}`)
-      lnkDest = fs.readlinkSync(`/${dir}`)
+      lnkDest = fs.readlinkSync(`${sourceRoot}/${dir}`)
       if (fs.existsSync(`${this.settings.work_dir.merged}/${dir}`)) {
         cmds.push('# SymbolicLink exist... skip')
-      } else if (fs.existsSync(lnkDest)) {
+      } else if (fs.existsSync(`${sourceRoot}/${lnkDest}`)) {
         cmds.push(`ln -s ${this.settings.work_dir.merged}/${lnkDest} ${this.settings.work_dir.merged}/${lnkDest}`)
       } else {
-        cmds.push(await rexec(`cp -r /${dir} ${this.settings.work_dir.merged}`, this.verbose))
+        cmds.push(await rexec(`cp -r ${sourceRoot}/${dir} ${this.settings.work_dir.merged}`, this.verbose))
       }
     } else if (statDir.isDirectory()) {
       /**
@@ -71,12 +75,12 @@ export async function bindLiveFs(this: Ovary) {
           cmds.push(`# /${dir} is copied if not exists on filesystem.squashfs`)
           const chkDir = path.join(this.settings.work_dir.merged, dir)
           cmds.push(`if ! [ -d "${chkDir}" ]; then`)
-          cmds.push(await rexec(`   cp -a /${dir} ${this.settings.work_dir.merged}/`, this.verbose), `fi`)
+          cmds.push(await rexec(`   cp -a ${sourceRoot}/${dir} ${this.settings.work_dir.merged}/`, this.verbose), `fi`)
           continue
         } else if (this.mergedAndOverlay(dir)) {
           cmds.push(`# /${dir} mergedAndOverlay (rw)\n`, '# create mountpoint lower')
           cmds.push(await makeIfNotExist(`${this.settings.work_dir.lowerdir}/${dir}`), `# first: mount /${dir} rw in ${this.settings.work_dir.lowerdir}/${dir}`)
-          cmds.push(await rexec(`mount --bind --make-slave /${dir} ${this.settings.work_dir.lowerdir}/${dir}`, this.verbose), '# now remount it ro')
+          cmds.push(await rexec(`mount --bind --make-slave ${sourceRoot}/${dir} ${this.settings.work_dir.lowerdir}/${dir}`, this.verbose), '# now remount it ro')
           cmds.push(await rexec(`mount -o remount,bind,ro ${this.settings.work_dir.lowerdir}/${dir}`, this.verbose), `\n# second: create mountpoint upper, work and ${this.settings.work_dir.merged} and mount ${dir}`)
           cmds.push(await makeIfNotExist(`${this.settings.work_dir.upperdir}/${dir}`, this.verbose))
           cmds.push(await makeIfNotExist(`${this.settings.work_dir.workdir}/${dir}`, this.verbose))
@@ -85,7 +89,7 @@ export async function bindLiveFs(this: Ovary) {
         } else if (this.merged(dir)) {
           cmds.push(`# /${dir} merged (ro)`)
           cmds.push(await makeIfNotExist(`${this.settings.work_dir.merged}/${dir}`, this.verbose))
-          cmds.push(await rexec(`mount --bind --make-slave /${dir} ${this.settings.work_dir.merged}/${dir}`, this.verbose))
+          cmds.push(await rexec(`mount --bind --make-slave ${sourceRoot}/${dir} ${this.settings.work_dir.merged}/${dir}`, this.verbose))
           cmds.push(await rexec(`mount -o remount,bind,ro ${this.settings.work_dir.merged}/${dir}`, this.verbose))
         } else {
           cmds.push(`# /${dir} just created`)
@@ -101,7 +105,7 @@ export async function bindLiveFs(this: Ovary) {
       if (fs.existsSync(`${this.settings.work_dir.merged}/${dir}`)) {
         cmds.push('# file exist... skip')
       } else {
-        cmds.push(await rexec(`cp -p /${dir} ${this.settings.work_dir.merged}`, this.verbose))
+        cmds.push(await rexec(`cp -p ${sourceRoot}/${dir} ${this.settings.work_dir.merged}`, this.verbose))
       }
     }
 
@@ -158,9 +162,10 @@ export async function uBindLiveFs(this: Ovary) {
       withFileTypes: true
     })
 
+    const sourceRoot = this.sourceRoot  // '/' normally; stage3 rootfs path when --stage3
     for (const dir of bindDirs) {
       const dirname = dir.name
-      const hostPath = `/${dirname}`
+      const hostPath = `${sourceRoot}/${dirname}`
 
       cmds.push(startLine)
 
