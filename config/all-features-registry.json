@@ -1,0 +1,142 @@
+{
+  "_comment": "Source of truth for all penguins-eggs all-features integration projects.",
+  "_comment2": "Used by sync-all-features.yml, dependabot, and submodule update scripts.",
+  "schema_version": "1",
+  "projects": [
+    {
+      "name": "eggs-ai",
+      "repo": "Interested-Deving-1896/eggs-ai",
+      "submodule_path": "integrations/eggs-ai",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "AI assistant integration for penguins-eggs"
+    },
+    {
+      "name": "eggs-gui",
+      "repo": "Interested-Deving-1896/eggs-gui",
+      "submodule_path": "integrations/eggs-gui",
+      "default_branch": "master",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "GUI frontend for penguins-eggs"
+    },
+    {
+      "name": "penguins-recovery",
+      "repo": "Interested-Deving-1896/penguins-recovery",
+      "submodule_path": "integrations/penguins-recovery",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Recovery environment integration"
+    },
+    {
+      "name": "penguins-immutable-framework",
+      "repo": "Interested-Deving-1896/penguins-immutable-framework",
+      "submodule_path": "integrations/penguins-immutable-framework",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Immutable/atomic OS layer for penguins-eggs"
+    },
+    {
+      "name": "penguins-powerwash",
+      "repo": "Interested-Deving-1896/penguins-powerwash",
+      "submodule_path": "integrations/penguins-powerwash",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "ChromeOS-style powerwash / factory reset"
+    },
+    {
+      "name": "penguins-incus-platform",
+      "repo": "Interested-Deving-1896/penguins-incus-platform",
+      "submodule_path": "integrations/penguins-incus-platform",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Incus/LXD container platform integration"
+    },
+    {
+      "name": "penguins-kernel-manager",
+      "repo": "Interested-Deving-1896/penguins-kernel-manager",
+      "submodule_path": "integrations/penguins-kernel-manager",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Kernel selection and management"
+    },
+    {
+      "name": "penguins-eggs-audit",
+      "repo": "Interested-Deving-1896/penguins-eggs-audit",
+      "submodule_path": "integrations/penguins-eggs-audit",
+      "default_branch": "master",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Security audit tooling for penguins-eggs systems"
+    },
+    {
+      "name": "penguins-over-the-air",
+      "repo": "Interested-Deving-1896/penguins-over-the-air",
+      "submodule_path": "integrations/penguins-over-the-air",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "OTA update framework for penguins-eggs systems"
+    },
+    {
+      "name": "penguins-distrobuilder",
+      "repo": "Interested-Deving-1896/penguins-distrobuilder",
+      "submodule_path": "integrations/penguins-distrobuilder",
+      "default_branch": "main",
+      "upstream": "canonical/distrobuilder",
+      "upstream_branch": "main",
+      "sync_strategy": "merge-upstream",
+      "description": "Fork of canonical/distrobuilder wired into penguins-eggs"
+    },
+    {
+      "name": "penguins-eggs-stage3",
+      "repo": "Interested-Deving-1896/penguins-eggs-stage3",
+      "submodule_path": "integrations/penguins-eggs-stage3",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Stage3 rootfs archives for linux-pivot bootstrap"
+    },
+    {
+      "name": "penguins-eggs-integrations",
+      "repo": "Interested-Deving-1896/penguins-eggs-integrations",
+      "submodule_path": "integrations/penguins-eggs-integrations",
+      "default_branch": "master",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Third-party plugin and integration registry"
+    },
+    {
+      "name": "penguins-eggs-prefix",
+      "repo": "Interested-Deving-1896/penguins-eggs-prefix",
+      "submodule_path": "integrations/penguins-eggs-prefix",
+      "default_branch": "main",
+      "upstream": null,
+      "sync_strategy": "none",
+      "description": "Gentoo-prefix style userland layer for penguins-eggs"
+    },
+    {
+      "name": "penguins-pivot",
+      "repo": "Interested-Deving-1896/penguins-pivot",
+      "submodule_path": "integrations/penguins-pivot",
+      "default_branch": "main",
+      "upstream": "Interested-Deving-1896/linux-pivot",
+      "upstream_branch": "main",
+      "sync_strategy": "merge-upstream",
+      "description": "Distro converter (linux-pivot fork) wired into penguins-eggs"
+    }
+  ],
+  "upstream_core": {
+    "repo": "pieroproietti/penguins-eggs",
+    "branch": "master",
+    "sync_strategy": "merge-upstream",
+    "target_branch": "all-features",
+    "description": "Upstream penguins-eggs — merged into all-features daily"
+  }
+}

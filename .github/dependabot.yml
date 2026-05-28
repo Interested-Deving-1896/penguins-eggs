@@ -1,6 +1,7 @@
 version: 2
 
 updates:
+  # GitHub Actions in the root repo
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -8,5 +9,166 @@ updates:
       day: monday
     commit-message:
       prefix: "ci"
+    labels:
+      - dependencies
+
+  # npm deps in the root penguins-eggs package
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: tuesday
+    commit-message:
+      prefix: "deps"
+    labels:
+      - dependencies
+    ignore:
+      # Major version bumps require manual review
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # ── all-features integration submodules ─────────────────────────────────────
+  # Each submodule that has a package.json gets its own npm entry so
+  # Dependabot opens PRs against the submodule repo directly.
+
+  - package-ecosystem: npm
+    directory: /integrations/eggs-ai
+    schedule:
+      interval: weekly
+      day: tuesday
+    commit-message:
+      prefix: "deps(eggs-ai)"
+    labels:
+      - dependencies
+      - eggs-ai
+
+  - package-ecosystem: npm
+    directory: /integrations/eggs-gui
+    schedule:
+      interval: weekly
+      day: tuesday
+    commit-message:
+      prefix: "deps(eggs-gui)"
+    labels:
+      - dependencies
+      - eggs-gui
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-recovery
+    schedule:
+      interval: weekly
+      day: wednesday
+    commit-message:
+      prefix: "deps(penguins-recovery)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-immutable-framework
+    schedule:
+      interval: weekly
+      day: wednesday
+    commit-message:
+      prefix: "deps(penguins-immutable-framework)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-powerwash
+    schedule:
+      interval: weekly
+      day: wednesday
+    commit-message:
+      prefix: "deps(penguins-powerwash)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-incus-platform
+    schedule:
+      interval: weekly
+      day: thursday
+    commit-message:
+      prefix: "deps(penguins-incus-platform)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-kernel-manager
+    schedule:
+      interval: weekly
+      day: thursday
+    commit-message:
+      prefix: "deps(penguins-kernel-manager)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-eggs-audit
+    schedule:
+      interval: weekly
+      day: thursday
+    commit-message:
+      prefix: "deps(penguins-eggs-audit)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-over-the-air
+    schedule:
+      interval: weekly
+      day: friday
+    commit-message:
+      prefix: "deps(penguins-over-the-air)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-distrobuilder
+    schedule:
+      interval: weekly
+      day: friday
+    commit-message:
+      prefix: "deps(penguins-distrobuilder)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-eggs-stage3
+    schedule:
+      interval: weekly
+      day: friday
+    commit-message:
+      prefix: "deps(penguins-eggs-stage3)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-eggs-integrations
+    schedule:
+      interval: weekly
+      day: friday
+    commit-message:
+      prefix: "deps(penguins-eggs-integrations)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-eggs-prefix
+    schedule:
+      interval: weekly
+      day: friday
+    commit-message:
+      prefix: "deps(penguins-eggs-prefix)"
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /integrations/penguins-pivot
+    schedule:
+      interval: weekly
+      day: friday
+    commit-message:
+      prefix: "deps(penguins-pivot)"
     labels:
       - dependencies

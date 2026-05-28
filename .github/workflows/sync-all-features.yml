@@ -1,0 +1,81 @@
+name: Sync all-features
+
+# Keeps the all-features branch and all 14 integration projects in sync
+# with their upstream counterparts.
+#
+# What this does:
+#   1. Merges pieroproietti/penguins-eggs master → all-features (core upstream)
+#   2. For each project in config/all-features-registry.json with an upstream:
+#      - merge-upstream: fast-forward or open a PR if diverged
+#      - Updates the submodule pointer in all-features to the new HEAD
+#   3. Updates all submodule pointers to their repos' current default branch HEAD
+#   4. Opens a single consolidation PR if any submodule pointer changed
+#
+# Runs daily at 03:00 UTC (after sync-pieroproietti-forks at :05 and
+# sync-upstream-sources at 01:30, so those have already run).
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Report without making changes"
+        type: boolean
+        default: false
+      project_filter:
+        description: "Sync only this project name (blank = all)"
+        required: false
+        default: ""
+      skip_core_upstream:
+        description: "Skip merging pieroproietti/penguins-eggs"
+        type: boolean
+        default: false
+      rate_limit_rerun:
+        description: "Set by rate-limit-rerun — prevents re-trigger loops"
+        required: false
+        default: "false"
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    name: Sync all-features
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout all-features
+        uses: actions/checkout@v4
+        with:
+          ref: all-features
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync core upstream (pieroproietti/penguins-eggs → all-features)
+        if: inputs.skip_core_upstream != true
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+        run: bash scripts/sync-all-features.sh --step core-upstream
+
+      - name: Sync project upstreams + update submodule pointers
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          PROJECT_FILTER: ${{ inputs.project_filter || '' }}
+        run: bash scripts/sync-all-features.sh --step projects
+
+      - name: Write job summary
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          INPUTS_JSON: ${{ toJSON(inputs) }}
+        run: bash scripts/write-summary.sh

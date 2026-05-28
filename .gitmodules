@@ -25,3 +25,21 @@
 [submodule "integrations/penguins-recovery"]
 	path = integrations/penguins-recovery
 	url = https://github.com/Interested-Deving-1896/penguins-recovery.git
+[submodule "integrations/penguins-over-the-air"]
+	path = integrations/penguins-over-the-air
+	url = https://github.com/Interested-Deving-1896/penguins-over-the-air.git
+[submodule "integrations/penguins-distrobuilder"]
+	path = integrations/penguins-distrobuilder
+	url = https://github.com/Interested-Deving-1896/penguins-distrobuilder.git
+[submodule "integrations/penguins-eggs-stage3"]
+	path = integrations/penguins-eggs-stage3
+	url = https://github.com/Interested-Deving-1896/penguins-eggs-stage3.git
+[submodule "integrations/penguins-eggs-integrations"]
+	path = integrations/penguins-eggs-integrations
+	url = https://github.com/Interested-Deving-1896/penguins-eggs-integrations.git
+[submodule "integrations/penguins-eggs-prefix"]
+	path = integrations/penguins-eggs-prefix
+	url = https://github.com/Interested-Deving-1896/penguins-eggs-prefix.git
+[submodule "integrations/penguins-pivot"]
+	path = integrations/penguins-pivot
+	url = https://github.com/Interested-Deving-1896/penguins-pivot.git
