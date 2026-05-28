@@ -109,7 +109,7 @@ Run \`eggs ai mcp\` to start the MCP server.
       }
     } else {
       this.error(
-        'eggs-ai source not found. Clone https://gitlab.com/OSPF1896/eggs-ai or run eggs from the all-features branch.',
+        'eggs-ai source not found. Clone https://github.com/Interested-Deving-1896/eggs-ai or run eggs from the all-features branch.',
         { exit: 1 },
       )
     }
@@ -118,7 +118,7 @@ Run \`eggs ai mcp\` to start the MCP server.
     const serviceContent = `[Unit]
 Description=eggs-ai HTTP API server (port 3737)
 After=network.target
-Documentation=https://gitlab.com/OSPF1896/eggs-ai
+Documentation=https://github.com/Interested-Deving-1896/eggs-ai
 
 [Service]
 Type=simple

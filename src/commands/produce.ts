@@ -104,7 +104,7 @@ export default class Produce extends Command {
    * Downloads the adapter if not present, then runs it against the ISO.
    */
   private async applyRecovery(isoPath: string, guiProfile?: string, withRescapp?: boolean, verbose?: boolean): Promise<void> {
-    const recoveryRepo = 'https://gitlab.com/OSPF1896/penguins-recovery'
+    const recoveryRepo = 'https://github.com/Interested-Deving-1896/penguins-recovery'
     const recoveryDir = '/usr/local/share/penguins-recovery'
     const adapterScript = `${recoveryDir}/adapters/adapter.sh`
 
