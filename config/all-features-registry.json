@@ -10,7 +10,7 @@
       "default_branch": "main",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "AI assistant integration for penguins-eggs"
+      "description": "AI assistant integration for penguins-eggs — original project"
     },
     {
       "name": "eggs-gui",
@@ -19,7 +19,7 @@
       "default_branch": "master",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "GUI frontend for penguins-eggs"
+      "description": "GUI frontend for penguins-eggs — original project"
     },
     {
       "name": "penguins-recovery",
@@ -28,7 +28,7 @@
       "default_branch": "main",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "Recovery environment integration"
+      "description": "Recovery environment integration — original project"
     },
     {
       "name": "penguins-immutable-framework",
@@ -37,7 +37,7 @@
       "default_branch": "main",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "Immutable/atomic OS layer for penguins-eggs"
+      "description": "Immutable/atomic OS layer — original project"
     },
     {
       "name": "penguins-powerwash",
@@ -46,7 +46,7 @@
       "default_branch": "main",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "ChromeOS-style powerwash / factory reset"
+      "description": "ChromeOS-style powerwash / factory reset — original project"
     },
     {
       "name": "penguins-incus-platform",
@@ -55,7 +55,7 @@
       "default_branch": "main",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "Incus/LXD container platform integration"
+      "description": "Incus/LXD container platform integration — original project"
     },
     {
       "name": "penguins-kernel-manager",
@@ -64,7 +64,7 @@
       "default_branch": "main",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "Kernel selection and management"
+      "description": "Kernel selection and management — original project"
     },
     {
       "name": "penguins-eggs-audit",
@@ -73,35 +73,7 @@
       "default_branch": "master",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "Security audit tooling for penguins-eggs systems"
-    },
-    {
-      "name": "penguins-over-the-air",
-      "repo": "Interested-Deving-1896/penguins-over-the-air",
-      "submodule_path": "integrations/penguins-over-the-air",
-      "default_branch": "main",
-      "upstream": null,
-      "sync_strategy": "none",
-      "description": "OTA update framework for penguins-eggs systems"
-    },
-    {
-      "name": "penguins-distrobuilder",
-      "repo": "Interested-Deving-1896/penguins-distrobuilder",
-      "submodule_path": "integrations/penguins-distrobuilder",
-      "default_branch": "main",
-      "upstream": "canonical/distrobuilder",
-      "upstream_branch": "main",
-      "sync_strategy": "merge-upstream",
-      "description": "Fork of canonical/distrobuilder wired into penguins-eggs"
-    },
-    {
-      "name": "penguins-eggs-stage3",
-      "repo": "Interested-Deving-1896/penguins-eggs-stage3",
-      "submodule_path": "integrations/penguins-eggs-stage3",
-      "default_branch": "main",
-      "upstream": null,
-      "sync_strategy": "none",
-      "description": "Stage3 rootfs archives for linux-pivot bootstrap"
+      "description": "Security audit tooling — original project"
     },
     {
       "name": "penguins-eggs-integrations",
@@ -110,16 +82,47 @@
       "default_branch": "master",
       "upstream": null,
       "sync_strategy": "none",
-      "description": "Third-party plugin and integration registry"
+      "description": "Third-party plugin and integration registry — original project"
+    },
+    {
+      "name": "penguins-over-the-air",
+      "repo": "Interested-Deving-1896/penguins-over-the-air",
+      "submodule_path": "integrations/penguins-over-the-air",
+      "default_branch": "main",
+      "upstream": "Interested-Deving-1896/linux-over-the-air",
+      "upstream_branch": "main",
+      "sync_strategy": "merge-upstream",
+      "description": "OTA update framework — penguins fork of Interested-Deving-1896/linux-over-the-air"
+    },
+    {
+      "name": "penguins-distrobuilder",
+      "repo": "Interested-Deving-1896/penguins-distrobuilder",
+      "submodule_path": "integrations/penguins-distrobuilder",
+      "default_branch": "main",
+      "upstream": "lxc/distrobuilder",
+      "upstream_branch": "main",
+      "sync_strategy": "merge-upstream",
+      "description": "Distrobuilder with penguins-eggs integration — fork of lxc/distrobuilder"
+    },
+    {
+      "name": "penguins-eggs-stage3",
+      "repo": "Interested-Deving-1896/penguins-eggs-stage3",
+      "submodule_path": "integrations/penguins-eggs-stage3",
+      "default_branch": "main",
+      "upstream": "Interested-Deving-1896/linux-distro-stage3",
+      "upstream_branch": "main",
+      "sync_strategy": "merge-upstream",
+      "description": "Stage3 rootfs archives — penguins fork of Interested-Deving-1896/linux-distro-stage3"
     },
     {
       "name": "penguins-eggs-prefix",
       "repo": "Interested-Deving-1896/penguins-eggs-prefix",
       "submodule_path": "integrations/penguins-eggs-prefix",
       "default_branch": "main",
-      "upstream": null,
-      "sync_strategy": "none",
-      "description": "Gentoo-prefix style userland layer for penguins-eggs"
+      "upstream": "Interested-Deving-1896/linux-distro-prefix",
+      "upstream_branch": "main",
+      "sync_strategy": "merge-upstream",
+      "description": "Gentoo-prefix userland layer — penguins fork of Interested-Deving-1896/linux-distro-prefix"
     },
     {
       "name": "penguins-pivot",
@@ -129,7 +132,7 @@
       "upstream": "Interested-Deving-1896/linux-pivot",
       "upstream_branch": "main",
       "sync_strategy": "merge-upstream",
-      "description": "Distro converter (linux-pivot fork) wired into penguins-eggs"
+      "description": "Distro converter — penguins fork of Interested-Deving-1896/linux-pivot"
     }
   ],
   "upstream_core": {
