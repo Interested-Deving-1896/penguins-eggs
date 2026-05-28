@@ -4,38 +4,32 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-This project provides a remastering tool for creating custom Linux distributions and live systems. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by system administrators, developers, and enthusiasts to generate ISO images tailored to specific needs or environments.
+Penguins Eggs is a remastering tool that allows users to create custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and more. It is designed for system administrators, developers, and enthusiasts who need to build and distribute tailored Linux environments.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project consists of a modular architecture designed to facilitate system remastering across multiple Linux distributions. The core components include:
+The architecture of `penguins-eggs` is modular, designed to facilitate system remastering across multiple Linux distributions. The project is implemented in TypeScript and uses the oclif framework for CLI functionality. Key components include:
 
-1. **CLI Tool**: The entry point is defined in `package.json` under the `bin` key, pointing to `./bin/run.js`. This CLI is built using the `@oclif/core` framework and provides commands for remastering tasks.
-2. **Integrations**: Custom integrations are located in the `integrations` directory and are referenced as a local dependency in `package.json`.
-3. **Frontend**: Built with `React` and `Ink`, the frontend provides a terminal-based user interface for interacting with the tool.
-4. **Backend**: The backend leverages `Express` for API handling and `axios` for external HTTP requests. It also uses `systeminformation` for system-level data collection.
-5. **Utilities**: Various utilities include YAML parsing (`js-yaml`), templating (`mustache`), and file system operations (`helia` and `@helia/unixfs`).
+1. **CLI Interface**: The entry point (`bin/run.js`) provides command-line utilities for interacting with the tool.
+2. **Core Logic**: The main functionality is implemented in TypeScript, leveraging dependencies like `@oclif/core`, `axios`, `chalk`, and `mustache` for CLI operations, HTTP requests, output formatting, and templating.
+3. **Integrations**: The `integrations` directory contains custom modules for distribution-specific operations.
+4. **Workflows**: GitHub Actions workflows automate CI/CD, repository synchronization, artifact mirroring, and documentation updates.
+5. **Configuration Files**: Various configuration files (e.g., `.prettierrc`, `.editorconfig`, `.yamllint.yaml`) ensure consistent coding standards and build processes.
 
-The directory structure is as follows:
-
+Directory structure:
 ```plaintext
 .
 ├── bin/                 # CLI entry point
-├── integrations/        # Custom integrations
-├── src/                 # Source code
-│   ├── commands/        # CLI commands
-│   ├── components/      # React/Ink components
-│   ├── utils/           # Utility functions
-│   └── services/        # Backend services
-├── workflows/           # CI/CD workflows
+├── src/                 # Source code (TypeScript)
+├── integrations/        # Distribution-specific integrations
+├── .github/workflows/   # CI/CD workflows
 ├── docs/                # Documentation files
 ├── tests/               # Test cases
-└── package.json         # Project metadata and dependencies
+├── package.json         # Project metadata and dependencies
+└── README.md            # Project documentation
 ```
-
-Components interact through a combination of CLI commands, API endpoints, and shared utilities, enabling modularity and extensibility.
 <!-- AI:end:architecture -->
 
 ## Install
