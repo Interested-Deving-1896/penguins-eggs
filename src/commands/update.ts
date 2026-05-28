@@ -125,7 +125,7 @@ export default class Update extends Command {
     console.log('Use the following commands to use penguins-eggs from source:')
     console.log('')
     console.log('cd ~')
-    console.log('git clone https://github.com/pieroproietti/penguins-eggs')
+    console.log('git clone https://github.com/Interested-Deving-1896/penguins-eggs')
     console.log('cd penguins-eggs')
     console.log('pnpm install')
     console.log('pnpm build')

@@ -56,7 +56,7 @@ export default class Settings {
     this.config.compression = compression
 
     this.app.author = 'Piero Proietti'
-    this.app.homepage = 'https://github.com/pieroproietti/penguins-eggs'
+    this.app.homepage = 'https://github.com/Interested-Deving-1896/penguins-eggs'
     this.app.mail = 'piero.proietti@gmail.com'
     this.app.name = pjson.name
     this.app.version = pjson.version

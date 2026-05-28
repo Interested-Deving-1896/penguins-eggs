@@ -25,7 +25,7 @@ export function branding(remix: IRemix, distro: IDistro, theme = '', verbose = f
   const productUrl = homeUrl
   // const supportUrl= supportUrl
   const releaseNotesUrl = bugReportUrl
-  const knownIssuesUrl = 'https://github.com/pieroproietti/penguins-eggs/issues/'
+  const knownIssuesUrl = 'https://github.com/Interested-Deving-1896/penguins-eggs/issues/'
 
   const productName = remix.versionName // Questa va nel titolo ed in basso
   const shortProductName = remix.fullname
