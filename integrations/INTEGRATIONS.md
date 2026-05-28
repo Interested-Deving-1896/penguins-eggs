@@ -1,7 +1,7 @@
 # penguins-eggs integrations
 
 This file documents all integrations on the `all-features` branch:
-**4 ecosystem tools** (full repos merged as subtrees) and **46 plugin
+**4 ecosystem tools** (full repos merged as subtrees) and **47 plugin
 integrations** across 6 domains.
 
 ---
@@ -62,6 +62,7 @@ Total: **46 integrations** across 6 domains.
 
 | Plugin | Upstream | Purpose |
 |---|---|---|
+| `penguins-over-the-air` | [penguins-over-the-air](https://github.com/Interested-Deving-1896/penguins-over-the-air) | OTA bundle creation + delivery after `eggs produce`; `eggs pota` command |
 | `lfs-tracker` | [git-lfs/git-lfs](https://github.com/git-lfs/git-lfs) | LFS tracking for large ISO artifacts |
 | `opengist-sharing` | [nicholaswilde/opengist](https://github.com/nicholaswilde/opengist) | ISO sharing via self-hosted Gist |
 | `gentoo-installer` | [jeremypass96/gentoo-installer](https://github.com/jeremypass96/gentoo-installer) | Gentoo Stage3 rootfs + GPU/CPU-optimized make.conf |

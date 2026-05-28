@@ -1,6 +1,15 @@
 /**
- * Distribution plugins — ISO hosting, versioning, and centralized distribution.
+ * Distribution plugins — ISO hosting, versioning, centralized distribution, and OTA delivery.
  */
+
+// penguins-over-the-air — OTA bundle creation + delivery (Interested-Deving-1896/penguins-over-the-air)
+export { PotaClient } from '../../plugins/distribution/penguins-over-the-air/pota-client.js'
+export type { PotaConfig, BundleResult, PotaStatus } from '../../plugins/distribution/penguins-over-the-air/pota-client.js'
+export {
+  afterProduce as potaAfterProduce,
+  beforeProduce as potaBeforeProduce,
+} from '../../plugins/distribution/penguins-over-the-air/produce-hook.js'
+export { commandPota, runPota } from '../../plugins/distribution/penguins-over-the-air/command-pota.js'
 
 export { LfsTracker } from '../../plugins/distribution/lfs-tracker/lfs-tracker.js'
 export { loadLfsConfig, saveLfsConfig } from '../../plugins/distribution/lfs-tracker/lfs-config.js'

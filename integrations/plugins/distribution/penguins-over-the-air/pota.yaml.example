@@ -1,0 +1,38 @@
+# /etc/penguins-eggs.d/pota.yaml
+# penguins-over-the-air integration configuration for penguins-eggs
+#
+# Copy to /etc/penguins-eggs.d/pota.yaml and edit to enable.
+
+pota:
+  # Enable the penguins-over-the-air integration
+  enabled: false
+
+  # OTA server URL (Nebraska or hawkBit)
+  # Leave empty to skip bundle registration
+  server_url: ""
+
+  # Default channel for new bundles
+  # Valid: stable, beta, dev, lts
+  channel: stable
+
+  # Output directory for created bundles
+  bundle_output_dir: /var/lib/pota/bundles
+
+  # Path to the pota bundle script
+  # Default: /usr/share/pota/packaging/bundle/bundle.sh
+  bundle_script: /usr/share/pota/packaging/bundle/bundle.sh
+
+  # Path to the pota CLI binary
+  pota_bin: /usr/bin/pota
+
+  # Register bundle with OTA server after eggs produce
+  register_after_produce: true
+
+  # Trigger pota update check on local system after bundle registration
+  check_update_after_produce: false
+
+  # AVB mode for Android bundles: signed or unlocked
+  avb_mode: unlocked
+
+  # AVB signing key path (required when avb_mode: signed)
+  avb_key: ""

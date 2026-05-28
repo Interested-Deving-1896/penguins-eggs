@@ -1,10 +1,11 @@
 /**
  * penguins-eggs-integrations
  *
- * Integration plugins extending Penguins-Eggs with 46 git-based projects
+ * Integration plugins extending Penguins-Eggs with 47 git-based projects
  * across 6 feature domains.
  *
  * Usage:
+ *   import { PotaClient, potaAfterProduce } from 'penguins-eggs-integrations/distribution'
  *   import { LfsTracker } from 'penguins-eggs-integrations/distribution'
  *   import { BrigPublisher } from 'penguins-eggs-integrations/decentralized'
  *   import { WardrobeMount } from 'penguins-eggs-integrations/config-management'
@@ -18,6 +19,12 @@
 
 // Distribution
 export {
+  // penguins-over-the-air (Interested-Deving-1896/penguins-over-the-air)
+  PotaClient,
+  potaAfterProduce,
+  potaBeforeProduce,
+  commandPota,
+  runPota,
   LfsTracker,
   loadLfsConfig,
   saveLfsConfig,
@@ -28,6 +35,9 @@ export {
   gentooStage3Rootfs,
 } from './distribution/index.js'
 export type {
+  PotaConfig,
+  BundleResult,
+  PotaStatus,
   ILfsConfig,
   GentooInstallerConfig,
   GentooArch,
