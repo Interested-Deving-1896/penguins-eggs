@@ -101,6 +101,12 @@ export default class Produce extends Command {
     'stage3-distro': Flags.string({ description: 'stage3 target distro (debian/ubuntu/devuan/arch/fedora/alpine/void/opensuse/gentoo)', options: ['debian','ubuntu','devuan','arch','fedora','alpine','void','opensuse','gentoo'] }),
     'stage3-release': Flags.string({ description: 'stage3 distro release (e.g. trixie, noble, rolling, 3.21)' }),
     'stage3-arch': Flags.string({ description: 'stage3 target architecture (amd64/arm64/armhf/riscv64/ppc64el/s390x/loong64/i386)', options: ['amd64','arm64','armhf','riscv64','ppc64el','s390x','loong64','i386'] }),
+    'eggs-prefix': Flags.boolean({ description: 'build a penguins-eggs-prefix Gentoo prefix and use it as the produce source instead of the running system' }),
+    'eggs-prefix-distro': Flags.string({ description: 'prefix target distro (debian/ubuntu/devuan/arch/fedora/alpine/void/opensuse/gentoo)', options: ['debian','ubuntu','devuan','arch','fedora','alpine','void','opensuse','gentoo'] }),
+    'eggs-prefix-release': Flags.string({ description: 'prefix distro release (e.g. trixie, noble, rolling, 3.21)' }),
+    'eggs-prefix-arch': Flags.string({ description: 'prefix target architecture (amd64/arm64/armhf/riscv64/ppc64el/s390x/loong64/i386)', options: ['amd64','arm64','armhf','riscv64','ppc64el','s390x','loong64','i386'] }),
+    'eggs-prefix-base': Flags.string({ description: 'path to a local linux-distro-prefix tarball to pre-seed the Gentoo bootstrap (skips ~1h build)' }),
+    'eggs-prefix-stage3': Flags.string({ description: 'path to a local linux-distro-stage3 tarball to use as the chroot base' }),
   }
 
   /**
@@ -772,6 +778,7 @@ export default class Produce extends Command {
       // it as the rootfs source. The rootfs path is passed to ovary via
       // EGGS_STAGE3_ROOTFS so bind-live-fs.ts can use it instead of /.
       let stage3Cleanup: (() => void) | undefined
+      let prefixCleanup: (() => void) | undefined
       if (flags.stage3) {
         const { stage3PrepareForProduce } = await import(
           '../../integrations/plugins/build-infra/linux-distro-stage3/produce-hook.js'
@@ -800,6 +807,46 @@ export default class Produce extends Command {
         process.env['EGGS_STAGE3_ROOTFS'] = hook.rootfsDir
         stage3Cleanup = hook.cleanup
         Utils.warning(`stage3: rootfs ready at ${hook.rootfsDir}`)
+      }
+
+      // ── penguins-eggs-prefix rootfs mode ──────────────────────────────────
+      // When --eggs-prefix is set, build a penguins-eggs-prefix tarball and
+      // extract it as the rootfs source. The rootfs path is passed to ovary via
+      // EGGS_STAGE3_ROOTFS (same env var — ovary treats it as the source root
+      // regardless of whether it came from stage3 or a prefix build).
+      if (flags['eggs-prefix']) {
+        if (flags.stage3) {
+          throw new Error('--eggs-prefix and --stage3 are mutually exclusive')
+        }
+        const { prefixPrepareForProduce } = await import(
+          '../../integrations/plugins/build-infra/penguins-eggs-prefix/produce-hook.js'
+        )
+        const prefixOpts = {
+          distro:             flags['eggs-prefix-distro'] as import('../../integrations/plugins/build-infra/penguins-eggs-prefix/prefix.js').PrefixDistro | undefined,
+          release:            flags['eggs-prefix-release'],
+          arch:               flags['eggs-prefix-arch'] as import('../../integrations/plugins/build-infra/penguins-eggs-prefix/prefix.js').PrefixArch | undefined,
+          basePrefixTarball:  flags['eggs-prefix-base'],
+          stage3Tarball:      flags['eggs-prefix-stage3'],
+        }
+        Utils.warning(`prefix: building ${prefixOpts.distro ?? 'debian'}/${prefixOpts.release ?? 'default'}/${prefixOpts.arch ?? 'amd64'} prefix...`)
+        const hook = await prefixPrepareForProduce(
+          async (cmd, opts) => {
+            const { execSync } = await import('node:child_process')
+            try {
+              if (opts?.echo) console.log(`$ ${cmd}`)
+              const data = execSync(cmd, { encoding: 'utf8', stdio: opts?.capture ? 'pipe' : 'inherit' })
+              return { code: 0, data: data ?? '' }
+            } catch (e: unknown) {
+              const err = e as { status?: number; stdout?: string; stderr?: string; message?: string }
+              return { code: err.status ?? 1, data: err.stdout ?? '', error: err.stderr ?? err.message ?? String(e) }
+            }
+          },
+          verbose,
+          prefixOpts
+        )
+        process.env['EGGS_STAGE3_ROOTFS'] = hook.rootfsDir
+        prefixCleanup = hook.cleanup
+        Utils.warning(`prefix: rootfs ready at ${hook.rootfsDir}`)
       }
 
       const ovary = new Ovary()
@@ -1000,9 +1047,13 @@ export default class Produce extends Command {
         }
       }
 
-      // Clean up stage3 rootfs directory after produce completes
+      // Clean up stage3 / prefix rootfs directory after produce completes
       if (stage3Cleanup) {
         stage3Cleanup()
+        delete process.env['EGGS_STAGE3_ROOTFS']
+      }
+      if (prefixCleanup) {
+        prefixCleanup()
         delete process.env['EGGS_STAGE3_ROOTFS']
       }
     } else {

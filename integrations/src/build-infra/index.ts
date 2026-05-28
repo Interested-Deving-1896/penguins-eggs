@@ -176,3 +176,15 @@ export type {
 } from '../../plugins/build-infra/linux-distro-stage3/stage3.js'
 export { stage3PrepareForProduce } from '../../plugins/build-infra/linux-distro-stage3/produce-hook.js'
 export type { Stage3HookOptions, Stage3HookResult } from '../../plugins/build-infra/linux-distro-stage3/produce-hook.js'
+
+// penguins-eggs-prefix — Gentoo prefix with ISO production tools (9 distros × 8 arches)
+// (Interested-Deving-1896/penguins-eggs-prefix)
+export { PrefixBuilder, prefixTarballs, prefixExtract } from '../../plugins/build-infra/penguins-eggs-prefix/prefix.js'
+export type {
+  PrefixOptions,
+  PrefixResult,
+  PrefixDistro,
+  PrefixArch,
+} from '../../plugins/build-infra/penguins-eggs-prefix/prefix.js'
+export { prefixPrepareForProduce } from '../../plugins/build-infra/penguins-eggs-prefix/produce-hook.js'
+export type { PrefixHookOptions, PrefixHookResult } from '../../plugins/build-infra/penguins-eggs-prefix/produce-hook.js'

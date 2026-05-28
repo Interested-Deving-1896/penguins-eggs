@@ -1,0 +1,57 @@
+# /etc/penguins-eggs.d/prefix.yaml
+# penguins-eggs-prefix integration configuration for penguins-eggs
+#
+# Copy to /etc/penguins-eggs.d/prefix.yaml and edit to enable.
+# Used when running: eggs produce --eggs-prefix
+
+prefix:
+  # Enable penguins-eggs-prefix rootfs mode for eggs produce.
+  # When true, eggs builds a Gentoo prefix tarball and uses it as the
+  # source rootfs instead of the running system.
+  enabled: false
+
+  # Target distro for the prefix bootstrap chroot.
+  # Supported: debian ubuntu devuan arch fedora alpine void opensuse gentoo
+  distro: debian
+
+  # Distro release.
+  # Debian: trixie bookworm sid
+  # Ubuntu: noble jammy oracular
+  # Devuan: excalibur daedalus ceres
+  # Arch/Void/Gentoo: rolling
+  # Fedora: 42 41 rawhide
+  # Alpine: 3.21 3.20 edge
+  # openSUSE: tumbleweed 15.6
+  release: trixie
+
+  # Target architecture.
+  # Supported: amd64 arm64 armhf riscv64 ppc64el s390x loong64 i386
+  # Cross-arch builds require qemu-user-static on the host.
+  arch: amd64
+
+  # Path to a local penguins-eggs-prefix checkout.
+  # If not set, the repo is cloned automatically to a temp directory.
+  # repo_path: /opt/penguins-eggs-prefix
+
+  # Path to a local linux-distro-prefix tarball to pre-seed the bootstrap.
+  # Skips the full Gentoo bootstrap (~1 hour) if provided.
+  # base_prefix_tarball: /home/eggs/linux_distro_prefix_debian_amd64_20250101.tar.gz
+
+  # Path to a local linux-distro-stage3 tarball for the chroot base.
+  # If not set, fetched automatically from linux-distro-stage3 releases.
+  # stage3_tarball: /home/eggs/debian_stage3_trixie_amd64_20250101.tar.gz
+
+  # Directory to write the prefix tarball to.
+  # Default: current working directory.
+  # output_dir: /home/eggs/prefix
+
+  # Parallel build jobs. Default: nproc.
+  # jobs: 4
+
+  # Keep the extracted rootfs directory after eggs produce completes.
+  # Useful for debugging. Default: false.
+  # keep_rootfs: false
+
+  # Also produce a naked base ISO alongside the prefix tarball.
+  # Default: false.
+  # build_iso: false
