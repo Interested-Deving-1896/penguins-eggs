@@ -1,81 +1,74 @@
 name: Sync all-features
 
-# Keeps the all-features branch and all 14 integration projects in sync
-# with their upstream counterparts.
+# Delegates to the canonical sync-all-features workflow in fork-sync-all.
+# The implementation lives in:
+#   Interested-Deving-1896/fork-sync-all  .github/workflows/sync-all-features.yml
+#   Interested-Deving-1896/fork-sync-all  scripts/sync-all-features.sh
 #
-# What this does:
-#   1. Merges pieroproietti/penguins-eggs master → all-features (core upstream)
-#   2. For each project in config/all-features-registry.json with an upstream:
-#      - merge-upstream: fast-forward or open a PR if diverged
-#      - Updates the submodule pointer in all-features to the new HEAD
-#   3. Updates all submodule pointers to their repos' current default branch HEAD
-#   4. Opens a single consolidation PR if any submodule pointer changed
-#
-# Runs daily at 03:00 UTC (after sync-pieroproietti-forks at :05 and
-# sync-upstream-sources at 01:30, so those have already run).
+# This workflow triggers that one via workflow_dispatch, passing the registry
+# file location in this repo. All sync logic, rate-limit handling, and
+# upstream tracking is owned by fork-sync-all.
 
 on:
   schedule:
-    - cron: "0 3 * * *"
+    # 03:05 UTC daily — offset from sync-pieroproietti-forks (:05) and
+    # sync-upstream-sources (01:30) so those have already run.
+    - cron: "5 3 * * *"
   workflow_dispatch:
     inputs:
-      dry_run:
-        description: "Report without making changes"
-        type: boolean
-        default: false
-      project_filter:
-        description: "Sync only this project name (blank = all)"
+      repo_filter:
+        description: "Sync only projects whose name contains this string"
         required: false
         default: ""
-      skip_core_upstream:
-        description: "Skip merging pieroproietti/penguins-eggs"
-        type: boolean
-        default: false
-      rate_limit_rerun:
-        description: "Set by rate-limit-rerun — prevents re-trigger loops"
-        required: false
-        default: "false"
         type: string
+      skip_core:
+        description: "Skip syncing pieroproietti/penguins-eggs → all-features"
+        required: false
+        default: false
+        type: boolean
+      skip_projects:
+        description: "Skip syncing the 14 integration projects"
+        required: false
+        default: false
+        type: boolean
+      dry_run:
+        description: "Report without making changes"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  sync:
-    name: Sync all-features
+  delegate:
+    name: Delegate to fork-sync-all
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
     steps:
-      - name: Checkout all-features
-        uses: actions/checkout@v4
-        with:
-          ref: all-features
-          fetch-depth: 0
-          token: ${{ secrets.SYNC_TOKEN }}
-
-      - name: Configure git
+      - name: Trigger sync-all-features in fork-sync-all
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Sync core upstream (pieroproietti/penguins-eggs → all-features)
-        if: inputs.skip_core_upstream != true
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
-          DRY_RUN: ${{ inputs.dry_run || 'false' }}
-        run: bash scripts/sync-all-features.sh --step core-upstream
-
-      - name: Sync project upstreams + update submodule pointers
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
-          DRY_RUN: ${{ inputs.dry_run || 'false' }}
-          PROJECT_FILTER: ${{ inputs.project_filter || '' }}
-        run: bash scripts/sync-all-features.sh --step projects
-
-      - name: Write job summary
-        if: always()
-        env:
-          JOB_STATUS: ${{ job.status }}
-          INPUTS_JSON: ${{ toJSON(inputs) }}
-        run: bash scripts/write-summary.sh
+          curl -fsSL \
+            -X POST \
+            -H "Authorization: token ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository_owner }}/fork-sync-all/actions/workflows/sync-all-features.yml/dispatches" \
+            -d "$(python3 -c "
+import json, sys
+print(json.dumps({
+  'ref': 'main',
+  'inputs': {
+    'registry_repo':   '${{ github.repository }}',
+    'registry_branch': 'all-features',
+    'registry_path':   'config/all-features-registry.json',
+    'repo_filter':     '${{ inputs.repo_filter || '' }}',
+    'skip_core':       '${{ inputs.skip_core || 'false' }}',
+    'skip_projects':   '${{ inputs.skip_projects || 'false' }}',
+    'dry_run':         '${{ inputs.dry_run || 'false' }}',
+  }
+}))
+")"
+          echo "Dispatched sync-all-features to ${{ github.repository_owner }}/fork-sync-all"
+          echo "Monitor at: https://github.com/${{ github.repository_owner }}/fork-sync-all/actions/workflows/sync-all-features.yml"
