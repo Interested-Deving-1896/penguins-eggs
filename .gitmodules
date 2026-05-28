@@ -1,27 +1,27 @@
 [submodule "test/fixtures/os_release"]
 	path = test/fixtures/os_release
-	url = https://gitlab.com/openos-project/upstream-mirrors/os_release
+	url = https://github.com/Interested-Deving-1896/os_release
 [submodule "integrations/eggs-ai"]
 	path = integrations/eggs-ai
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/eggs-ai.git
+	url = https://github.com/Interested-Deving-1896/eggs-ai.git
 [submodule "integrations/eggs-gui"]
 	path = integrations/eggs-gui
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/eggs-gui.git
+	url = https://github.com/Interested-Deving-1896/eggs-gui.git
 [submodule "integrations/penguins-immutable-framework"]
 	path = integrations/penguins-immutable-framework
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/penguins-immutable-framework.git
+	url = https://github.com/Interested-Deving-1896/penguins-immutable-framework.git
 [submodule "integrations/penguins-powerwash"]
 	path = integrations/penguins-powerwash
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/penguins-powerwash.git
+	url = https://github.com/Interested-Deving-1896/penguins-powerwash.git
 [submodule "integrations/penguins-incus-platform"]
 	path = integrations/penguins-incus-platform
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/penguins-incus-platform.git
+	url = https://github.com/Interested-Deving-1896/penguins-incus-platform.git
 [submodule "integrations/penguins-kernel-manager"]
 	path = integrations/penguins-kernel-manager
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/penguins-kernel-manager.git
+	url = https://github.com/Interested-Deving-1896/penguins-kernel-manager.git
 [submodule "integrations/penguins-eggs-audit"]
 	path = integrations/penguins-eggs-audit
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/penguins-eggs-audit.git
+	url = https://github.com/Interested-Deving-1896/penguins-eggs-audit.git
 [submodule "integrations/penguins-recovery"]
 	path = integrations/penguins-recovery
-	url = https://gitlab.com/openos-project/penguins-eggs_deving/penguins-recovery.git
+	url = https://github.com/Interested-Deving-1896/penguins-recovery.git

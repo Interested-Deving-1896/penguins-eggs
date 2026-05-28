@@ -1,7 +1,7 @@
 # penguins-eggs integrations
 
 This directory contains all projects integrated with
-[penguins-eggs](https://gitlab.com/OSPF1896/penguins-eggs) on the
+[penguins-eggs](https://github.com/Interested-Deving-1896/penguins-eggs) on the
 `all-features` branch. It is split into two layers:
 
 1. **Ecosystem tools** — four full companion repos merged as subtrees, each

@@ -461,7 +461,7 @@ INCUS_SERVER_PRODUCT=<product-id>
 ```
 
 Source: [`penguins-incus-platform/`](penguins-incus-platform/) — Elixir + Shell + TypeScript.
-Upstream: https://gitlab.com/OSPF1896/penguins-incus-platform
+Upstream: https://github.com/Interested-Deving-1896/penguins-incus-platform
 
 ---
 

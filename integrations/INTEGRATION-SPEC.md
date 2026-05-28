@@ -493,7 +493,7 @@ eggs wardrobe import https://gist.example.com/abc123
 building, LXC/Incus rootfs image building, simplestreams image serving, and
 penguins-eggs/recovery integration hooks.
 
-**Repository:** [penguins-incus-platform](https://gitlab.com/openos-project/penguins-eggs_deving/penguins-incus-platform)
+**Repository:** [penguins-incus-platform](https://github.com/Interested-Deving-1896/penguins-incus-platform)
 (merged from `incus-oci-builder`, `penguins-distrobuilder`, `penguins-incus-hub`)
 
 **Dependencies:** Incus ≥ 6.0 on the build host
