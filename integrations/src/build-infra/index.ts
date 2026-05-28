@@ -150,3 +150,17 @@ export type {
 export {
   partymixAfterProduce,
 } from '../../plugins/build-infra/partymix/produce-hook.js'
+
+// penguins-eggs-stage3 — distro-agnostic stage3 builder + naked base images
+// (Interested-Deving-1896/penguins-eggs-stage3)
+export { PenguinsEggsStage3 } from '../../plugins/build-infra/penguins-eggs-stage3/penguins-eggs-stage3.js'
+export type {
+  Stage3Config,
+  Stage3Result,
+  Stage3Distro,
+  Stage3Arch,
+} from '../../plugins/build-infra/penguins-eggs-stage3/penguins-eggs-stage3.js'
+export {
+  stage3PrepareRootfs,
+  stage3BuildNaked,
+} from '../../plugins/build-infra/penguins-eggs-stage3/produce-hook.js'

@@ -125,6 +125,10 @@ export {
   // partymix (pyx-cvm/partymix)
   Partymix,
   partymixAfterProduce,
+  // penguins-eggs-stage3 (Interested-Deving-1896/penguins-eggs-stage3)
+  PenguinsEggsStage3,
+  stage3PrepareRootfs,
+  stage3BuildNaked,
 } from './build-infra/index.js'
 export type {
   StDescriptor,
@@ -165,6 +169,10 @@ export type {
   PartymixResult,
   PartymixPartition,
   PartymixPartitionType,
+  Stage3Config,
+  Stage3Result,
+  Stage3Distro,
+  Stage3Arch,
 } from './build-infra/index.js'
 
 // Dev Workflow
