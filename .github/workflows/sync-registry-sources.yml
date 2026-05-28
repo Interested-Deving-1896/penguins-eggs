@@ -1,9 +1,9 @@
 name: Sync all-features
 
-# Delegates to the canonical sync-all-features workflow in fork-sync-all.
+# Delegates to the canonical sync-registry-sources workflow in fork-sync-all.
 # The implementation lives in:
-#   Interested-Deving-1896/fork-sync-all  .github/workflows/sync-all-features.yml
-#   Interested-Deving-1896/fork-sync-all  scripts/sync-all-features.sh
+#   Interested-Deving-1896/fork-sync-all  .github/workflows/sync-registry-sources.yml
+#   Interested-Deving-1896/fork-sync-all  scripts/sync-registry-sources.sh
 #
 # This workflow triggers that one via workflow_dispatch, passing the registry
 # file location in this repo. All sync logic, rate-limit handling, and
@@ -45,7 +45,7 @@ jobs:
     name: Delegate to fork-sync-all
     runs-on: ubuntu-24.04
     steps:
-      - name: Trigger sync-all-features in fork-sync-all
+      - name: Trigger sync-registry-sources in fork-sync-all
         env:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
@@ -54,7 +54,7 @@ jobs:
             -H "Authorization: token ${GH_TOKEN}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${{ github.repository_owner }}/fork-sync-all/actions/workflows/sync-all-features.yml/dispatches" \
+            "https://api.github.com/repos/${{ github.repository_owner }}/fork-sync-all/actions/workflows/sync-registry-sources.yml/dispatches" \
             -d "$(python3 -c "
 import json, sys
 print(json.dumps({
@@ -70,5 +70,5 @@ print(json.dumps({
   }
 }))
 ")"
-          echo "Dispatched sync-all-features to ${{ github.repository_owner }}/fork-sync-all"
-          echo "Monitor at: https://github.com/${{ github.repository_owner }}/fork-sync-all/actions/workflows/sync-all-features.yml"
+          echo "Dispatched sync-registry-sources to ${{ github.repository_owner }}/fork-sync-all"
+          echo "Monitor at: https://github.com/${{ github.repository_owner }}/fork-sync-all/actions/workflows/sync-registry-sources.yml"
