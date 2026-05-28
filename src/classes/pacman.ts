@@ -23,6 +23,7 @@ import Fedora from './pacman.d/fedora.js'
 import Gentoo from './pacman.d/gentoo.js'
 import Openmamba from './pacman.d/openmamba.js'
 import Opensuse from './pacman.d/opensuse.js'
+import Void from './pacman.d/void.js'
 import Settings from './settings.js'
 import Utils from './utils.js'
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
@@ -122,6 +123,12 @@ export default class Pacman {
           break
         }
 
+        case 'void': {
+          await Void.calamaresInstall(verbose)
+
+          break
+        }
+
         case 'chromiumos': {
           await ChromiumOS.calamaresInstall(verbose)
 
@@ -181,6 +188,12 @@ export default class Pacman {
 
       case 'opensuse': {
         await Opensuse.calamaresPolicies(verbose)
+
+        break
+      }
+
+      case 'void': {
+        await Void.calamaresPolicies(verbose)
 
         break
       }
@@ -245,6 +258,12 @@ export default class Pacman {
 
       case 'opensuse': {
         retVal = await Opensuse.calamaresRemove(verbose)
+
+        break
+      }
+
+      case 'void': {
+        retVal = await Void.calamaresRemove(verbose)
 
         break
       }
@@ -749,6 +768,14 @@ export default class Pacman {
         break
       }
 
+      case 'void': {
+        if (Void.isInstalledWayland()) {
+          installed = true
+        }
+
+        break
+      }
+
       case 'chromiumos': {
         if (ChromiumOS.isInstalledWayland()) {
           installed = true
@@ -826,6 +853,14 @@ export default class Pacman {
 
       case 'opensuse': {
         if (Opensuse.packageIsInstalled('xorg-x11-server')) {
+          installed = true
+        }
+
+        break
+      }
+
+      case 'void': {
+        if (Void.isInstalledXorg()) {
           installed = true
         }
 
@@ -987,6 +1022,12 @@ export default class Pacman {
         break
       }
 
+      case 'void': {
+        retVal = await Void.packageInstall(packageName)
+
+        break
+      }
+
       case 'chromiumos': {
         retVal = await ChromiumOS.packageInstall(packageName)
 
@@ -1050,6 +1091,12 @@ export default class Pacman {
 
       case 'opensuse': {
         installed = Opensuse.packageIsInstalled(packageName)
+
+        break
+      }
+
+      case 'void': {
+        installed = Void.packageIsInstalled(packageName)
 
         break
       }

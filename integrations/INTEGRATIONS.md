@@ -1,7 +1,7 @@
 # penguins-eggs integrations
 
 This file documents all integrations on the `all-features` branch:
-**4 ecosystem tools** (full repos merged as subtrees) and **48 plugin
+**4 ecosystem tools** (full repos merged as subtrees) and **49 plugin
 integrations** across 6 domains.
 
 ---
@@ -57,7 +57,8 @@ Total: **46 integrations** across 6 domains.
 | `gpt-image` | [queso-fuego/UEFI-GPT-image-creator](https://github.com/queso-fuego/UEFI-GPT-image-creator) | Bootable GPT disk image (UEFI, USB, VM) |
 | `partitionfs` | [madscientist42/partitionfs](https://github.com/madscientist42/partitionfs) | Rootless FUSE partition access for disk images |
 | `partymix` | [pyx-cvm/partymix](https://github.com/pyx-cvm/partymix) | MBR disk image assembly for legacy BIOS targets |
-| `penguins-eggs-stage3` | [Interested-Deving-1896/penguins-eggs-stage3](https://github.com/Interested-Deving-1896/penguins-eggs-stage3) | Distro-agnostic stage3 builder (9 distros × 8 arches) + naked base ISO production |
+| `linux-distro-stage3` | [Interested-Deving-1896/linux-distro-stage3](https://github.com/Interested-Deving-1896/linux-distro-stage3) | Distro-agnostic stage3 builder (9 distros × 8 arches); `--stage3` flag for eggs produce |
+| `penguins-eggs-stage3` | [Interested-Deving-1896/penguins-eggs-stage3](https://github.com/Interested-Deving-1896/penguins-eggs-stage3) | Fork of linux-distro-stage3 with eggs install + naked base ISO production |
 
 ## Distribution (`distribution`)
 

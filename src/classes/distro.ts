@@ -145,6 +145,16 @@ class Distro implements IDistro {
         break
       }
 
+      case 'Void': {
+        this.familyId = 'void'
+        this.distroLike = 'Void'
+        this.codenameId = 'rolling'
+        this.distroUniqueId = this.familyId
+        this.liveMediumPath = '/run/initramfs/live/'
+
+        break
+      }
+
       case 'Openmamba': {
         this.familyId = 'openmamba'
         this.distroLike = 'Openmamba'

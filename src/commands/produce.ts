@@ -96,7 +96,11 @@ export default class Produce extends Command {
     standard: Flags.boolean({ char: 'S', description: 'standard compression: xz -b 1M' }),
     theme: Flags.string({ description: 'theme for livecd, calamares branding and partitions' }),
     verbose: Flags.boolean({ char: 'v', description: 'verbose' }),
-    yolk: Flags.boolean({ char: 'y', description: 'force yolk renew' })
+    yolk: Flags.boolean({ char: 'y', description: 'force yolk renew' }),
+    stage3: Flags.boolean({ description: 'build a linux-distro-stage3 rootfs and use it as the produce source instead of the running system' }),
+    'stage3-distro': Flags.string({ description: 'stage3 target distro (debian/ubuntu/devuan/arch/fedora/alpine/void/opensuse/gentoo)', options: ['debian','ubuntu','devuan','arch','fedora','alpine','void','opensuse','gentoo'] }),
+    'stage3-release': Flags.string({ description: 'stage3 distro release (e.g. trixie, noble, rolling, 3.21)' }),
+    'stage3-arch': Flags.string({ description: 'stage3 target architecture (amd64/arm64/armhf/riscv64/ppc64el/s390x/loong64/i386)', options: ['amd64','arm64','armhf','riscv64','ppc64el','s390x','loong64','i386'] }),
   }
 
   /**
@@ -763,6 +767,41 @@ export default class Produce extends Command {
         Utils.info(`CPU: ${cpuSummary}`)
       }
 
+      // ── stage3 rootfs mode ────────────────────────────────────────────────
+      // When --stage3 is set, build a linux-distro-stage3 tarball and extract
+      // it as the rootfs source. The rootfs path is passed to ovary via
+      // EGGS_STAGE3_ROOTFS so bind-live-fs.ts can use it instead of /.
+      let stage3Cleanup: (() => void) | undefined
+      if (flags.stage3) {
+        const { stage3PrepareForProduce } = await import(
+          '../../integrations/plugins/build-infra/linux-distro-stage3/produce-hook.js'
+        )
+        const stage3Opts = {
+          distro:    flags['stage3-distro'] as import('../../integrations/plugins/build-infra/linux-distro-stage3/stage3.js').Stage3Distro | undefined,
+          release:   flags['stage3-release'],
+          arch:      flags['stage3-arch'] as import('../../integrations/plugins/build-infra/linux-distro-stage3/stage3.js').Stage3Arch | undefined,
+        }
+        Utils.warning(`stage3: building ${stage3Opts.distro ?? 'debian'}/${stage3Opts.release ?? 'default'}/${stage3Opts.arch ?? 'amd64'} rootfs...`)
+        const hook = await stage3PrepareForProduce(
+          async (cmd, opts) => {
+            const { execSync } = await import('node:child_process')
+            try {
+              if (opts?.echo) console.log(`$ ${cmd}`)
+              const data = execSync(cmd, { encoding: 'utf8', stdio: opts?.capture ? 'pipe' : 'inherit' })
+              return { code: 0, data: data ?? '' }
+            } catch (e: unknown) {
+              const err = e as { status?: number; stdout?: string; stderr?: string; message?: string }
+              return { code: err.status ?? 1, data: err.stdout ?? '', error: err.stderr ?? err.message ?? String(e) }
+            }
+          },
+          verbose,
+          stage3Opts
+        )
+        process.env['EGGS_STAGE3_ROOTFS'] = hook.rootfsDir
+        stage3Cleanup = hook.cleanup
+        Utils.warning(`stage3: rootfs ready at ${hook.rootfsDir}`)
+      }
+
       const ovary = new Ovary()
       Utils.warning('Produce an egg...')
       if (i.calamares) {
@@ -959,6 +998,12 @@ export default class Produce extends Command {
             verbose,
           )
         }
+      }
+
+      // Clean up stage3 rootfs directory after produce completes
+      if (stage3Cleanup) {
+        stage3Cleanup()
+        delete process.env['EGGS_STAGE3_ROOTFS']
       }
     } else {
       Utils.useRoot(this.id)

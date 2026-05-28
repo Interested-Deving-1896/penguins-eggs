@@ -129,6 +129,11 @@ export {
   PenguinsEggsStage3,
   stage3PrepareRootfs,
   stage3BuildNaked,
+  // linux-distro-stage3 (Interested-Deving-1896/linux-distro-stage3)
+  Stage3Builder,
+  stage3Tarballs,
+  stage3Extract,
+  stage3PrepareForProduce,
 } from './build-infra/index.js'
 export type {
   StDescriptor,
@@ -170,9 +175,15 @@ export type {
   PartymixPartition,
   PartymixPartitionType,
   Stage3Config,
+  Stage3Options,
   Stage3Result,
   Stage3Distro,
   Stage3Arch,
+  Stage3HookOptions,
+  Stage3HookResult,
+  PenguinsEggsStage3Result,
+  PenguinsEggsStage3Distro,
+  PenguinsEggsStage3Arch,
 } from './build-infra/index.js'
 
 // Dev Workflow

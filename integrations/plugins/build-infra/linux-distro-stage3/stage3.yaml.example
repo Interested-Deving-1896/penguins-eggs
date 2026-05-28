@@ -1,0 +1,45 @@
+# /etc/penguins-eggs.d/stage3.yaml
+# linux-distro-stage3 integration configuration for penguins-eggs
+#
+# Copy to /etc/penguins-eggs.d/stage3.yaml and edit to enable.
+# Used when running: eggs produce --stage3
+
+stage3:
+  # Enable stage3 rootfs mode for eggs produce.
+  # When true, eggs builds a fresh stage3 tarball and uses it as the
+  # source rootfs instead of the running system.
+  enabled: false
+
+  # Target distro for the stage3.
+  # Supported: debian ubuntu devuan arch fedora alpine void opensuse gentoo
+  distro: debian
+
+  # Distro release.
+  # Debian: trixie bookworm sid
+  # Ubuntu: noble jammy oracular
+  # Devuan: excalibur daedalus ceres
+  # Arch/Void/Gentoo: rolling
+  # Fedora: 42 41 rawhide
+  # Alpine: 3.21 3.20 edge
+  # openSUSE: tumbleweed 15.6
+  release: trixie
+
+  # Target architecture.
+  # Supported: amd64 arm64 armhf riscv64 ppc64el s390x loong64 i386
+  # Cross-arch builds require qemu-user-static on the host.
+  arch: amd64
+
+  # Path to a local linux-distro-stage3 checkout.
+  # If not set, the repo is cloned automatically to a temp directory.
+  # repo_path: /opt/linux-distro-stage3
+
+  # Directory to write the stage3 tarball to.
+  # Default: current working directory.
+  # output_dir: /home/eggs/stage3
+
+  # Parallel build jobs. Default: nproc.
+  # jobs: 4
+
+  # Keep the extracted rootfs directory after eggs produce completes.
+  # Useful for debugging. Default: false.
+  # keep_rootfs: false

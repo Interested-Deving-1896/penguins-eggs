@@ -156,11 +156,23 @@ export {
 export { PenguinsEggsStage3 } from '../../plugins/build-infra/penguins-eggs-stage3/penguins-eggs-stage3.js'
 export type {
   Stage3Config,
-  Stage3Result,
-  Stage3Distro,
-  Stage3Arch,
+  Stage3Result as PenguinsEggsStage3Result,
+  Stage3Distro as PenguinsEggsStage3Distro,
+  Stage3Arch as PenguinsEggsStage3Arch,
 } from '../../plugins/build-infra/penguins-eggs-stage3/penguins-eggs-stage3.js'
 export {
   stage3PrepareRootfs,
   stage3BuildNaked,
 } from '../../plugins/build-infra/penguins-eggs-stage3/produce-hook.js'
+
+// linux-distro-stage3 — distro-agnostic stage3 builder (9 distros × 8 arches)
+// (Interested-Deving-1896/linux-distro-stage3)
+export { Stage3Builder, stage3Tarballs, stage3Extract } from '../../plugins/build-infra/linux-distro-stage3/stage3.js'
+export type {
+  Stage3Options,
+  Stage3Result,
+  Stage3Distro,
+  Stage3Arch,
+} from '../../plugins/build-infra/linux-distro-stage3/stage3.js'
+export { stage3PrepareForProduce } from '../../plugins/build-infra/linux-distro-stage3/produce-hook.js'
+export type { Stage3HookOptions, Stage3HookResult } from '../../plugins/build-infra/linux-distro-stage3/produce-hook.js'
