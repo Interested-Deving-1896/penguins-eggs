@@ -1,7 +1,7 @@
 # ========================================================
-# NOME: 1-publish-oa-tools
-# DESCRIZIONE: Scarica i pacchetti di oa-tools da GitHub Releases
-#              e li pubblica nella repository VPS.
+# NOME: 2-publish-oa-tools
+# DESCRIZIONE: Scarica gli archivi zip di oa-tools da GitHub Releases,
+#              li estrae e pubblica i pacchetti nella repository VPS.
 # ========================================================
 name: 2-publish-oa-tools
 
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       oa_tools_version:
-        description: 'Tag della release di oa-tools (es. v0.8.2)'
+        description: 'Tag della release di oa-tools (es. v0.8.3)'
         required: true
         type: string
 
@@ -29,7 +29,7 @@ jobs:
       - name: 1. Install Dependencies
         run: |
           apt-get update
-          apt-get install -y apt-utils gnupg dpkg dpkg-dev curl
+          apt-get install -y apt-utils gnupg dpkg dpkg-dev curl unzip
           # Installiamo GitHub CLI (gh)
           curl -sL https://github.com/cli/cli/releases/download/v2.47.0/gh_2.47.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin --strip-components=2 gh_2.47.0_linux_amd64/bin/gh
 
@@ -45,14 +45,17 @@ jobs:
           gpg-connect-agent reloadagent /bye
           echo "$GPG_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
 
-      - name: 3. Fetch oa-tools Debian packages
+      - name: 3. Fetch & Extract oa-tools Debian packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento oa-tools versione ${{ inputs.oa_tools_version }}..."
+          echo "Scaricamento oa-tools-debian.zip versione ${{ inputs.oa_tools_version }}..."
           mkdir -p /tmp/oa-tools
-          # Presumo che oa-tools sia nel tuo account pieroproietti
-          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/oa-tools --pattern "*.deb" --dir /tmp/oa-tools || echo "Nessun .deb trovato"
+          # Scarica il file zip specifico per Debian
+          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/oa-tools --pattern "oa-tools-debian.zip" --dir /tmp/oa-tools || echo "Nessun zip trovato"
+          
+          echo "Estrazione pacchetti..."
+          unzip -o /tmp/oa-tools/oa-tools-debian.zip -d /tmp/oa-tools/ 2>/dev/null || true
           cp /tmp/oa-tools/*.deb /mnt/deb-repo/pool/main/ 2>/dev/null || true
 
       - name: 4. Update Debian Repo (NO Pruning)
@@ -99,23 +102,31 @@ jobs:
         run: |
           pacman-key --init && pacman-key --populate archlinux
           pacman -Syu --noconfirm
-          pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools github-cli
+          pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools github-cli unzip
 
-      - name: 2. Fetch & Distribute oa-tools packages
+      - name: 2. Fetch, Extract & Distribute oa-tools packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento oa-tools versione ${{ inputs.oa_tools_version }}..."
+          echo "Scaricamento archivi zip oa-tools versione ${{ inputs.oa_tools_version }}..."
           mkdir -p /tmp/oa-tools
-          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/oa-tools --dir /tmp/oa-tools || echo "Nessun file trovato"
+          # Scarica tutti i file .zip dalla release
+          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/oa-tools --pattern "*.zip" --dir /tmp/oa-tools || echo "Nessun file zip trovato"
           
-          echo "Smistamento dei pacchetti oa-tools..."
-          cp /tmp/oa-tools/*.apk /mnt/repos/alpine/ 2>/dev/null || true
-          cp /tmp/oa-tools/*arch*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
-          cp /tmp/oa-tools/*manjaro*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
-          # Aggiusta i pattern RPM in base a come li nomina oa-tools
-          cp /tmp/oa-tools/*fedora*.rpm /mnt/repos/rpm/fedora/42/ 2>/dev/null || true
-          cp /tmp/oa-tools/*opensuse*.rpm /mnt/repos/rpm/opensuse/leap/ 2>/dev/null || true
+          echo "Estrazione e smistamento dei pacchetti oa-tools nelle rispettive cartelle..."
+          # Estraiamo in sottocartelle per evitare di mescolare file con la stessa estensione (es. .rpm per fedora e opensuse)
+          unzip -o /tmp/oa-tools/oa-tools-alpine.zip -d /tmp/oa-tools/alpine/ 2>/dev/null || true
+          unzip -o /tmp/oa-tools/oa-tools-arch.zip -d /tmp/oa-tools/arch/ 2>/dev/null || true
+          unzip -o /tmp/oa-tools/oa-tools-manjaro.zip -d /tmp/oa-tools/manjaro/ 2>/dev/null || true
+          unzip -o /tmp/oa-tools/oa-tools-fedora.zip -d /tmp/oa-tools/fedora/ 2>/dev/null || true
+          unzip -o /tmp/oa-tools/oa-tools-opensuse.zip -d /tmp/oa-tools/opensuse/ 2>/dev/null || true
+          
+          echo "Copia nei percorsi del repository..."
+          cp /tmp/oa-tools/alpine/*.apk /mnt/repos/alpine/ 2>/dev/null || true
+          cp /tmp/oa-tools/arch/*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
+          cp /tmp/oa-tools/manjaro/*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
+          cp /tmp/oa-tools/fedora/*.rpm /mnt/repos/rpm/fedora/42/ 2>/dev/null || true
+          cp /tmp/oa-tools/opensuse/*.rpm /mnt/repos/rpm/opensuse/leap/ 2>/dev/null || true
 
       - name: 3. Import GPG Key
         env:
@@ -180,3 +191,4 @@ jobs:
           done
           rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
           repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
+          
