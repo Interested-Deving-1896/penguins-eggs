@@ -39,6 +39,9 @@ Source1:        bootloaders.tar.gz
 # See: https://docs.fedoraproject.org/en-US/packaging-guidelines/Node.js/
 Provides:       bundled(nodejs-module)
 
+
+Conflicts:      oa-tools
+
 # ==============================================================================
 # DIPENDENZE DI BUILD COMUNI
 # ==============================================================================

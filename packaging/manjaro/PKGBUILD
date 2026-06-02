@@ -49,7 +49,7 @@ optdepends=(
 makedepends=(
  #'pnpm'
 )
-
+conflicts=('oa-tools')
 options=('!strip')
 source=(
   "bootloaders.tar.gz::https://github.com/pieroproietti/penguins-bootloaders/releases/download/v$_bootloadersver/bootloaders.tar.gz"

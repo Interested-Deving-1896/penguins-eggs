@@ -8,7 +8,7 @@ Architecture: {{{arch}}}
 Version: {{{version}}}
 Depends: {{{depends}}}
 Suggests: calamares
-Conflicts: calamares-settings-debian, calamares-settings-ubuntu, eggs
+Conflicts: calamares-settings-debian, calamares-settings-ubuntu, oa-tools
 Replaces: eggs
 Description: {{{description}}}
  Penguins-eggs is a versatile remastering tool that allows users to create
