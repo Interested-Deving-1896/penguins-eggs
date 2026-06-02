@@ -20,6 +20,16 @@ It took years of work to create the penguins-eggs, and I also incurred expenses 
 # CHANGELOG
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
 
+# v26.6.2
+In this release, alongside updating the core Node dependencies and fixing the sudoers bug for custom users, I have introduced a strict package conflict with oa-tools.
+
+## oa-tools: what is it?
+[oa-tools](https://github.com/pieroproietti/oa-tools) is the next-generation evolution of penguins-eggs. Over the past few months, I have been working hard to rewrite the core remastering engine from scratch using C and Go. This new architecture makes the tool faster, extremely robust, and ready for future architectures.
+
+Since penguins-eggs and oa-tools do the exact same job but with entirely different under-the-hood mechanics, they cannot coexist on the same system. You have to choose one or the other.
+
+penguins-eggs is still alive and useful, but if you are curious about the future of Linux remastering, feel free to check out the new repository!
+
 # v26.5.12 Where are you?
 - Updated all Node.js packages to their latest versions (and magically, nothing broke!).
 - Swapped out `show.qml` for a newer, shinier, and all-around better version.
