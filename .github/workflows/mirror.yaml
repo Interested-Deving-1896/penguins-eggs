@@ -41,10 +41,13 @@ jobs:
 
       - name: Push mirror to OpenOS-Project-OSP
         env:
-          GITHUB_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
-          git remote add mirror "https://github.com/OpenOS-Project-OSP/penguins-eggs.git"
+          git config --global credential.helper 'store --file ~/.git-credentials'
+          echo "https://x-access-token:${MIRROR_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
+          git remote add mirror \
+            "https://x-access-token:${MIRROR_TOKEN}@github.com/OpenOS-Project-OSP/penguins-eggs.git"
           git fetch mirror  # Fetch latest changes from the mirror
           git push mirror 'refs/remotes/origin/*:refs/heads/*' --force
           git push mirror --tags --force
-```
+          rm -f ~/.git-credentials
