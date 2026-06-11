@@ -16,11 +16,9 @@
 </a>
 
 ### 🥚 oa-tools - A Next-Generation Remastering Suite
-After years of passionate work on *penguins-eggs*, I am currently undertaking a massive evolution of the project: [oa-tools](https://github.com/pieroproietti/oa-tools). I am developing **oa** (a high-performance, C-native remastering engine) and **coa** (its intelligent Go orchestrator). 
-
-This new architecture abandons fragile bash scripts in favor of native Linux kernel syscalls, strict zero-copy principles and it's again more fast! I hope can be the future of an universal Linux remastering.
-
-The idea is that every system should have its own way of being remastered. Every distro is different, yet they share many common roots; here, we want to see if a universal approach is reasonably possible.
+After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: [oa-tools](https://github.com/pieroproietti/oa-tools).
+oa-tools is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
+The goal is ambitious: a truly universal approach to Linux remastering. Every distribution is different, yet they all share common roots. oa-tools already supports Alpine, Arch, Debian, Fedora, Manjaro and openSUSE — and aims to prove that a single, unified engine can handle them all.
 
 [![donate](https://img.shields.io/badge/Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/penguinseggs)
 

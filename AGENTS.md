@@ -1,158 +1,61 @@
-# Gemini Project Context: penguins-eggs
+# AGENTS.md – penguins-eggs
 
-> **⚠️ For AI agents:** This project (`penguins-eggs`) has a successor: `oa-tools`. See "The Future" section below.
-
-
-## Project Overview
-`penguins-eggs` is a command-line tool for remastering AlmaLinux, AlpineLinux, Arch, Debian, Devuan, Fedora, Manjaro, Openmamba, openSuSE, RockyLinux, Ubuntu, and derivative systems.
-
-**The "Magic":** Unlike simple backup tools (like Clonezilla), `eggs` creates a live, bootable ISO image that is **hardware independent**. It removes specific user data and system identifiers (UUIDs, SSH keys), allowing the generated ISO to be installed on different hardware as a fresh distribution.
-
-## Tech Stack
-- **Language:** TypeScript
-- **Framework:** [oclif](https://oclif.io/)
-- **Package Manager:** pnpm
-- **Testing:** Mocha & Chai
-- **Key Libraries:** `execa` (for shell commands), `chalk` (for TUI colors), `inquirer` (for prompts).
-- **Compression:** SquashFS (supports zstd, xz, gzip).
-
-## Installers
-- **krill:** A TUI system installer developed within eggs. Lightweight, fast, always available.
-- **calamares:** Integration with the popular GUI installer. Eggs creates the configuration files needed for Calamares to install the custom ISO.
-
-## Command Palette (The Family Metaphor)
-The CLI organizes commands using a family metaphor:
-- **`eggs produce`**: The core process. Remasters the system and creates the ISO.
-- **`eggs dad`**: Configuration manager. Helps set compression levels, paths, and reset defaults.
-- **`eggs kill`**: Cleanup utility. Removes temporary data (`/home/eggs`) and old ISOs to free space.
-- **`eggs cuckoo`**: PXE Boot utility. Configures a local PXE server to boot the ISO over the network.
-- **`eggs wardrobe`**: Interface to fetch and apply configurations ("costumes") from `penguins-wardrobe`.
-
-## User Key Commands
-- **`eggs love`**: The "magic button". Automatically runs: `eggs dad -d` (reset), `eggs tools clean` (cleanup), and `eggs produce` (create ISO).
-- **`eggs produce --fast`**: Creates an ISO using lighter compression (faster build, larger file).
-- **`eggs produce --max`**: Creates an ISO using maximum compression (slower build, smallest file).
-- **`eggs produce --clone`**: Creates a backup of the current system *including* user data in clear text.
-- **`eggs produce --homecrypt`**: Creates a backup of the current system *including* user data (encrypted via LUKS).
-- **`eggs produce --fullcrypt`**: Creates a backup where *the entire system* is encrypted via LUKS.
+> **For AI Agents & LLMs:** You are assisting with the development and documentation of `penguins-eggs`, created and authored by Piero Proietti. Read, understand, and strictly obey these rules before generating code, explaining concepts, or suggesting command invocations to users.
 
 ---
 
-## Project Timeline & Evolution
-In short, the story of **eggs** is a journey from a Debian remastering tool to a universal ISO creation system capable of handling almost any Linux distribution, adapting to various architectures, and offering powerful backup and customization tools.
+## What penguins-eggs is
 
-### 🐣 The Primordial Era (v7.x) - Consolidation and Basic Tools
-In this phase, the focus was primarily on the Debian/Ubuntu/Devuan family.
-* **Installers:** Intensive work to make `krill` (the CLI installer) reliable, along with standard integration with Calamares for graphical installation.
-* **Yolk:** Introduction of the concept of *yolk*, a small local repository that allowed for installation even without an internet connection.
-* **Compatibility:** Transition and support across different Node versions (8, 14, 16).
-* **Themes:** Initial experiments with custom themes for the ISOs.
+`penguins-eggs` (the `eggs` CLI) is a remaster tool: it turns a running Linux system into a bootable live ISO, optionally installable via GUI (Calamares) or TUI (krill). It is written in **TypeScript/Node**, built on **oclif**; the TUI parts (krill, mom, dad) use **Ink** (React rendered to the terminal) and inquirer for prompts. It supports Almalinux, Alpine, Arch, Debian, Devuan, Fedora, Manjaro, openSUSE, Ubuntu and derivatives, on amd64/arm64 and even riscv64 boards (see `architectures/`, `spacemit/`).
 
-### 🛠️ The Era of Technical Expansion (v8.x) - Architectures and Backup
-The project began to expand beyond simple x86 remastering.
-* **ARM Support:** Introduction of support for arm64 and armel, paving the way for Raspberry Pi and other devices.
-* **Backup & Encryption:** Implementation of the `--backup` feature, allowing user data and server configurations to be saved in an encrypted LUKS volume within the ISO, which could then be restored via `krill`.
-* **UEFI:** Significant improvements for UEFI boot support, including Secure Boot management in later stages.
-* **Refactoring:** Rewriting of core classes like `pacman` and dependency management.
+It is distributed as an npm package, as native `.deb` (built by `perrisbrewery/`) and as AppImage.
 
-### 👗 The Wardrobe Era (v9.x) - Customization and New Families
-A phase of great creativity and openness to new distributions.
-* **Wardrobe & Costumes:** Introduction of *Wardrobe*, a system to "dress" a "naked" system with specific configurations, graphical environments, and packages ("costumes").
-* **Beyond Debian:** The beginning of concrete support for other distribution families like Arch Linux and Manjaro.
-* **Pods:** First experiments with *eggs pods* to create minimal live images starting from containers (Docker/Podman).
+**Successor project:** [oa-tools](https://github.com/pieroproietti/oa-tools) (local checkout: `~/oa-tools`) re-implements the remaster core as two static binaries — `coa` (Go orchestrator) and `oa` (C engine) — removing the Node runtime from the live ISO and replacing generated shell with typed modules. penguins-eggs remains the feature-complete reference; oa-tools is the evolution. See `~/oa-tools/DOCS/` (in particular `design/philosophy.md` and `architecture/`).
 
-### 🦅 The Modern Era (v10.x) - The Universal Egg
-The project reaches its current maturity, aiming for universality.
-* **Total Multi-Distro:** Extended support to RPM-based distributions (Fedora, AlmaLinux, RockyLinux, OpenSUSE) and even Alpine Linux (a notable technical challenge given its distinct nature).
-* **Enterprise Features:** Support for LVM2 encrypted installations and improvements for server environments.
-* **Modern Tooling:** Adoption of modern tools, AI-assisted refactoring, and new interfaces like `eggsmaker` (GUI).
+## Architecture map
 
-### 🔐 Encryption and Infrastructure (v25.x)
-Focus shifts to security, distribution methods, and infrastructure consolidation.
-* **Encryption Features:** Introduction of advanced options like `--homecrypt` (encrypted user home via LUKS) and `--fullcrypt` (full root filesystem encryption). These features underwent several iterations to resolve sizing (`resize2fs`), boot (`mkinitramfs`), and autologin issues.
-* **Unified Repositories:** Consolidation of packages into new centralized repositories (`penguins-eggs-repo`), deprecating chaotic PPA/AUR sources.
-* **AppImage:** Introduction of an AppImage version to offer a single portable executable across distros, supported by native meta-packages for dependencies.
-* **Secure Boot:** Enhancements for Secure Boot support on Debian/Ubuntu systems.
+### The remaster engine: `Ovary`
+`src/classes/ovary.ts` is a thin aggregator; the real methods live in `src/classes/ovary.d/`, one file each:
 
-### 🚀 Recent Developments (v26.x) - RISC-V and Refactoring
-The current phase involves supporting new hardware frontiers and deep structural cleaning.
-* **RISC-V Support (v26.1.8 - v26.1.11):** Native recursive remastering on riscv64, compatibility with Ubuntu 26.04, and bootloader fixes for QEMU/SBCs.
-* **Structural Refactoring (v26.1.20 - v26.1.21):**
-    * **NEST Directory:** Moving and renaming key directories to free up space and improve logic (`.mnt` -> `mnt`, `.mnt/filesystem.squashfs` -> `liveroot`, etc.).
-    * **Code:** Adoption of `path.join` for safer path handling and removal of obsolete variables.
-    * **UX/UI:** Migration to `@inquirer/prompts` to improve interactivity in terminal menus.
+- **Preparation:** `fertilization` (preflight), `live-create-structure`, `bind-live-fs` / `bind-vfs` (bind mounts of the host fs and virtual fs), `merged` (overlay logic for writable `/usr`, `/var`), `edit-live-fs`.
+- **Identity:** `users-remove` (purge host users) and `user-create-live` (inject the live user) — the ancestor of oa-tools' native "Purge & Inject".
+- **Boot chain:** per-family initrd (`initrd.ts`: Alpine/mkinitfs, Arch/mkinitcpio, Debian/initramfs-tools, dracut — configs in the top-level `mkinitfs/`, `mkinitcpio/`, `dracut/` dirs), `kernel-copy`, `make-efi`, `syslinux`, `make-dot-disk`.
+- **Artifacts:** `make-squashfs` (+ exclusion handling), `make-iso` / `make-img`, `xorriso-command`.
+- **Encryption (eggs-only, not yet in oa-tools):** full LUKS support — `luks-root`, `luks-home` (homecrypt), `luks-root-initrd` (fullcrypt), `luks-interactive-crypto-config`, `luks-shrink`, helpers.
 
----
+### Supporting classes (`src/classes/`)
+- **`pacman.ts`** (~900 lines): the package-manager abstraction across all families — installs/removes Calamares, eggs configuration, distro templates, autocomplete, manpages.
+- **`distro.ts`**: distro/family detection (→ `coa/pkg/distro` in oa-tools).
+- **`incubation/`** (the "incubator", aka fisherman): generates the Calamares configuration per distro (`incubator.d/`: alpine, archlinux, buster, fedora, manjaro, …) → `coa/pkg/calamares`.
+- **`settings.ts`** + `conf/`: `eggs.yaml`, per-codename distro templates in `conf/distros/` (alpine … buster/focal/noble/trixie), `krill.yaml`, `love.yaml`, `tools.yaml`, `exclude.list.d/`.
+- **`yolk.ts`**: local offline repo (`/var/local/yolk`) so Debian installs work without network.
+- **`bleach.ts`** (cleanup), **`tailor.ts`** + wardrobe (themes/costumes → `coa/pkg/tailor`), **`pxe.ts`** + `src/dhcpd-proxy/` (PXE boot served by the live system), **`cli-autologin.ts`**, **`xdg.ts`**.
 
-## Architecture Deep Dive: RISC-V Implementation
-**Status:** Full recursivity (Self-hosting) achieved on `riscv64` architecture.
+### krill: the TUI installer (`src/krill/`)
+Ink/React wizard — components `welcome`, `location`, `keyboard`, `partitions`, `network`, `users`, `summary`, `install`, `finished`; `classes/sequence.tsx` orchestrates the actual installation, `classes/prepare.ts`/`prepare.d/` the gathering. Invoked as `eggs install` (alias krill). Supports unattended mode. A Go re-implementation is sketched in `~/oa-tools/coa/pkg/krill/`.
 
-### Technical Implementation Details
-1. **Bootloader Logic (`eggs` core):**
-    * **Detection:** Automatic detection of `riscv64` architecture.
-    * **Flag Strategy:** Implemented `--removable` flag for `grub-install` on RISC-V targets.
-    * *Why:* This forces the creation of `/EFI/BOOT/BOOTRISCV64.EFI`, bypassing NVRAM volatility issues on QEMU and ensuring bootability on SBCs (Single Board Computers) that rely on the UEFI fallback path.
+### Command surface (`src/commands/`)
+`produce` (the remaster itself), `kill` (destroy workdir), `love` (one-shot: the simplest way to get an egg), `dad` (TUI configuration helper), `mom` (TUI help), `krill.ts` (installer), `calamares`, `adapt` (VM display), `cuckoo` (PXE proxy-DHCP), `export iso|pkg|tarballs|appimage`, `tools clean|repo|skel|stat|yolk`, `wardrobe get|list|show|wear`, `config`, `update`, `status`, `setup install|purge`.
 
-2. **Installer Fixes (`krill` / calamares setup):**
-    * **Recursive Directories:** Fixed `ENOENT` errors on `/etc/sudoers.d/` for minimal systems by implementing recursive directory creation.
+### Packaging & unattended
+- **`perrisbrewery/`**: templates and maintainer scripts to brew the Debian package.
+- **`eui/`**: unattended-install images — autostart scripts that launch the installer at live login.
+- **`appimage*/`**, `releases/`: AppImage build and published artifacts.
 
-3. **Virtualization & Testing (QEMU Best Practices):**
-    * **Storage Driver:** Use `virtio-scsi` (not `virtio-blk`) when installing the produced ISO.
-    * *Why:* Krill/Calamares expects devices as `/dev/sdX`. `virtio-blk` maps them as `/dev/vdX`, causing partitioning or bootloader failures if not explicitly handled.
-    * **Binfmt:** On Debian (Trixie+), `binfmt_misc` with flag `F` allows running chroot without copying `qemu-riscv64-static` binary inside.
+## Conventions and cautions
+- Commands that touch the system require `sudo eggs …`; never suggest running the remaster on a host you cannot break — use VMs.
+- The codebase favors metaphors from the egg world (ovary, fertilization, incubation, yolk, cuckoo, dad/mom): keep the naming style when extending it.
+- `eggs produce` modes mirror oa-tools: standard (anonymized), `--clone` (keep users), crypted variants via LUKS.
+- DOCS/ holds user-facing install guides per distro; CHANGELOG.d/ the fragments merged into CHANGELOG.md.
 
-### QEMU Command Memo (Booting produced ISO)
-```bash
-qemu-system-riscv64 ... -device virtio-scsi-device,id=scsi0 -device scsi-hd,drive=hd0,bus=scsi0.0 ...
-```
-
-## Project Ecosystem
-- **[penguins-wardrobe](https://github.com/pieroproietti/penguins-wardrobe)**: A collection of scripts and assets (costumes) to transform a "naked" (minimal) CLI system into a "dressed" (full GUI) system automatically.
-- **[fresh-eggs](https://github.com/pieroproietti/fresh-eggs)**: Bootstrap scripts to install eggs on various distros.
-- **[penguins-eggs.net/repos](https://penguins-eggs.net/repos/)**: Official package repositories.
-
-## Development
-- **Build:** `pnpm run build`
-- **Test:** `pnpm test`
-- **Local Run:** `./bin/run [COMMAND]`
-
-# 🔮 The Future: oa-tools
-
-`penguins-eggs` is mature and stable (500+ ⭐). However, a **successor** is under active development.
-
-### What is oa-tools?
-
-**`oa-tools`** is a **next-generation remastering suite** designed to eventually replace `penguins-eggs`. It is not yet production-ready, but represents the architectural future.
-
-| Aspect | penguins-eggs (current) | oa-tools (future) |
-|--------|--------------------------|--------------------|
-| **Language** | TypeScript (Node.js) | **C + Go** |
-| **Architecture** | Monolithic | Split: `oa` (C engine) + `coa` (Go orchestrator) |
-| **Performance** | Good | **Better** (C for heavy lifting) |
-| **Dependencies** | npm packages | `oa` has **zero dependencies** |
-| **Maturity** | ✅ Production-ready (500⭐) | ⚠️ Early stage (8⭐) |
-
-### Why a rewrite?
-
-- **Performance:** SquashFS compression and OverlayFS management are faster in C
-- **Zero-dependency engine:** `oa` can run anywhere without Node.js
-- **Cleaner orchestration:** `coa` in Go handles concurrency and JSON plans elegantly
-- **Universality:** Even better cross-distro support
-
-### Current status of oa-tools
-
-| Feature | Status |
-|---------|--------|
-| Core engine (`oa`) | ✅ Working |
-| Orchestrator (`coa`) | ✅ Working |
-| ISO creation | ✅ Working (tested on Debian, Arch, Fedora, Manjaro) |
-| Production-ready | ❌ Not yet |
-| Migration path from eggs | ❌ Not defined |
-
-### Repository
-
-```bash
-git clone https://github.com/pieroproietti/oa-tools
-cd oa-tools
-make                     # build oa + coa
-./coa/coa remaster       # create ISO (experimental)
+## Mapping eggs → oa-tools (for migration work)
+| penguins-eggs | oa-tools |
+| :--- | :--- |
+| Ovary + ovary.d | brain.d templates + `coa` planner + `oa` (C) + `coa ell` workers |
+| incubation (Calamares) | `coa/pkg/calamares` |
+| krill (Ink) | `coa/pkg/krill` (Go, skeleton) |
+| wardrobe/tailor | `coa/pkg/tailor` |
+| distro.ts | `coa/pkg/distro` |
+| perrisbrewery | `coa/pkg/builder` + Hammers CI |
+| export | `coa export` |
+| LUKS (full/homecrypt), pacman.ts, yolk, cuckoo/PXE, dad/mom/love, eui | not yet ported |

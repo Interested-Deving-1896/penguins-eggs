@@ -13,12 +13,24 @@
   <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="CD-ROM">
 </a>
 
-It took years of work to create the penguins-eggs, and I also incurred expenses for renting the site and subscribing to Google Gemini, for the artificial intelligence that is now indispensable.
+### 🥚 oa-tools - A Next-Generation Remastering Suite
+After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: [oa-tools](https://github.com/pieroproietti/oa-tools).
+oa-tools is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
+The goal is ambitious: a truly universal approach to Linux remastering. Every distribution is different, yet they all share common roots. oa-tools already supports Alpine, Arch, Debian, Fedora, Manjaro and openSUSE — and aims to prove that a single, unified engine can handle them all.
 
 [![donate](https://img.shields.io/badge/Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/penguinseggs)
 
-# CHANGELOG
+# CHANGELOG penguins-eggs
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
+
+# v26.6.11
+**penguins-eggs** is not going away. While **oa-tools** represents the future 
+of universal Linux remastering, penguins-eggs will continue to be 
+actively maintained as the reference tool for historical and legacy 
+distributions — ensuring that the distros that shaped Linux history 
+remain remasterable for years to come.
+- update packages;
+- Added oa-tools presentation.
 
 # v26.6.2
 In this release, alongside updating the core Node dependencies and fixing the sudoers bug for custom users, I have introduced a strict package conflict with oa-tools.
