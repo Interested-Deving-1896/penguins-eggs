@@ -750,3 +750,7 @@ You can contact me by [mail](mailto://pieroproietti@gmail.com) or follow me on
 
 # Copyright and licenses
 Copyright (c) 2017, 2026 [Piero Proietti](https://penguins-eggs.net/about-me.html), dual licensed under the MIT or GPL Version 2 licenses.
+
+### blog ed AI
+* [https://penguins-eggs.net](https://penguins-eggs.net)
+* [llvm.txt](https://penguins-eggs.net/llvm.txt)
