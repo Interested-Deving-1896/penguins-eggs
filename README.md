@@ -4,28 +4,33 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-Penguins Eggs is a remastering tool that enables users to create custom Linux distributions or live ISO images based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and more. It is designed for system administrators, developers, and power users who need to create tailored operating system images for deployment or personal use.
+This project provides a remastering tool for creating custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for developers, system administrators, and advanced users who need to create tailored system images for deployment or personal use. The tool automates the process of customizing and packaging operating systems into bootable ISO files.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project is organized into several key components that facilitate its functionality as a remaster system tool. The core logic is implemented in TypeScript, leveraging the `@oclif/core` framework for CLI functionality. The `bin/run.js` file serves as the entry point for the CLI. Dependencies include libraries for user interaction (`inquirer`, `chalk`, `ink`), system information retrieval (`systeminformation`, `linux-release-info`), and file handling (`js-yaml`, `mustache`). The project also integrates with external tools and services via `axios`, `helia`, and `tftp`.
+The architecture of `penguins-eggs` consists of a CLI tool built with TypeScript and the oclif framework. It provides functionality for creating system remasters compatible with various Linux distributions. The main entry point is defined in `package.json` as `./bin/run.js`. The project uses multiple dependencies for CLI interaction, system information retrieval, and integration with external tools. Key components include:
 
-The repository includes a set of GitHub workflows for CI/CD, documentation updates, artifact mirroring, and repository synchronization. These workflows are defined in the `.github/workflows` directory. The `integrations` directory contains custom modules for extending functionality. Configuration files for tools like ESLint, Prettier, and npm are located at the root level.
+- **CLI Core**: Built with oclif, handling command parsing and execution.
+- **Integrations**: Located in the `integrations` directory, providing modular support for different Linux distributions.
+- **Workflows**: GitHub Actions workflows automate CI/CD, documentation updates, and repository synchronization.
+- **Utilities**: Scripts for AppImage creation, system detection, and other tasks.
 
-Directory structure:
+The directory structure is as follows:
+
 ```plaintext
 .
 ├── bin/                  # CLI entry point
-├── integrations/         # Custom integrations
-├── .github/workflows/    # CI/CD workflows
-├── src/                  # Source code
+├── integrations/         # Distribution-specific integrations
+├── workflows/            # GitHub Actions workflows
+├── scripts/              # Utility scripts
+├── src/                  # TypeScript source code
 ├── test/                 # Test files
+├── .github/              # GitHub configuration
 ├── CHANGELOG.md          # Changelog
 ├── LICENSE               # License file
-├── README.md             # Project documentation
-└── package.json          # Project metadata and dependencies
+└── README.md             # Project documentation
 ```
 <!-- AI:end:architecture -->
 
