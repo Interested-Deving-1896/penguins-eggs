@@ -1140,4 +1140,4 @@ the MIT or GPL Version 2 licenses.
 
 ### blog ed AI
 * [https://penguins-eggs.net](https://penguins-eggs.net)
-* [llvm.txt](https://penguins-eggs.net/llvm.txt)
+* [llms.txt](https://penguins-eggs.net/llms.txt)

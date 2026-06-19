@@ -753,4 +753,4 @@ Copyright (c) 2017, 2026 [Piero Proietti](https://penguins-eggs.net/about-me.htm
 
 ### blog ed AI
 * [https://penguins-eggs.net](https://penguins-eggs.net)
-* [llvm.txt](https://penguins-eggs.net/llvm.txt)
+* [llms.txt](https://penguins-eggs.net/llms.txt)
