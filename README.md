@@ -1,3 +1,4 @@
+See AI context: https://penguins-eggs.net/llms.txt
 # README
 
 # Penguin&#39;s eggs are generated and new birds are ready to fly...
