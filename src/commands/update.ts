@@ -1,6 +1,6 @@
 /**
  * ./src/commands/update.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -352,7 +352,7 @@ export default class Update extends Command {
 
     if (Utils.isRoot()) {
       if (Utils.isSources()) {
-        Utils.warning(`You are on penguins-eggs v. ${Utils.getPackageVersion()} from sources`)
+        Utils.warning(`You are on penguins-eggs-legacy v. ${Utils.getPackageVersion()} from sources`)
       } else if (Utils.isPackage()) {
         Utils.warning(`You are on eggs-${Utils.getPackageVersion()} installed as package`)
       }

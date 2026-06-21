@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/customize/customize-partitions.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -41,13 +41,6 @@ export async function customizePartitions() {
   if (Pacman.packageIsInstalled('f2fs-tools')) {
     partition.availableFileSystemTypes.push('f2fs')
   }
-
-  // Cannot work here
-  // if (!fs.existsSync('/sys/firmware/efi')) {
-  //   if (partition.efi) {
-  //     delete partition.efi
-  //   }
-  // }
 
   fs.writeFileSync(filePartition, yaml.dump(partition), 'utf-8')
 }

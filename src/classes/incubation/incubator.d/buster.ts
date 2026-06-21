@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/distros/buster.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -84,9 +84,6 @@ export class Buster {
     await fisherman.buildModuleRemoveuser(this.user_opt)
     await fisherman.buildCalamaresModule('sources-yolk-undo', false)
     await fisherman.buildCalamaresModule('cleanup', true)
-
-    // contextualprocess
-    // await fisherman.contextualprocess('before_bootloader_context')
 
     // shellprocess
     await fisherman.shellprocess('mkinitramfs')

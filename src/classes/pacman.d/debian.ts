@@ -43,7 +43,6 @@ export default class Debian {
     }
 
     try {
-      // await exec(`apt-get install --yes ${array2spaced(this.debs4calamares)}`, echo)
       await exec(`apt-get install --yes ${this.debs4calamares.join(' ')
         }`, echo)
     } catch {
@@ -131,9 +130,6 @@ export default class Debian {
     const cmd = `apt - cache show ${debPackage} | grep Version: `
     const stdout = shx.exec(cmd, { silent: true }).stdout.trim()
     version = stdout.slice(9)
-    // console.log('===================================')
-    // console.log('[' + version + ']')
-    // console.log('===================================')
     return version
   }
 

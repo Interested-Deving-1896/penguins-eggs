@@ -47,7 +47,6 @@ export default class Compressors {
     }
 
     const options = '-b 1M -no-duplicates -no-recovery -always-use-fragments'
-    // if (process.arch === 'ia32') { options = '-b 1M' }
 
     const comp = `xz -Xbcj ${filter} ${options}`
     return comp

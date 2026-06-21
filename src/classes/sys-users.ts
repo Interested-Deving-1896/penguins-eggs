@@ -269,7 +269,6 @@ export default class SysUsers {
 
       // 2. Fix SELinux (Solo RHEL Family)
       if (['almalinux', 'centos', 'fedora', 'rhel', 'rocky'].includes(this.distroFamily)) {
-        // await exec, echo false per non sporcare i log
         await exec(`chcon -t ${contextType} ${fullPath}`, { echo: false }).catch(() => { })
       }
     } catch (error) {

@@ -204,9 +204,7 @@ exit 0
 
   try {
     await exec(`mkdir -p "${hostHooksDirPath}"`)
-    // Scrive il file e lo rende eseguibile (mode 0o755)
     fs.writeFileSync(hostHookPath, hookContent, { encoding: 'utf-8', mode: 0o755 })
-    // console.log(hookContent)
     success(`Generated and set executable hook: ${hookScriptName}`)
   } catch (error: any) {
     Utils.error(`Failed to write hook script ${hostHookPath}: ${error.message}`)

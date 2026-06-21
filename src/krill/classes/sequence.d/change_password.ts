@@ -1,6 +1,6 @@
 /**
  * src/krill/modules/change-password.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * REFACTORED: Uses "The SysUser Master" class.
  * Changes user password directly in /etc/shadow safely (No binaries, SELinux safe).
  */

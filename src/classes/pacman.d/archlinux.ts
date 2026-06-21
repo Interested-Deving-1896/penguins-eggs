@@ -135,9 +135,6 @@ export default class Archlinux {
     const cmd = `/usr/bin/pacman -Q ${packageName} | grep Version:`
     const stdout = shx.exec(cmd, { silent: true }).stdout.trim()
     version = stdout.slice(9)
-    // console.log('===================================')
-    // console.log('[' + version + ']')
-    // console.log('===================================')
     return version
   }
 }

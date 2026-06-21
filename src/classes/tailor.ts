@@ -498,8 +498,6 @@ export default class Tailor {
             }
 
             case 'opensuse': {
-              // Quanto mi è costato
-              // await this.packagesInstall(this.materials.sequence.packages, 'packages', `zypper install --no-confirm`)
               await this.packagesInstall(this.materials.sequence.packages, 'packages', `zypper install --no-confirm`)
               break
             }

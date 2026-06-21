@@ -1,6 +1,6 @@
 /**
  * ./src/krill/modules/unpackfs.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * CLEANED: Just unpacks. SELinux is handled via autorelabel on first boot.
  */
 
@@ -24,10 +24,5 @@ export default async function unpackfs(this: Sequence): Promise<void> {
   // Usiamo echo false per evitare di intasare il log con migliaia di file
   const echoNo = Utils.setEcho(false)
 
-  // console.log('Unpacking filesystem (this may take a while)...')
-
-  // Esecuzione
   await exec(cmd, echoNo)
-
-  // console.log('Filesystem unpacked successfully.')
 }

@@ -18,36 +18,33 @@ export interface IDhcpOptions {
 export interface IDhcpd {
   discover: (pkt: IPacket) => void
   inform: (pkt: IPacket) => void
-  // constructor(opts)
   pre_init: (pkt: IPacket) => void
   proxy_request: (pkt: IPacket) => IPacket
   request: (pkt: IPacket) => void
 }
 
 export interface IProxy {
-  // constructor(type, opts)
   bind: (port: number, addr: string, cb: any) => IPacket
 }
 
 export interface IServer {
-  // constructor(type, opts)
   bind: (port: number, addr: string, cb: any) => IPacket
 }
 
 export interface IPacket {
-  chaddr: (chaddr: any) => IPacket // set chaddr
-  ciaddr: (ciaddr: string) => IPacket // set coaddr
-  flags: (flags: any) => IPacket // set flags
-  fname: (fname: any) => IPacket // set fname
-  getRequestedIPAddress: () => string // this.options[50]
-  giaddr: (giaddr: string) => IPacket // set giaddr
-  hlen: (hlen: any) => IPacket // set hlen
-  hops: (hops: any) => IPacket // set hops
-  htype: (htype: any) => IPacket // set htype
-  op: (op: any) => IPacket // set op
+  chaddr: (chaddr: any) => IPacket
+  ciaddr: (ciaddr: string) => IPacket
+  flags: (flags: any) => IPacket
+  fname: (fname: any) => IPacket
+  getRequestedIPAddress: () => string
+  giaddr: (giaddr: string) => IPacket
+  hlen: (hlen: any) => IPacket
+  hops: (hops: any) => IPacket
+  htype: (htype: any) => IPacket
+  op: (op: any) => IPacket
   options: (options: any) => IPacket
-  secs: (secs: any) => IPacket // set secs
-  siaddr: (siaddr: string) => IPacket // set siaddr
-  sname: (sname: any) => IPacket // set snme
-  xid: (xid: any) => IPacket // set xid
+  secs: (secs: any) => IPacket
+  siaddr: (siaddr: string) => IPacket
+  sname: (sname: any) => IPacket
+  xid: (xid: any) => IPacket
 }

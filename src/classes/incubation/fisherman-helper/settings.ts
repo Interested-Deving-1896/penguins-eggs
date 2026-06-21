@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/fisherman-helper/settings.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -72,10 +72,6 @@ export async function settings(src: string, dest: string, theme = 'eggs', isClon
   if (!Utils.isSystemd()) {
     execModules = execModules.filter((module) => module !== 'machineid' && module !== 'services-systemd')
   }
-
-  // if (displaymanager()) {
-  //   execModules = execModules.filter(module => module !== 'displaymanager')
-  // }
 
   if (isClone) {
     execModules = execModules.filter((module) => module !== 'users')

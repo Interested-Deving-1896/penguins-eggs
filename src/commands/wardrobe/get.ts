@@ -1,6 +1,6 @@
 /**
  * ./src/commands/wardrobe/get.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -50,9 +50,7 @@ export default class Get extends Command {
       process.exit(0)
     }
 
-    const wardrobe = basename(repo) // ~/.eggs-wardrobe
-    // git clone -b <branchname> --single-branch
-    // const result = await exec(`git clone -b devel --single-branch --depth 1 ${repo} ${await Utils.wardrobe()}`)
+    const wardrobe = basename(repo)
     const result = await exec(`git clone --single-branch --depth 1 ${repo} ${await Utils.wardrobe()}`)
     if (result.code === 0) {
       Utils.warning(`you get new wardrobe from repo: ${repo} in ${await Utils.wardrobe()}`)

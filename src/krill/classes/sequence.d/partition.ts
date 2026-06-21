@@ -1,6 +1,6 @@
 /**
  * ./src/krill/modules/partition.tsx
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -41,7 +41,6 @@ export default async function partition(this: Sequence): Promise<boolean> {
 
   switch (this.partitions.userSwapChoice) {
     case SwapChoice.File: {
-      // total mem
       break
     }
 
@@ -59,7 +58,6 @@ export default async function partition(this: Sequence): Promise<boolean> {
 
       break
     }
-    // No default
   }
 
   if (installationMode === InstallationMode.Replace) {

@@ -1,6 +1,6 @@
 /**
  * ./src/commands/produce.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -185,7 +185,6 @@ export default class Produce extends Command {
 
       const { noicon } = flags
 
-      // if clone, homecrypt, fullcrypt
       const includeRootHome = flags.includeRootHome || clone || homecrypt
 
       let { kernel } = flags

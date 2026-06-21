@@ -59,8 +59,6 @@ export default class Yolk {
       await exec(`chown _apt:root ${this.yolkDir} -R`, this.echo)
     }
 
-    // packages we need
-    // const pkgs = ['cryptsetup', 'grub-efi-amd64', 'grub-pc', 'keyutils', 'shim-signed']
     interface IYolk {
       packages: string[]
     }
@@ -119,9 +117,7 @@ export default class Yolk {
     // select for downloads only packages NOT already installed
     const toDownloads: string[] = []
     for (const depend of depends) {
-      // if (depend !== '' && !Pacman.packageIsInstalled(depend)) {
       toDownloads.push(depend)
-      // }
     }
 
     // now we go to downloads them

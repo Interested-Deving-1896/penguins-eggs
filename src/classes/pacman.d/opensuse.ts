@@ -83,7 +83,6 @@ export default class Opensuse {
     let available = false
     const cmd = `/usr/bin/zypper --not-installed-only ${packageName} | grep Package:`
     const stdout = shx.exec(cmd, { silent: true }).stdout.trim()
-    // const stdout = (await exec(cmd, Utils.setEcho(false))).data.trim()
     if (stdout.includes(packageName)) {
       available = true
     }

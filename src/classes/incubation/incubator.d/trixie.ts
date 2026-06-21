@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/distros/buster.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -86,8 +86,6 @@ export class Trixie {
     await fisherman.buildModuleRemoveuser(this.user_opt)
     await fisherman.buildCalamaresModule('sources-yolk-undo', false)
     await fisherman.buildCalamaresModule('cleanup', true)
-
-    // await fisherman.buildModule('initramfs')
 
     // libexec recreate
     await exec(`rm -rf /usr/libexec/calamares`)

@@ -1,6 +1,6 @@
 /**
  * ./src/appimage/dependency-manager.ts
- * penguins-eggs v.25.11.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.11.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -352,7 +352,6 @@ export class DependencyManager {
 function findPackage(dir: string, ext: string, pattern: string = ''): null | string {
   try {
     if (!fs.existsSync(dir)) {
-      // console.warn(`[DependencyManager] Directory non trovata: ${dir}`);
       return null
     }
 

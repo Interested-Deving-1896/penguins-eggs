@@ -72,7 +72,6 @@ export async function liveCreateStructure(this: Ovary) {
 async function tryCatch(cmd = '', verbose = false) {
   try {
     const echo = Utils.setEcho(verbose)
-    // console.log(cmd)
     await exec(cmd, echo)
   } catch (error) {
     console.log(`Error: ${error}`)

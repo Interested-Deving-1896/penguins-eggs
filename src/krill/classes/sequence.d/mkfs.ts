@@ -1,6 +1,6 @@
 /**
  * ./src/krill/modules/mkfs.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -62,13 +62,11 @@ export default async function mkfs(this: Sequence): Promise<boolean> {
         this.devices.boot.mountPoint = '/boot'
       }
 
-      // await exec(`mke2fs -Ft ${this.devices.boot.fsType} ${this.devices.boot.name} ${this.toNull}`, this.echo)
       await exec(`mkfs.${this.devices.boot.fsType} -F ${this.devices.boot.name} ${this.toNull}`, this.echo)
     }
 
     // root
     if (this.devices.root.name !== 'none') {
-      // await exec(`mke2fs -Ft ${this.devices.root.fsType} ${this.devices.root.name} ${this.toNull}`, this.echo)
       await exec(`mkfs.ext4 -F ${this.devices.root.name} ${this.toNull}`, this.echo)
     }
 

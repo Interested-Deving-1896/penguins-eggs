@@ -1,6 +1,6 @@
 /**
  * ./src/commands/krill.ts
- * penguins-eggs v.25.11.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.11.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -18,7 +18,6 @@ const agent = new https.Agent({
   rejectUnauthorized: false
 })
 import { IKrillConfig } from '../krill/interfaces/i_krill_config.js'
-// import { ILvmOptions } from '../krill/interfaces/i-krill.js'
 
 /**
  * Class Krill

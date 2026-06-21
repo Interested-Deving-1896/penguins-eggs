@@ -1,6 +1,6 @@
 /**
  * ./src/lib/get_luks-passphrase.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -15,14 +15,12 @@ export default async function getLuksPassphrase(passphrase = '', confirm = ''): 
       message: `I often use "evolution"\nChoose a passphrase to encrypt device: `,
       name: 'passphrase',
       type: 'password'
-      // validate: requireLetterAndNumber
     },
     {
       default: confirm,
       message: `Confirm your passphrase: `,
       name: 'confirm',
       type: 'password'
-      // validate: requireLetterAndNumber
     }
   ]
 

@@ -1,29 +1,19 @@
 /**
  * ./src/lib/utils.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
  */
 
-// Importiamo con alias per poter wrappare
 import { ChildProcess, spawn as nodeSpawn, spawnSync as nodeSpawnSync, SpawnOptions, SpawnSyncOptions, SpawnSyncReturns } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
 import { IExec } from '../interfaces/index.js'
 
-/**
- * Pulizia AppImage
- * Variabili d'ambiente da rimuovere per evitare conflitti quando si eseguono
- * comandi di sistema dall'interno di una AppImage.
- */
 const APPIMAGE_ENV_BLACKLIST = ['LD_LIBRARY_PATH', 'LD_PRELOAD', 'PYTHONPATH', 'PERLLIB', 'GSETTINGS_SCHEMA_DIR', 'QT_PLUGIN_PATH', 'XDG_DATA_DIRS', 'LIBRARY_PATH', 'PKG_CONFIG_PATH', 'GIO_MODULE_DIR', 'APPIMAGE', 'APPDIR']
 
-/**
- * Ottiene un ambiente pulito dalle variabili AppImage
- * @returns Oggetto process.env sanificato
- */
 function getCleanEnv(): NodeJS.ProcessEnv {
   const env = { ...process.env }
   if (process.env.APPIMAGE) {
@@ -45,23 +35,14 @@ interface ExecSyncOptions {
   stdio?: 'ignore' | 'inherit' | 'pipe'
 }
 
-/**
- * spawnSync (WRAPPER INTELLIGENTE)
- * Supporta:
- * 1. (command, args, options)
- * 2. (command, options) -> args diventa []
- * Pulisce automaticamente l'ambiente.
- */
 export function spawnSync(command: string, arg2?: SpawnSyncOptions | string[], arg3?: SpawnSyncOptions): SpawnSyncReturns<Buffer | string> {
   let args: string[] = []
   let options: SpawnSyncOptions = {}
 
-  // Rilevamento argomenti (Polimorfismo)
   if (Array.isArray(arg2)) {
     args = arg2
     options = arg3 || {}
   } else if (arg2 && typeof arg2 === 'object') {
-    // TypeScript fix: cast esplicito per evitare errori di tipo union
     options = arg2 as SpawnSyncOptions
   }
 
@@ -74,23 +55,14 @@ export function spawnSync(command: string, arg2?: SpawnSyncOptions | string[], a
   })
 }
 
-/**
- * spawn (WRAPPER INTELLIGENTE)
- * Supporta:
- * 1. (command, args, options)
- * 2. (command, options) -> args diventa []
- * Pulisce automaticamente l'ambiente.
- */
 export function spawn(command: string, arg2?: readonly string[] | SpawnOptions, arg3?: SpawnOptions): ChildProcess {
   let args: readonly string[] = []
   let options: SpawnOptions = {}
 
-  // Rilevamento argomenti (Polimorfismo)
   if (Array.isArray(arg2)) {
     args = arg2
     options = arg3 || {}
   } else if (arg2 && typeof arg2 === 'object') {
-    // TypeScript fix: cast esplicito
     options = arg2 as SpawnOptions
   }
 
@@ -103,10 +75,6 @@ export function spawn(command: string, arg2?: readonly string[] | SpawnOptions, 
   })
 }
 
-/**
- * shx
- * Sostituto drop-in per shelljs che usa API native e ambiente pulito.
- */
 export const shx = {
   chmod(mode: number | string, file: string): void {
     if (!fs.existsSync(file)) return
@@ -123,7 +91,6 @@ export const shx = {
     const src = arg3 ? arg2 : arg1
     const dest = arg3 ? arg3 : arg2
 
-    // --- GESTIONE WILDCARD (*) ---
     if (src.endsWith('*')) {
       const srcDir = path.dirname(src)
       if (!fs.existsSync(srcDir)) return
@@ -138,7 +105,6 @@ export const shx = {
 
       return
     }
-    // ----------------------------
 
     let finalDest = dest
     if (fs.existsSync(dest) && fs.statSync(dest).isDirectory()) {
@@ -159,7 +125,6 @@ export const shx = {
       stdio: options.silent ? 'pipe' : 'inherit'
     }
 
-    // Usiamo nodeSpawnSync perché calcoliamo l'env qui sopra
     const result = nodeSpawnSync(command, [], spawnOpts)
 
     return {
@@ -181,13 +146,10 @@ export const shx = {
     let options = ''
     let paths: string[] = []
 
-    // Rilevamento argomenti: ls('-R', path) vs ls(path)
     if (typeof arg1 === 'string' && arg1.startsWith('-')) {
       options = arg1
-      // Se c'è arg2 lo usa, altrimenti default a '.'
       paths = arg2 ? (Array.isArray(arg2) ? arg2 : [arg2]) : ['.']
     } else {
-      // Nessuna opzione, arg1 sono i path. Se null, default a '.'
       paths = arg1 ? (Array.isArray(arg1) ? arg1 : [arg1]) : ['.']
     }
 
@@ -200,12 +162,11 @@ export const shx = {
       const stat = fs.statSync(p)
       if (stat.isDirectory()) {
         if (recursive) {
-          // Funzione ricorsiva interna
           const walk = (dir: string) => {
             const files = fs.readdirSync(dir)
             for (const f of files) {
               const fullPath = path.join(dir, f)
-              results.push(fullPath) // Aggiunge il path completo
+              results.push(fullPath)
               if (fs.statSync(fullPath).isDirectory()) {
                 walk(fullPath)
               }
@@ -214,11 +175,9 @@ export const shx = {
 
           walk(p)
         } else {
-          // Comportamento standard: ritorna solo i nomi dei file nella cartella
           results = results.concat(fs.readdirSync(p))
         }
       } else {
-        // È un file singolo
         results.push(p)
       }
     }
@@ -256,7 +215,7 @@ export const shx = {
       const stats = fs.statSync(pathToCheck)
       if (flag === '-f') return stats.isFile()
       if (flag === '-d') return stats.isDirectory()
-      return true // -e
+      return true
     } catch {
       return false
     }
@@ -277,9 +236,6 @@ export const shx = {
   }
 }
 
-/**
- * execSync
- */
 export function execSync(command: string, options: ExecSyncOptions = {}): null | string {
   const { echo = false, ignore = false, stdio } = options
   if (echo) console.log(command)
@@ -293,15 +249,11 @@ export function execSync(command: string, options: ExecSyncOptions = {}): null |
   return result.stdout.trim()
 }
 
-/**
- * exec (Async)
- */
 export async function exec(command: string, { capture = false, echo = false, ignore = false } = {}): Promise<IExec> {
   return new Promise((resolve, reject) => {
     if (echo) console.log(command)
 
     const env = getCleanEnv()
-    // Usiamo nodeSpawn direttamente qui per coerenza
     const child = nodeSpawn(command, [], {
       env,
       shell: '/bin/bash',

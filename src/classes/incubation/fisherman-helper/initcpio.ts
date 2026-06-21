@@ -2,7 +2,7 @@ import { access } from 'fs/promises'
 
 /**
  * ./src/classes/incubation/fisherman-helper/initcpio.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT

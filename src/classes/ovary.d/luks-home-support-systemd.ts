@@ -23,8 +23,6 @@ const __dirname = dirname(__filename)
  */
 export function installHomecryptSupport(this: Ovary, squashfsRoot: string, homeImgPath: string): void {
   Utils.warning('installing encrypted home support...')
-  // console.log("squashfsRoot:", squashfsRoot)
-  // console.log("homeImgPath:", homeImgPath)
 
   // Leggi il template bash
   const templatePath = path.join(__dirname, '../../../scripts/mount-encrypted-home.sh')

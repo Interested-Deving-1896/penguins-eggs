@@ -14,7 +14,6 @@ export default async function selectKeyboardLayout(selected = ''): Promise<strin
     supported.push(l.code)
   }
 
-  // sord keyboard layouts
   supported.sort()
 
   const choices = supported.map((l) => ({ name: l, value: l }));

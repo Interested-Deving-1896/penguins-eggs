@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/distros/focal.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -88,7 +88,6 @@ export class Noble {
     await fisherman.contextualprocess('after_bootloader_context')
 
     // shellprocess
-    // const spSrc = path.resolve(__dirname, this.installer.templateModules + 'shellprocess@' + name + '.yml')
     await fisherman.shellprocess('mkinitramfs')
     await fisherman.shellprocess('aptsources')
     await fisherman.shellprocess('boot_deploy')
@@ -100,8 +99,6 @@ export class Noble {
     // libexec recreate
     await exec(`rm -rf /usr/libexec/calamares`)
     await exec(`mkdir -p /usr/libexec/calamares`)
-    // const scriptSrc=path.resolve(__dirname, '../../../../conf/distros/noble/calamares/libexec/')
-    // await exec (`cp ${scriptSrc}/*.sh /usr/libexec/calamares/`)
     await fisherman.helper('calamares-aptsources')
     await fisherman.helper('calamares-l10n-helper')
     await fisherman.helper('calamares-logs-helper') // Sostituzione __LIVE_MEDIUM_PATH__

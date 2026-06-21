@@ -1,6 +1,6 @@
 /**
  * ./src/krill/modules/bootloader-config.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -40,10 +40,6 @@ export default async function bootloaderConfig(this: Sequence): Promise<void> {
         }
       }
 
-      /**
-       * archlinux
-       */
-
       break
     }
 
@@ -63,10 +59,6 @@ export default async function bootloaderConfig(this: Sequence): Promise<void> {
           await showError(cmd, error)
         }
       }
-
-      /**
-       * debian
-       */
 
       break
     }
@@ -97,10 +89,6 @@ export default async function bootloaderConfig(this: Sequence): Promise<void> {
           await showError(cmd, error)
         }
       }
-
-      /**
-       * fedora
-       */
 
       break
     }
@@ -133,10 +121,6 @@ export default async function bootloaderConfig(this: Sequence): Promise<void> {
         }
       }
 
-      /**
-       * openmamba
-       */
-
       break
     }
 
@@ -165,10 +149,6 @@ export default async function bootloaderConfig(this: Sequence): Promise<void> {
         }
       }
 
-      /**
-       * opensuse
-       */
-
       break
     }
 
@@ -191,9 +171,7 @@ export default async function bootloaderConfig(this: Sequence): Promise<void> {
 
       break
     }
-    // No default
   }
-  // await Utils.debug(`grub packages install cmd: ${cmd}`)
 }
 
 /**

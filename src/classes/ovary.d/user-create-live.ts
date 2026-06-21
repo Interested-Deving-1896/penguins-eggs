@@ -1,6 +1,6 @@
 /**
  * src/classes/ovary.d/user-create-live.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * REFACTORED: Uses "The SysUser Master" class.
  * Creates the live user directly in the merged filesystem safely.
  */
@@ -100,7 +100,6 @@ export default async function userCreateLive(this: Ovary): Promise<void> {
       await exec(`chcon -R -t user_home_t ${homeDir}`, { echo: false }).catch(() => { })
       // Nota: .autorelabel nella root della live potrebbe rallentare il boot,
       // ma è meglio averlo se i contesti sono dubbi.
-      // await exec(`touch ${target}/.autorelabel`, { echo: false })
     } catch (error) {
       console.error('SELinux home fix warning:', error)
     }

@@ -1,6 +1,6 @@
 /**
  * ./src/commands/adapt.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -29,7 +29,6 @@ export default class Adapt extends Command {
 
     const echo = Utils.setEcho(verbose)
 
-    // const {args, flags} = this.parse(Adjust)
     Utils.titles(this.id + ' ' + this.argv)
 
     Utils.warning('Adapt monitor resolutions to the size of window in virtual machines')

@@ -1,6 +1,6 @@
 /**
  * ./src/commands/export/appimage.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -57,7 +57,6 @@ export default class ExportAppimage extends Command {
     const localPath = '$HOME/penguins-eggs'
     const remotePath = '/eggs/'
     const filter = `penguins-eggs-+([0-9.])-*.AppImage`
-    // let filter = `penguins-eggs-[0-9][0-9].[0-9]*.[0-9]*-*.AppImage`
 
     let cmd = `#!/bin/bash\n`
     cmd += `set -e\n`

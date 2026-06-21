@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/distros/openmamba.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -69,8 +69,6 @@ export class Openmamba {
     await fisherman.buildModulePackages(this.distro, this.release)
     await fisherman.buildModule('plymouthcfg')
     await fisherman.buildModuleRemoveuser(this.user_opt)
-    // await fisherman.buildModule('penmamba-postinstall')
-    // await fisherman.buildCalamaresModule('cleanup', true)
 
     /**
      * cfs: custom final steps

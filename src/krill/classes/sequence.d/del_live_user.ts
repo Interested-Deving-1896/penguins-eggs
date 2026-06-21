@@ -1,6 +1,6 @@
 /**
  * src/krill/classes/sequence.d/del_live_user.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * REFACTORED: Uses "The SysUser Master" class.
  * Removes the live user from the installed target safely (SELinux friendly).
  */

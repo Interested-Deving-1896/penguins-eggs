@@ -1,6 +1,6 @@
 /**
  * ./src/classes/families/cfs.ts (custom final steps)
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -27,7 +27,6 @@ export default class CFS {
       configRoot = '/etc/calamares/'
     }
 
-    // solo se esiste settings.conf  CALAMARES
     if (fs.existsSync(`${configRoot}settings.conf`)) {
       const settingsVar: string = fs.readFileSync(`${configRoot}settings.conf`, 'utf8')
       const settingsYaml = yaml.load(settingsVar) as ISettings

@@ -1,6 +1,6 @@
 /**
  * ./src/krill/modules/bootloader.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -53,8 +53,6 @@ export default async function bootloader(this: Sequence) {
     const target = 'i386-pc'
     cmd = `chroot ${this.installTarget} ${grubName}-install --target=${target} ${this.partitions.installationDevice} ${grubForce}`
   }
-
-  // await Utils.debug(`grub-install: ${cmd}`)
 
   await exec(cmd, this.echo)
 

@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/branding.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -21,9 +21,7 @@ import { IDistro, IRemix } from '../../interfaces/index.js'
 export function branding(remix: IRemix, distro: IDistro, theme = '', verbose = false): string {
   const { bugReportUrl, homeUrl, supportUrl } = distro
 
-  // Li ridenomino per calamares
   const productUrl = homeUrl
-  // const supportUrl= supportUrl
   const releaseNotesUrl = bugReportUrl
   const knownIssuesUrl = 'https://github.com/pieroproietti/penguins-eggs/issues/'
 

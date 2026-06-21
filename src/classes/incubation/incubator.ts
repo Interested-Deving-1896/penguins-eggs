@@ -1,6 +1,6 @@
 /**
  * ./src/classes/incubation/incubator.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -387,8 +387,6 @@ export default class Incubator {
     if (this.theme.includes('/')) {
       calamaresBranding = `${this.theme}/theme/calamares/branding`
     }
-
-    // console.log(`calamaresBranding: ${calamaresBranding}`)
     if (fs.existsSync(calamaresBranding)) {
       if (!fs.existsSync(path.join(this.installer.configRoot, `branding/${this.remix.branding}`))) {
         try {

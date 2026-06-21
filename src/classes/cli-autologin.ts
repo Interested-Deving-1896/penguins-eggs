@@ -267,7 +267,6 @@ export default class CliAutologin {
 
       // Safe Restore per SysVinit
       if (fs.existsSync(`${inittab}.bak`)) {
-        // console.log(`Restoring ${inittab} from backup...`);
         shx.cp(`${inittab}.bak`, inittab)
         shx.rm(`${inittab}.bak`)
       } else {

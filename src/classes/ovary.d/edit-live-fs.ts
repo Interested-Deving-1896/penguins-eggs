@@ -96,9 +96,6 @@ export async function editLiveFs(this: Ovary) {
   if (Utils.isSysvinit()) {
     await exec(`chroot ${workDir} dbus-uuidgen --ensure=/etc/machine-id`)
     await exec(`ln -sf /etc/machine-id ${workDir}/var/lib/dbus/machine-id`)
-    // const machineId = crypto.randomBytes(16).toString('hex')
-    // fs.writeFileSync(`${workDir}/etc/machine-id`, machineId + '\n')
-    // fs.writeFileSync(`${workDir}/var/lib/dbus/machine-id`, machineId + '\n')
   } else if (Utils.isSystemd()) {
     await exec(`touch ${workDir}/etc/machine-id`)
   }

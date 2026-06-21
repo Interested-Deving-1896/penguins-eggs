@@ -180,17 +180,6 @@ export default class Daddy {
    */
   private async applyResetOrCustomConfig(config: IEggsConfig, isCustom: boolean, fileCustom: string) {
     if (!config.snapshot_prefix) {
-      /**
-       * add fstype: btrfs, xfs, etc
-       */
-      // let fstype = '';
-      // try {
-      //   const { data } = await exec(`findmnt -n -o FSTYPE /`, { capture: true });
-      //   fstype = data.trim() === 'ext4' ? '' : `${data.trim()}-`;
-      // } catch (err) {
-      //   console.warn('Unable to detect FSTYPE:', err);
-      // }
-
       config.snapshot_prefix = Utils.snapshotPrefix(this.settings.distro.distroId, this.settings.distro.codenameId)
     }
 

@@ -1,6 +1,6 @@
 /**
  * ./src/krill/modules/remove-installer-link.ts
- * penguins-eggs v.25.7.x / ecmascript 2020
+ * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com
  * license: MIT
@@ -18,9 +18,6 @@ import Sequence from '../sequence.js'
 export default async function removeHomecryptHack(this: Sequence): Promise<void> {
   const targetRoot = this.installTarget
 
-  // -------------------------------------------------------
-  // 1. PULIZIA SYSVINIT (Critica per il boot)
-  // -------------------------------------------------------
   const inittabPath = path.join(targetRoot, 'etc/inittab')
 
   if (fs.existsSync(inittabPath)) {
@@ -33,14 +30,9 @@ export default async function removeHomecryptHack(this: Sequence): Promise<void>
     if (hackRegex.test(content)) {
       content = content.replace(hackRegex, standardLine)
       fs.writeFileSync(inittabPath, content)
-      // console.log('- Restored standard inittab entry')
     }
   }
 
-  // -------------------------------------------------------
-  // 2. PULIZIA SYSTEMD (Cosmetica / Best Practice)
-  // -------------------------------------------------------
-  // Anche se non rompe il boot, rimuoviamo i file inutili
   const systemdFiles = ['etc/systemd/system/mount-encrypted-home.service', 'etc/systemd/system/local-fs.target.wants/mount-encrypted-home.service']
 
   for (const fileRelPath of systemdFiles) {
@@ -54,9 +46,6 @@ export default async function removeHomecryptHack(this: Sequence): Promise<void>
     }
   }
 
-  // -------------------------------------------------------
-  // 3. RIMOZIONE SCRIPT COMUNI
-  // -------------------------------------------------------
   const scriptFiles = ['usr/local/bin/tty1-unlock-wrapper.sh', 'usr/local/bin/mount-encrypted-home.sh']
 
   for (const fileRelPath of scriptFiles) {

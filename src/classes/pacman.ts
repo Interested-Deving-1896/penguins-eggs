@@ -318,12 +318,6 @@ export default class Pacman {
       await exec('rm /etc/penguins-eggs.d -rf', echo)
     }
 
-    /**
-     * No remove calamares more
-     */
-    // if (fs.existsSync('/etc/calamares')) {
-    //   await exec('rm /etc/calamares -rf', echo)
-    // }
   }
 
   /**
@@ -339,7 +333,6 @@ export default class Pacman {
    */
   static distroTemplateCheck(): boolean {
     const { distroUniqueId } = this.distro()
-    // console.log(distroUniqueId)
     return fs.existsSync(`/etc/penguins-eggs.d/distros/${distroUniqueId}`)
   }
 
@@ -798,9 +791,6 @@ export default class Pacman {
       }
 
       await exec(`cp ${manpageSrc} ${manpageDest}`)
-      // if (shx.exec('which mandb', { silent: true }).stdout.trim() !== '') {
-      // await exec('mandb > /dev/null')
-      // }
     }
   }
 
