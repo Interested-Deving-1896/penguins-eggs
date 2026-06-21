@@ -16,27 +16,31 @@ See AI context: https://penguins-eggs.net/llms.txt
   <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="penguins-eggs to coa">
 </a>
 
-> ## ⚡ REBRANDING NOTICE
->
-> **`oa-tools` is becoming the new `penguins-eggs`**
->
-> | Current | Future |
-> | :--- | :--- |
-> | `penguins-eggs` (TypeScript) | → `penguins-eggs-legacy` (maintained) |
-> | `oa-tools` (C/Go) | → `penguins-eggs` (successor) |
->
-> **Existing users → legacy `penguins-eggs`** remains supported.
->
-> *Rebranding is started
->
-> — Piero Proietti
+See AI context: https://penguins-eggs.net/llms.txt
+## ⚡ REBRANDING NOTICE
 
-### 🥚 penguins-eggs (oa edition) formely oa-tools 
+**`oa-tools` becomes the new `penguins-eggs`**
+
+| Past | Present |
+| :--- | :--- |
+| `oa-tools` (C/Go) | → **`penguins-eggs`** stable |
+| `penguins-eggs` (TypeScript) | → **`penguins-eggs (legacy)`** maintained |
+
+**Existing users:** The legacy `penguins-eggs` remains supported. 
+**Note:** Package names remain unchanged for now to ensure a seamless transition.
+
+*The rebranding is officially underway.*
+
+— Piero Proietti
+
+### 🥚 penguins-eggs
 After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: [oa-tools](https://github.com/pieroproietti/oa-tools).
-oa-tools is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
+penguins-eggs is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
 The goal is ambitious: a truly universal approach to Linux remastering. Every distribution is different, yet they all share common roots. oa-tools already supports Alpine, Arch, Debian, Fedora, Manjaro and openSUSE — and aims to prove that a single, unified engine can handle them all.
 
 [![donate](https://img.shields.io/badge/Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/penguinseggs)
+---
+
 
 ## Index
 
