@@ -20,7 +20,7 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 
 [![donate](https://img.shields.io/badge/Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/penguinseggs)
 
-# CHANGELOG penguins-eggs
+# CHANGELOG penguins-eggs (legacy edition)
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
 
 # v26.6.11

@@ -65,7 +65,7 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 - [FAQ](https://penguins-eggs.net/docs/faq)
 - [Changelog](https://github.com/pieroproietti/penguins-eggs/blob/master/CHANGELOG.md#changelog)
 
-# penguins-eggs
+# penguins-eggs (legacy edition)
 
 **penguins-eggs** (or simply `eggs`) is a console tool that allows you to
 remaster your system and redistribute it as live images on USB sticks or via
