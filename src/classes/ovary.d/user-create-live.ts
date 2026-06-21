@@ -1,6 +1,6 @@
 /**
  * src/classes/ovary.d/user-create-live.ts
- * penguins-eggs-legacy v.25.7.x / ecmascript 2020
+ * penguins-eggs v.25.7.x / ecmascript 2020
  * REFACTORED: Uses "The SysUser Master" class.
  * Creates the live user directly in the merged filesystem safely.
  */
