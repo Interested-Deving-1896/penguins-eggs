@@ -4,33 +4,34 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-This project provides a remastering tool for creating custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for developers, system administrators, and advanced users who need to create tailored system images for deployment or personal use. The tool automates the process of customizing and packaging operating systems into bootable ISO files.
+Penguins Eggs is a remastering tool that allows users to create custom Linux distributions or live ISO images based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and more. It is designed for system administrators, developers, and enthusiasts who need to customize and redistribute operating system images for specific use cases.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The architecture of `penguins-eggs` consists of a CLI tool built with TypeScript and the oclif framework. It provides functionality for creating system remasters compatible with various Linux distributions. The main entry point is defined in `package.json` as `./bin/run.js`. The project uses multiple dependencies for CLI interaction, system information retrieval, and integration with external tools. Key components include:
+The project is structured as a CLI tool implemented in TypeScript, designed for creating system remasters across various Linux distributions. It uses the [oclif](https://oclif.io/) framework for command-line interface functionality and integrates with multiple libraries for system information, templating, and network operations. Key components include:
 
-- **CLI Core**: Built with oclif, handling command parsing and execution.
-- **Integrations**: Located in the `integrations` directory, providing modular support for different Linux distributions.
-- **Workflows**: GitHub Actions workflows automate CI/CD, documentation updates, and repository synchronization.
-- **Utilities**: Scripts for AppImage creation, system detection, and other tasks.
+1. **CLI Commands**: Defined in the `bin/run.js` file, leveraging `@oclif/core` for command parsing and execution.
+2. **Integrations**: Custom integrations are located in the `integrations` directory and are included as a local dependency.
+3. **Workflows**: GitHub Actions workflows automate tasks like CI/CD, repository synchronization, and artifact management.
+4. **Dependencies**: The project uses libraries such as `express` for HTTP handling, `js-yaml` for configuration parsing, and `systeminformation` for system-level data.
 
 The directory structure is as follows:
 
 ```plaintext
 .
-├── bin/                  # CLI entry point
-├── integrations/         # Distribution-specific integrations
+├── bin/                  # Entry point for CLI commands
+├── integrations/         # Custom integrations
 ├── workflows/            # GitHub Actions workflows
-├── scripts/              # Utility scripts
-├── src/                  # TypeScript source code
+├── src/                  # Source code
 ├── test/                 # Test files
 ├── .github/              # GitHub configuration
+├── .vscode/              # VSCode settings
 ├── CHANGELOG.md          # Changelog
 ├── LICENSE               # License file
-└── README.md             # Project documentation
+├── README.md             # Project documentation
+└── package.json          # Project metadata and dependencies
 ```
 <!-- AI:end:architecture -->
 
@@ -80,16 +81,16 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- **ci.yml**: Runs unit tests and linting for the project. No secrets required.
-- **codeql.yml**: Performs static code analysis using GitHub's CodeQL. No secrets required.
-- **release.yml**: Automates the release process, including version tagging and publishing. Requires `NPM_TOKEN` for publishing to npm.
-- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` for authentication.
-- **iso-test.yml**: Tests ISO builds for compatibility and functionality. No secrets required.
-- **docs.yml**: Builds and deploys project documentation. Requires `DOCS_DEPLOY_KEY` for deployment.
-- **sync-eggs-docs-to-book.yml**: Synchronizes documentation with an external book repository. Requires `SYNC_TOKEN`.
-- **mirror-artifacts.yml**: Mirrors build artifacts to external storage. Requires `ARTIFACT_STORAGE_KEY`.
-- **rate-limit-status.yml**: Monitors API rate limits and logs status. No secrets required.
-- **rotate-token.yml**: Rotates API tokens for security. Requires `ADMIN_TOKEN` for token management.
+- **ci.yml**: Runs the main CI pipeline, including linting, testing, and build tasks. No secrets required.
+- **codeql.yml**: Performs CodeQL analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
+- **release.yml**: Automates the release process, including version tagging and publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
+- **iso-test.yml**: Tests ISO builds for supported distributions. No secrets required.
+- **mirror.yaml**: Mirrors the repository to other platforms. Requires `MIRROR_GITLAB_TOKEN` secret.
+- **sync-eggs-docs-to-book.yml**: Syncs documentation to the book repository. Requires `GH_TOKEN` secret.
+- **mirror-releases.yml**: Mirrors release assets to external storage. Requires `STORAGE_ACCESS_KEY` and `STORAGE_SECRET_KEY` secrets.
+- **frogbot-scan.yml**: Runs dependency vulnerability scans using Frogbot. Requires `JFROG_API_KEY` secret.
+- **rate-limit-status.yml**: Monitors and reports GitHub API rate limits. No secrets required.
+- **rotate-token.yml**: Rotates API tokens for security. Requires `ADMIN_TOKEN` secret.
 <!-- AI:end:ci -->
 
 ## Mirror chain
