@@ -95,12 +95,7 @@ export async function xorrisoCommand(this: Ovary, clone = false, homecrypt = fal
     let luksPartitionParam = ''
     if (fullcrypt) {
       const luksImagePath = path.join(this.settings.iso_work, 'live', this.luksMappedName)
-      if (fs.existsSync(luksImagePath)) {
-        luksPartitionParam = `-append_partition 3 0x80 ${luksImagePath}`
-      } else {
-        Utils.warning(`Errore: impossibile creare l'ISO criptata, file non trovato: ${luksImagePath}`)
-        process.exit()
-      }
+      luksPartitionParam = `-append_partition 3 0x80 ${luksImagePath}`
     }
 
     // Il comando ora usa x86_boot_params che sarà vuoto su RISC-V

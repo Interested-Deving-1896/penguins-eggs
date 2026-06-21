@@ -391,7 +391,6 @@ jobs:
       - name: 2. Install Build Dependencies (with jq)
         run: |
           zypper --non-interactive install rpm-build curl gpg2 rsync nodejs-devel jq
-          zypper modifyrepo --enable repo-source
           zypper --non-interactive refresh
           npm install -g pnpm
 
