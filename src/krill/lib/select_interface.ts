@@ -4,9 +4,9 @@ export default async function selectInterface(iface = 'eth0', ifaces: string[]):
   const choices = ifaces.map((i) => ({ name: i, value: i }));
 
   const answer = await select({
-    message: 'Select interface: ',
     choices,
     default: iface,
+    message: 'Select interface: ',
   });
 
   return answer;

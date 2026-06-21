@@ -260,10 +260,12 @@ export async function makeEfi(this: Ovary, theme = 'eggs') {
     Utils.error(`Error creating ${efiImg}`)
     process.exit(1)
   }
+
   if ((await exec(`/sbin/mkdosfs -F 16 ${efiImg}`, this.echo)).code !== 0) {
     Utils.error(`Error formatting ${efiImg}`)
     process.exit(1)
   }
+
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   // Use mtools to populate efi.img without mounting
@@ -272,6 +274,7 @@ export async function makeEfi(this: Ovary, theme = 'eggs') {
     Utils.error(`Error creating ::/EFI on ${efiImg}`)
     process.exit(1)
   }
+
   await exec(`mmd -i ${efiImg} ::/EFI/boot`, this.echo)
   await exec(`mmd -i ${efiImg} ::/boot`, this.echo)
   await exec(`mmd -i ${efiImg} ::/boot/grub`, this.echo)
@@ -409,15 +412,15 @@ export async function makeEfi(this: Ovary, theme = 'eggs') {
     // Se non trova nulla, mantiene l'originale kernelName come fallback
   }
 
-  let devicetree = ''
+  const devicetree = ''
 
   const view = {
+    devicetree,
     fullname,
     initrdImg: `/live/${path.basename(this.initrd)}`,
     kernel: this.kernel,
     kernel_parameters,
-    vmlinuz: `/live/${kernelName}`, // Usiamo il nome verificato
-    devicetree: devicetree
+    vmlinuz: `/live/${kernelName}` // Usiamo il nome verificato
   }
 
   let cfgMainText = ''

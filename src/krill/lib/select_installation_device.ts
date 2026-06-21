@@ -22,8 +22,8 @@ export default async function selectInstallationDevice(): Promise<string> {
   })
 
   const answer = await select({
-    message: 'Select the installation disk: ',
     choices: driveList,
+    message: 'Select the installation disk: ',
   });
 
   return answer;

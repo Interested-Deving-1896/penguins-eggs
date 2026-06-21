@@ -387,6 +387,7 @@ export default class Incubator {
     if (this.theme.includes('/')) {
       calamaresBranding = `${this.theme}/theme/calamares/branding`
     }
+
     if (fs.existsSync(calamaresBranding)) {
       if (!fs.existsSync(path.join(this.installer.configRoot, `branding/${this.remix.branding}`))) {
         try {

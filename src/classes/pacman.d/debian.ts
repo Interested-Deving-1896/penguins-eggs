@@ -21,17 +21,6 @@ export default class Debian {
   static debs4calamares = ['calamares', 'qml-module-qtquick2', 'qml-module-qtquick-controls']
 
   /**
-   * Così è poesia! 
-   * Aggiunge 'language-selector-common' se la distro è Ubuntu
-  */
-  static {
-    const currentDistro = new Distro()
-    if (currentDistro.distroLike === 'Ubuntu') {
-      Debian.debs4calamares.push('language-selector-common')
-    }
-  }
-
-  /**
    * Debian: calamaresInstall
    */
   static async calamaresInstall(verbose = true): Promise<void> {
@@ -159,7 +148,19 @@ export default class Debian {
     if (stdout === 'Status: install ok installed') {
       installed = true
     }
+
     return installed
+  }
+
+  /**
+   * Così è poesia! 
+   * Aggiunge 'language-selector-common' se la distro è Ubuntu
+   */
+  static {
+    const currentDistro = new Distro()
+    if (currentDistro.distroLike === 'Ubuntu') {
+      Debian.debs4calamares.push('language-selector-common')
+    }
   }
 }
 

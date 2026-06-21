@@ -17,9 +17,9 @@ export default async function selectKeyboardVariant(keyboardLayout = ''): Promis
   const choices = supported.map((v) => ({ name: v, value: v }));
 
   const answer = await select({
-    message: 'Select variant: ',
     choices,
     default: '',
+    message: 'Select variant: ',
   });
 
   return answer;

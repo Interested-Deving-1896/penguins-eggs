@@ -1,7 +1,7 @@
 // ./src/krill/sequence.d/spacemit.d/partition.ts
 import path from 'path'
-import Utils from '../../../../classes/utils.js'
 
+import Utils from '../../../../classes/utils.js'
 import { exec } from '../../../../lib/utils.js'
 import Sequence from '../../sequence.js'
 

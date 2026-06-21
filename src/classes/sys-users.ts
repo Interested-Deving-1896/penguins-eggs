@@ -125,6 +125,14 @@ export default class SysUsers {
   // =========================================================================
 
   /**
+   * Verifica l'esistenza di un gruppo
+   */
+  public groupExists(groupName: string): boolean {
+    return Boolean(this.group.find((g) => g.groupName === groupName))
+  }
+
+
+  /**
    * Carica tutti i file di configurazione in memoria
    */
   public load() {
@@ -135,14 +143,6 @@ export default class SysUsers {
     this.gshadowLines = this.readFile('etc/gshadow')
     this.subuidLines = this.readFile('etc/subuid')
     this.subgidLines = this.readFile('etc/subgid')
-  }
-
-
-  /**
-   * Verifica l'esistenza di un gruppo
-   */
-  public groupExists(groupName: string): boolean {
-    return !!this.group.find((g) => g.groupName === groupName)
   }
 
   /**

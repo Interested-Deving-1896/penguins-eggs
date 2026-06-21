@@ -13,8 +13,8 @@ export default async function selectReplacedPartition(): Promise<string> {
   })
 
   const answer = await select({
-    message: 'Select the installation partition: ',
     choices: partitionsList,
+    message: 'Select the installation partition: ',
   });
 
   return answer;

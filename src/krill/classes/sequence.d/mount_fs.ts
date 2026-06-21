@@ -9,6 +9,7 @@
 
 import fs from 'node:fs'
 import os from 'node:os'
+
 import { exec } from '../../../lib/utils.js'
 import { SwapChoice } from '../krill_enums.js'
 import Sequence from '../sequence.js'
@@ -25,6 +26,7 @@ export async function mountFs(this: Sequence): Promise<boolean> {
   if ((await exec(`mountpoint -q ${this.installTarget}${this.devices.root.mountPoint}`)).code !== 0) {
     throw new Error(`[Krill ENOSPC Prevention] Failed to mount ${this.devices.root.name} on ${this.installTarget}${this.devices.root.mountPoint}`)
   }
+
   await exec(`tune2fs -c 0 -i 0 ${this.devices.root.name} ${this.toNull}`, this.echo)
   await exec(`rm -rf ${this.installTarget}/lost+found ${this.toNull}`, this.echo)
 
@@ -34,6 +36,7 @@ export async function mountFs(this: Sequence): Promise<boolean> {
     if ((await exec(`mountpoint -q ${this.installTarget}${this.devices.boot.mountPoint}`)).code !== 0) {
       throw new Error(`Failed to mount boot partition ${this.devices.boot.name}`)
     }
+
     await exec(`tune2fs -c 0 -i 0 ${this.devices.boot.name} ${this.toNull}`, this.echo)
   }
 
@@ -44,6 +47,7 @@ export async function mountFs(this: Sequence): Promise<boolean> {
       if ((await exec(`mountpoint -q ${this.installTarget}${this.devices.data.mountPoint}`)).code !== 0) {
         throw new Error(`Failed to mount data partition ${this.devices.data.name}`)
       }
+
       await exec(`tune2fs -c 0 -i 0 ${this.devices.data.name} ${this.toNull}`, this.echo)
     }
 

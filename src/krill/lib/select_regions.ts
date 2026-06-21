@@ -6,9 +6,9 @@ export default async function selectRegions(selected = ''): Promise<string> {
   );
 
   const answer = await select({
-    message: 'Select your region: ',
     choices,
     default: selected,
+    message: 'Select your region: ',
   });
 
   return answer;

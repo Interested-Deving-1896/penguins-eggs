@@ -6,8 +6,8 @@
  * license: MIT
  */
 
-import { Command, Flags } from '@oclif/core'
 import { select } from '@inquirer/prompts'
+import { Command, Flags } from '@oclif/core'
 import axios from 'axios'
 import https from 'node:https'
 
@@ -44,8 +44,8 @@ export default class Update extends Command {
     ]
 
     const selected = await select({
-      message: 'Select update method',
       choices,
+      message: 'Select update method',
     })
 
     if (selected === 'Abort') {

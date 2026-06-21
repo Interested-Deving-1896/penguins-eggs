@@ -20,6 +20,7 @@
  *
  */
 import path from 'node:path'
+
 import Distro from '../../classes/distro.js'
 import Pacman from '../../classes/pacman.js'
 import { IInstaller, IRemix } from '../../interfaces/index.js'

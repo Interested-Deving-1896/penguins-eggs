@@ -16,6 +16,8 @@ import os from 'node:os'
 
 import { shx } from '../lib/utils.js'
 const require = createRequire(import.meta.url)
+import path from 'node:path'
+
 const pjson = require('../../package.json')
 // interfaces
 import { IApp, IDistro, IRemix, IWorkDir } from '../interfaces/index.js'
@@ -25,7 +27,6 @@ import Incubator from './incubation/incubator.js'
 import Pacman from './pacman.js'
 // classes
 import Utils from './utils.js'
-import path from 'node:path'
 
 const config_file = '/etc/penguins-eggs.d/eggs.yaml' as string
 
@@ -36,10 +37,8 @@ export default class Settings {
   app = {} as IApp
   config = {} as IEggsConfig
   distro = {} as IDistro
-
-  efi_work = ''
-
-  i686 = false
+efi_work = ''
+i686 = false
   incubator = {} as Incubator
   initrd_image = ''
   initrdImg = ''

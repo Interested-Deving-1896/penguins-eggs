@@ -101,12 +101,12 @@ export default class Daddy {
       });
 
       const answers = {
-        snapshot_prefix,
-        snapshot_basename,
-        user_opt,
-        user_opt_passwd,
+        compression,
         root_passwd,
-        compression
+        snapshot_basename,
+        snapshot_prefix,
+        user_opt,
+        user_opt_passwd
       };
 
       return { ...config, ...answers }

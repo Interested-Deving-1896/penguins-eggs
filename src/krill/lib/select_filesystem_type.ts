@@ -21,9 +21,9 @@ export default async function selectFileSystemType(): Promise<string> {
   partitions.defaultFileSystemType = 'ext4'
 
   const answer = await select({
-    message: 'Select file system type',
     choices,
     default: partitions.defaultFileSystemType,
+    message: 'Select file system type',
   });
 
   return answer;

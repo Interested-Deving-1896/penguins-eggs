@@ -7,8 +7,8 @@ export default async function selectInstallationMode(): Promise<InstallationMode
   const choices = modes.map((mode) => ({ name: mode, value: mode }));
 
   const answer = await select({
-    message: 'Select the installation mode: ',
     choices,
+    message: 'Select the installation mode: ',
   });
 
   return answer as InstallationMode;

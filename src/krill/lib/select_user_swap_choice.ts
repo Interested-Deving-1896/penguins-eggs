@@ -17,9 +17,9 @@ export default async function selectUserSwapChoice(initialSwapChoice: SwapChoice
   const choices = partitions.userSwapChoices.map((c) => ({ name: c, value: c }));
 
   const answer = await select({
-    message: 'Select the swap choice',
     choices,
     default: partitions.initialSwapChoice,
+    message: 'Select the swap choice',
   });
 
   return answer as SwapChoice;

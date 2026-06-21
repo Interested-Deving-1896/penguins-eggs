@@ -614,13 +614,6 @@
           "multiple": false,
           "type": "option"
         },
-        "fdt": {
-          "description": "path to Flattened Device Tree (DTB) file or directory",
-          "name": "fdt",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
         "clone": {
           "char": "c",
           "description": "clone (uncrypted)",
@@ -633,6 +626,13 @@
           "name": "excludes",
           "hasDynamicHelp": false,
           "multiple": true,
+          "type": "option"
+        },
+        "fdt": {
+          "description": "path to Flattened Device Tree (DTB) file or directory",
+          "name": "fdt",
+          "hasDynamicHelp": false,
+          "multiple": false,
           "type": "option"
         },
         "fullcrypt": {

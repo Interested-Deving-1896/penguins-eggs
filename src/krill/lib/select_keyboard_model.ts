@@ -18,9 +18,9 @@ export default async function selectKeyboardModel(selected = ''): Promise<string
   const choices = supported.map((m) => ({ name: m, value: m }));
 
   const answer = await select({
-    message: 'Select model: ',
     choices,
     default: selected,
+    message: 'Select model: ',
   });
 
   return answer;

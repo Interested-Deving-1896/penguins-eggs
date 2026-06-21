@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+
 import Settings from '../src/classes/settings.js';
 
 describe('Settings Paths', () => {

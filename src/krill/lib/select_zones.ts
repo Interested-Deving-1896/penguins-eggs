@@ -530,8 +530,8 @@ export default async function selectRegions(region = ''): Promise<string> {
   const choices = zone.map((z) => ({ name: z, value: z }));
 
   const answer = await select({
-    message: 'Please select the city or region corresponding to your time zone: ',
     choices,
+    message: 'Please select the city or region corresponding to your time zone: ',
   });
 
   return answer;

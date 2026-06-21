@@ -87,6 +87,7 @@ export async function xorrisoCommand(this: Ovary, clone = false, homecrypt = fal
       if (legacyBoot) {
         uefi_elToritoAltBoot = '-eltorito-alt-boot'
       }
+
       uefi_e = '-e boot/grub/efi.img'
       uefi_isohybridGptBasdat = '-isohybrid-gpt-basdat'
       uefi_noEmulBoot = '-no-emul-boot'

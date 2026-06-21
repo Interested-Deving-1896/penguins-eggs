@@ -7,9 +7,9 @@
  */
 
 export interface IWorkDir {
+  bin: string // default: /home/eggs/mnt/bin/
   lowerdir: string // default: ${bin}.lowerdir
   merged: string // default: ${bin}.merged
-  bin: string // default: /home/eggs/mnt/bin/
   upperdir: string // default: ${bin}.upperdir
   workdir: string // default: ${bin}.workdir
 }

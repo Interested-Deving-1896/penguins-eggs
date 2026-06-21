@@ -10,9 +10,9 @@ export default async function selectLanguages(selectedLanguage = ''): Promise<st
   const choices = supported.map((l: any) => ({ name: l, value: l }));
 
   const answer = await select({
-    message: 'Select language: ',
     choices,
     default: selected,
+    message: 'Select language: ',
   });
 
   return answer;

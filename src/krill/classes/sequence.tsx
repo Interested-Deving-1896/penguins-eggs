@@ -12,9 +12,9 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 import cliCursor from 'cli-cursor'
 import fs from 'fs'
-import os from 'os'
 import { Box, render, RenderOptions, Text } from 'ink'
 import yaml from 'js-yaml'
+import os from 'os'
 import React from 'react'
 
 import CliAutologin from '../../classes/cli-autologin.js'
@@ -58,9 +58,9 @@ import uefiStandard from './sequence.d/partition.d/uefi_standard.js'
 import partition from './sequence.d/partition.js'
 import removeHomecryptHack from './sequence.d/remove-homecrypt-hack.js'
 import removeInstallerLink from './sequence.d/remove_installer_link.js'
+import { Spacemit } from './sequence.d/spacemit.d/index.js'
 import umount from './sequence.d/umount.js'
 import unpackfs from './sequence.d/unpackfs.js'
-import { Spacemit } from './sequence.d/spacemit.d/index.js'
 
 
 /**

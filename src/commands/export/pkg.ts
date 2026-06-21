@@ -114,6 +114,7 @@ export default class ExportPkg extends Command {
         if (this.all) {
           arch = '*'
         }
+
         filter = `penguins-eggs_+([0-9.])-?_${arch}.deb`
         break
       }

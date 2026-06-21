@@ -133,12 +133,12 @@ export default class Utils {
    static async customConfirm(msg = 'Select yes to continue... '): Promise<boolean> {
       const { select } = await import('@inquirer/prompts');
       const answer = await select({
-         message: msg,
          choices: [
             { name: 'No', value: 'No' },
             { name: 'Yes', value: 'Yes' },
          ],
          default: 'No',
+         message: msg,
       });
       console.log('User selected:', answer); // Debug logging
       return answer === 'Yes';
@@ -151,13 +151,13 @@ export default class Utils {
    static async customConfirmAbort(msg = 'Confirm'): Promise<any> {
       const { select } = await import('@inquirer/prompts');
       const answer = await select({
-         message: msg,
          choices: [
             { name: 'No', value: 'No' },
             { name: 'Yes', value: 'Yes' },
             { name: 'Abort', value: 'Abort' },
          ],
          default: 'Yes',
+         message: msg,
       });
       return JSON.stringify({ confirm: answer });
    }
@@ -170,12 +170,12 @@ export default class Utils {
    static async customConfirmCompanion(msg = 'Select yes to continue... '): Promise<any> {
       const { select } = await import('@inquirer/prompts');
       const answer = await select({
-         message: msg,
          choices: [
             { name: 'No', value: 'No' },
             { name: 'Yes', value: 'Yes' },
          ],
          default: 'No',
+         message: msg,
       });
       return JSON.stringify({ confirm: answer });
    }

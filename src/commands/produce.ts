@@ -35,9 +35,9 @@ export default class Produce extends Command {
     addons: Flags.string({ description: 'addons to be used: adapt, pve, rsupport', multiple: true }),
     basename: Flags.string({ description: 'basename' }),
 
-    fdt: Flags.string({ description: 'path to Flattened Device Tree (DTB) file or directory' }),
     clone: Flags.boolean({ char: 'c', description: 'clone (uncrypted)' }),
     excludes: Flags.string({ description: 'use: static, homes, home', multiple: true }),
+    fdt: Flags.string({ description: 'path to Flattened Device Tree (DTB) file or directory' }),
     fullcrypt: Flags.boolean({ char: 'f', description: 'clone crypted full' }),
     help: Flags.help({ char: 'h' }),
     hidden: Flags.boolean({ char: 'H', description: 'stealth mode' }),

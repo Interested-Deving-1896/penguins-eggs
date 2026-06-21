@@ -12,11 +12,11 @@ import { fileURLToPath } from 'node:url'
 
 import { IAddons } from '../../interfaces/index.js'
 import { exec } from '../../lib/utils.js'
-import Xdg from '../xdg.js'
 // classes
 import Ovary from '../ovary.js'
 import Pacman from '../pacman.js'
 import PveLive from '../pve-live.js'
+import Xdg from '../xdg.js'
 
 // Setup __dirname per moduli ESM
 const __filename = fileURLToPath(import.meta.url)

@@ -6,6 +6,7 @@
  * license: MIT
  */
 
+import fs from 'node:fs'
 // packages
 import path from 'node:path'
 
@@ -14,7 +15,6 @@ import Distro from '../distro.js'
 import Ovary from '../ovary.js'
 import Settings from '../settings.js'
 import Utils from '../utils.js'
-import fs from 'node:fs'
 
 // _dirname
 const __dirname = path.dirname(new URL(import.meta.url).pathname)

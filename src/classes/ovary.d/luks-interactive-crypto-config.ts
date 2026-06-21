@@ -7,6 +7,7 @@
  */
 
 import { select } from '@inquirer/prompts'
+
 import Ovary from '../ovary.js'
 import Utils from '../utils.js'
 
@@ -71,12 +72,12 @@ export async function interactiveCryptoConfig(this: Ovary): Promise<CryptoConfig
 
   // Chiedi se usare la configurazione LUKS di default
   const useDefault = await select({
-    message: 'Use default LUKS configuration?',
     choices: [
       { name: 'Yes', value: true },
       { name: 'No', value: false }
     ],
-    default: true
+    default: true,
+    message: 'Use default LUKS configuration?'
   })
 
   if (useDefault) {
@@ -86,43 +87,43 @@ export async function interactiveCryptoConfig(this: Ovary): Promise<CryptoConfig
 
   // Se l'utente sceglie "No", procediamo con le domande
   const cipher = await select<Cipher>({
-    message: 'Choose the cipher algorithm:',
     choices: CIPHER_OPTIONS.map(c => ({ name: c, value: c })),
-    default: 'aes-xts-plain64'
+    default: 'aes-xts-plain64',
+    message: 'Choose the cipher algorithm:'
   })
 
   const keySize = await select<KeySize>({
-    message: 'Choose the key size:',
     choices: KEY_SIZE_OPTIONS.map((size) => ({
       name: `${size} bits ${size === 512 ? '(Standard for AES-256/XTS)' : '(Standard for AES-128/XTS)'}`,
       value: size
     })),
-    default: 512
+    default: 512,
+    message: 'Choose the key size:'
   })
 
   const hash = await select<Hash>({
-    message: 'Choose the hash algorithm:',
     choices: HASH_OPTIONS.map(h => ({ name: h, value: h })),
-    default: 'sha256'
+    default: 'sha256',
+    message: 'Choose the hash algorithm:'
   })
 
   const sectorSize = await select<SectorSize>({
-    message: 'Choose the sector size:',
     choices: SECTOR_SIZE_OPTIONS.map((size) => ({
       name: `${size} bytes ${size === 4096 ? '(Modern SSDs/NVMe)' : '(Legacy default/Loop devices'}`,
       value: size
     })),
-    default: 512
+    default: 512,
+    message: 'Choose the sector size:'
   })
 
   const pbkdf = await select<ArgonPbkdf | Pbkdf2Pbkdf>({
-    message: 'Choose the key derivation function (PBKDF):',
     choices: [
       { name: 'argon2id (Recommended, LUKS2 default)', value: 'argon2id' },
       { name: 'argon2i', value: 'argon2i' },
       { name: 'pbkdf2 (LUKS1 standard)', value: 'pbkdf2' }
     ],
-    default: 'argon2id'
+    default: 'argon2id',
+    message: 'Choose the key derivation function (PBKDF):'
   })
 
   let argonMemory: ArgonMemory = 524_288
@@ -131,30 +132,30 @@ export async function interactiveCryptoConfig(this: Ovary): Promise<CryptoConfig
 
   if (pbkdf === 'argon2id' || pbkdf === 'argon2i') {
     argonMemory = await select<ArgonMemory>({
-      message: 'Choose the memory cost for Argon2 (KiB):',
       choices: ARGON_MEMORY_OPTIONS.map((mem) => ({
         name: `${mem / 1024 / 1024} GiB (${mem} KiB)`,
         value: mem
       })),
-      default: 524_288
+      default: 524_288,
+      message: 'Choose the memory cost for Argon2 (KiB):'
     })
 
     argonParallel = await select<ArgonParallel>({
-      message: 'Choose parallel threads for Argon2:',
       choices: ARGON_PARALLEL_OPTIONS.map((threads) => ({
         name: `${threads} threads`,
         value: threads
       })),
-      default: 4
+      default: 4,
+      message: 'Choose parallel threads for Argon2:'
     })
   } else if (pbkdf === 'pbkdf2') {
     iterTime = await select<Pbkdf2IterTime>({
-      message: 'Choose the iteration time for PBKDF2 (ms):',
       choices: PBKDF2_ITER_TIME_OPTIONS.map((time) => ({
         name: `${time / 1000} seconds (${time} ms)`,
         value: time
       })),
-      default: 2000
+      default: 2000,
+      message: 'Choose the iteration time for PBKDF2 (ms):'
     })
   }
 
@@ -165,10 +166,10 @@ export async function interactiveCryptoConfig(this: Ovary): Promise<CryptoConfig
     finalConfig = {
       cipher,
       hash,
+      'iter-time (ms)': iterTime,
       'key-size': keySize,
       pbkdf: 'pbkdf2',
-      'sector-size': sectorSize,
-      'iter-time (ms)': iterTime
+      'sector-size': sectorSize
     }
   } else {
     finalConfig = {
@@ -176,9 +177,9 @@ export async function interactiveCryptoConfig(this: Ovary): Promise<CryptoConfig
       hash,
       'key-size': keySize,
       pbkdf, // argon2i or argon2id
-      'sector-size': sectorSize,
       'pbkdf-memory (KiB)': argonMemory,
-      'pbkdf-parallel (threads)': argonParallel
+      'pbkdf-parallel (threads)': argonParallel,
+      'sector-size': sectorSize
     }
   }
 

@@ -59,8 +59,7 @@ export function getStandardExclusions(ovary: Ovary, includeRootHome = false): st
    * secure
    */
   if (!includeRootHome) {
-    excludes.push(`root/*`)
-    excludes.push(`root/.*`)
+    excludes.push(`root/*`, `root/.*`)
   }
 
   excludes.push(ovary.settings.config.snapshot_dir /* .absolutePath() */)

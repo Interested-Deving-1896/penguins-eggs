@@ -4,11 +4,12 @@
  * Refactored for clarity and Live-on-Raw strategy
  */
 
-import path from 'node:path'
+import Mustache from 'mustache'
 import fs from 'node:fs'
+import path from 'node:path'
+
 import Ovary from '../ovary.js'
 import Utils from '../utils.js'
-import Mustache from 'mustache'
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
@@ -18,14 +19,19 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname)
 export async function makeImg(this: Ovary, includeRootHome = false): Promise<string> {
     if (process.arch === 'riscv64') {
         return await makeImgRiscv64.call(this, includeRootHome)
-    } else if (process.arch === 'x64') {
+    }
+
+ if (process.arch === 'x64') {
         return await makeImgAmd64.call(this, includeRootHome)
-    } else if (process.arch === 'arm64') {
+    }
+
+ if (process.arch === 'arm64') {
         return await makeImgArm64.call(this, includeRootHome)
-    } else {
+    }
+ 
         Utils.error(`Architecture ${process.arch} not supported`)
         process.exit(1)
-    }
+    
 }
 
 /**
@@ -163,10 +169,10 @@ async function makeImgRiscv64(this: Ovary, includeRootHome: boolean) {
      * Use Mustache to generate the env_k1-x.txt file
      */
     const view = {
-        kernel_name: path.basename(this.vmlinuz),
-        initrd_name: path.basename(this.initrd),
         fdt_dir: fdtDir,
         fdt_file: vars.fdtFile,
+        initrd_name: path.basename(this.initrd),
+        kernel_name: path.basename(this.vmlinuz),
     };
 
     const template = fs.readFileSync(`${vars.spacemitDir}/env_k1-x.mustache`, 'utf8');
@@ -210,8 +216,8 @@ async function makeImgRiscv64(this: Ovary, includeRootHome: boolean) {
 function getVariables(ovary: Ovary) {
     const srcDir = path.join(ovary.nest, 'mnt/iso')
     const mntDir = path.join(ovary.nest, 'mnt/img')
-    const fdtDir = ovary.fdtDir
-    const fdtFile = ovary.fdtFile
+    const {fdtDir} = ovary
+    const {fdtFile} = ovary
 
     ovary.settings.isoFilename = ovary.settings.config.snapshot_prefix + ovary.volid + '_' + Utils.uefiArch() + Utils.getPostfix() + '.img'
     const imgLnk = ovary.settings.config.snapshot_dir + ovary.settings.isoFilename
@@ -225,7 +231,7 @@ function getVariables(ovary: Ovary) {
         spacemitDir = path.resolve('/usr/share/penguins-eggs/spacemit')
     }
 
-    return { srcDir, mntDir, fdtDir, fdtFile, imgLnk, imgName, mergedDir, snapshotExcludes, spacemitDir, imgVolid }
+    return { fdtDir, fdtFile, imgLnk, imgName, imgVolid, mergedDir, mntDir, snapshotExcludes, spacemitDir, srcDir }
 }
 
 function getScriptHeader(vars: any) {

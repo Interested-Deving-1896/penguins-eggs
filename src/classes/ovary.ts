@@ -41,8 +41,8 @@ import { luksRoot } from './ovary.d/luks-root.js'
 import { luksShrink } from './ovary.d/luks-shrink.js'
 import { makeDotDisk } from './ovary.d/make-dot-disk.js'
 import { makeEfi } from './ovary.d/make-efi.js'
-import { makeIso } from './ovary.d/make-iso.js'
 import { makeImg } from './ovary.d/make-img.js'
+import { makeIso } from './ovary.d/make-iso.js'
 import { addExclusion, makeSquashfs } from './ovary.d/make-squashfs.js'
 import { copied, merged, mergedAndOverlay } from './ovary.d/merged.js'
 import { produce } from './ovary.d/produce.js'
@@ -72,12 +72,12 @@ export default class Ovary {
   distroId = ''
   distroLike = ''
   distroLiveMediumPath = ''
-  liveRoot = ''
-  mnt = ''
   dotOverlay = {} as IWorkDir
   echo = {}
   editLiveFs = editLiveFs
   familyId = ''
+  fdtDir = ''
+  fdtFile = ''
   // I put all methods on ovary.d
   public fertilization = fertilization
   finished = finished
@@ -96,6 +96,7 @@ export default class Ovary {
   kernel = ''
   kernelCopy = kernelCopy
   liveCreateStructure = liveCreateStructure
+  liveRoot = ''
   luksConfig = {} as CryptoConfig
   luksDevice = ''
   // luks
@@ -118,8 +119,10 @@ export default class Ovary {
   makeSquashfs = makeSquashfs
   merged = merged
   mergedAndOverlay = mergedAndOverlay
+  mnt = ''
   nest = ''
   public produce = produce
+  projectRoot = ''
   settings = {} as Settings
   snapshot_basename = ''
   snapshot_prefix = ''
@@ -134,10 +137,7 @@ export default class Ovary {
   verbose = false
   vmlinuz = ''
   volid = ''
-  fdtDir = ''
-  fdtFile = ''
   xorrisoCommand = xorrisoCommand
-  projectRoot = ''
 
   constructor(projectRoot: string) {
     this.projectRoot = projectRoot

@@ -8,6 +8,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+
 import { exec, shx } from '../lib/utils.js'
 import Distro from './distro.js'
 import Pacman from './pacman.js'
@@ -58,6 +59,7 @@ export default class Xdg {
         } else {
           content += `\n[Seat:*]\nautologin-user=${newuser}\nautologin-user-timeout=0\n`
         }
+
         fs.writeFileSync(confPath, content.replaceAll(/\n\n+/g, '\n\n'), 'utf8')
       }
 
@@ -118,6 +120,7 @@ export default class Xdg {
       if (!fs.existsSync(sddmConfDir)) {
         fs.mkdirSync(sddmConfDir, { recursive: true })
       }
+
       const sddmConfPath = `${sddmConfDir}/autologin.conf`
 
       const sddmContent = `[Autologin]
@@ -174,6 +177,7 @@ Relogin=false
         } else {
           content = newInitialSession + content
         }
+
         fs.writeFileSync(greetdPath, content, 'utf8')
       }
       else if (fs.existsSync(`${chroot}/etc/greetd/config.toml`)) {
@@ -294,6 +298,7 @@ Relogin=false
         }
       })
     }
+
     return retval
   }
 }

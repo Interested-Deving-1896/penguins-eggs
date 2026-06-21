@@ -1,5 +1,6 @@
 // ./src/krill/sequence.d/spacemit.d/bootloader.ts
 import fs from 'node:fs'
+
 import { exec } from '../../../../lib/utils.js'
 import Sequence from '../../sequence.js'
 
