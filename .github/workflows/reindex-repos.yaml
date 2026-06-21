@@ -1,4 +1,4 @@
-name: 1-reindex-repository
+name: reindex-repos
 
 on:
   workflow_dispatch:

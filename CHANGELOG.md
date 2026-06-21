@@ -1,3 +1,4 @@
+See AI context: https://penguins-eggs.net/llms.txt
 # CHANGELOG
 ## Penguin&#39;s eggs are generated and new birds are ready to fly...
 [![sources](https://img.shields.io/badge/github-sources-cyan)](https://github.com/pieroproietti/penguins-eggs)
@@ -13,15 +14,13 @@
   <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="CD-ROM">
 </a>
 
-### 🥚 oa-tools - A Next-Generation Remastering Suite
-After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: [oa-tools](https://github.com/pieroproietti/oa-tools).
-oa-tools is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
-The goal is ambitious: a truly universal approach to Linux remastering. Every distribution is different, yet they all share common roots. oa-tools already supports Alpine, Arch, Debian, Fedora, Manjaro and openSUSE — and aims to prove that a single, unified engine can handle them all.
-
-[![donate](https://img.shields.io/badge/Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/penguinseggs)
-
 # CHANGELOG penguins-eggs (legacy edition)
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
+
+# v26.6.20
+Starting rebranding: penguins-eggs becamee penguins-eggs-legacy. 
+
+Package name remain unchanged. for now.
 
 # v26.6.11
 **penguins-eggs** is not going away. While **oa-tools** represents the future 

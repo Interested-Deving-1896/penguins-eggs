@@ -25,14 +25,13 @@ See AI context: https://penguins-eggs.net/llms.txt
 > | `penguins-eggs` (TypeScript) | → `penguins-eggs-legacy` (maintained) |
 > | `oa-tools` (C/Go) | → `penguins-eggs` (successor) |
 >
-> **New users → use `oa-tools`** (faster, C/Go).  
 > **Existing users → legacy `penguins-eggs`** remains supported.
 >
-> *Rebranding happens when `--clone` is fully implemented in `oa-tools`.*
+> *Rebranding is started
 >
 > — Piero Proietti
 
-### 🥚 oa-tools - A Next-Generation Remastering Suite
+### 🥚 penguins-eggs (oa edition) formely oa-tools 
 After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: [oa-tools](https://github.com/pieroproietti/oa-tools).
 oa-tools is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
 The goal is ambitious: a truly universal approach to Linux remastering. Every distribution is different, yet they all share common roots. oa-tools already supports Alpine, Arch, Debian, Fedora, Manjaro and openSUSE — and aims to prove that a single, unified engine can handle them all.

@@ -1,7 +1,7 @@
 # ========================================================
-# NOME: 0-build-publish-packages
+# NOME: publish-penguins-eggs-legacy
 # ========================================================
-name: 0-build-publish-packages
+name: publish-penguins-eggs-legacy
 env:
   BOOTLOADERS_VERSION: v26.1.16
 on:

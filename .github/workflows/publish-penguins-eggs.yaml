@@ -1,15 +1,15 @@
 # ========================================================
-# NOME: 2-publish-oa-tools
+# NOME: publish-penguins-eggs
 # DESCRIZIONE: Scarica gli archivi zip di oa-tools da GitHub Releases,
 #              li estrae e pubblica i pacchetti nella repository VPS.
 # ========================================================
-name: 2-publish-oa-tools
+name: publish-penguins-eggs
 
 on:
   workflow_dispatch:
     inputs:
       oa_tools_version:
-        description: 'Tag della release di oa-tools (es. v0.8.3)'
+        description: 'Tag della release di oa-tools (es. v0.9.1)'
         required: true
         type: string
 
