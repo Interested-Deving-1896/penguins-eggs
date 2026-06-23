@@ -4,7 +4,7 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-Penguins Eggs is a remastering tool for creating custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for developers and system administrators who need to create and distribute tailored Linux images for specific use cases or environments.
+Penguins Eggs is a remastering tool designed to create custom Linux distributions and live ISO images. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by developers, system administrators, and Linux enthusiasts to build and distribute tailored operating system images for specific use cases.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
@@ -83,16 +83,17 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- **ci.yml**: Runs tests and lints the codebase on push and pull request events. No secrets required.
-- **codeql.yml**: Performs static code analysis for security vulnerabilities using GitHub CodeQL. No secrets required.
-- **release.yml**: Automates the release process, including version tagging and publishing to npm. Requires `NPM_TOKEN` secret.
-- **iso-test.yml**: Builds and tests ISO images for supported distributions. No secrets required.
-- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_SSH_KEY` and `MIRROR_TOKEN` secrets.
-- **docs.yml**: Generates and deploys project documentation. No secrets required.
-- **sync-eggs-docs-to-book.yml**: Synchronizes documentation with an external book repository. Requires `BOOK_REPO_TOKEN` secret.
-- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
-- **rate-limit-status.yml**: Monitors API rate limits for external services. No secrets required.
-- **rotate-token.yml**: Rotates API tokens for external integrations. Requires `ADMIN_TOKEN` secret.
+- **`ci.yml`**: Runs the main CI pipeline, including linting, testing, and building the project. No secrets required.
+- **`codeql.yml`**: Performs static code analysis using GitHub's CodeQL to identify potential security vulnerabilities. No secrets required.
+- **`release.yml`**: Automates the release process, including version tagging and publishing artifacts. Requires `NPM_TOKEN` for publishing to npm.
+- **`iso-test.yml`**: Tests ISO builds for supported Linux distributions. No secrets required.
+- **`mirror.yaml`**: Mirrors the repository to other platforms. Requires `MIRROR_TOKEN` for authentication.
+- **`mirror-releases.yml`**: Syncs release artifacts to external repositories. Requires `MIRROR_TOKEN`.
+- **`sync-eggs-docs-to-book.yml`**: Synchronizes documentation to the project book repository. Requires `DOCS_SYNC_TOKEN`.
+- **`rotate-token.yml`**: Rotates access tokens used in workflows. Requires `ADMIN_TOKEN`.
+- **`rate-limit-status.yml`**: Monitors API rate limits for external services. No secrets required.
+- **`frogbot-scan.yml`**: Runs dependency vulnerability scans using Frogbot. Requires `JFROG_API_KEY`.
+- **`trigger-artifact-mirror.yml`**: Triggers artifact mirroring workflows. Requires `MIRROR_TRIGGER_TOKEN`.
 <!-- AI:end:ci -->
 
 ## Mirror chain
@@ -114,7 +115,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 <!-- AI:start:contributors -->
 [@monstermunchkin](https://github.com/monstermunchkin) (818 commits)  
 [@stgraber](https://github.com/stgraber) (785 commits)  
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) (335 commits)  
+[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) (342 commits)  
 [@itoffshore](https://github.com/itoffshore) (155 commits)  
 [@pieroproietti](https://github.com/pieroproietti) (56 commits)  
 [@ona-agent](https://github.com/ona-agent) (50 commits)  
@@ -143,7 +144,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 [@timbretimber](https://github.com/timbretimber) (3 commits)  
 [@foxtrotcz](https://github.com/foxtrotcz) (3 commits)  
 
-*Note: This repository may be a mirror. Please check the [upstream source](https://github.com/Interested-Deving-1896/penguins-eggs) for additional context.*
+*Note: This repository may be a mirror. Please refer to the upstream source for the original contributions.*
 <!-- AI:end:contributors -->
 
 ## Origins
