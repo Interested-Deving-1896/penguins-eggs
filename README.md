@@ -10,31 +10,26 @@ Penguins Eggs is a remastering tool designed to create custom Linux distribution
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project consists of a modular architecture designed to facilitate system remastering across multiple Linux distributions. The core components include:
+The project is structured as a command-line tool built with TypeScript and the oclif framework. It facilitates the creation of Linux system remasters, supporting multiple distributions. The main entry point is defined in `package.json` as `./bin/run.js`. The tool uses various dependencies for CLI interactions, system information retrieval, templating, and network communication. It also includes custom integrations and audit utilities.
 
-1. **CLI Tool**: The entry point (`bin/run.js`) provides a command-line interface built using the `@oclif/core` framework.
-2. **Integrations**: Located in the `integrations` directory, this module handles distribution-specific logic and external tool integrations.
-3. **Configuration and Templates**: YAML and Mustache are used for configuration and templating, enabling customization of remastering workflows.
-4. **System Utilities**: Dependencies like `systeminformation` and `linux-release-info` gather system metadata, while `tftp` and `axios` manage file transfers and HTTP requests.
-5. **UI Components**: Built with `ink` and related libraries, providing interactive terminal-based user interfaces.
-6. **Workflows**: GitHub Actions workflows automate CI/CD, repository synchronization, and artifact management.
-
-The directory structure is as follows:
+The repository is organized as follows:
 
 ```plaintext
 .
-├── bin/                 # CLI entry point
-├── integrations/        # Distribution-specific integrations
-├── workflows/           # GitHub Actions workflows
-├── .github/             # GitHub configuration files
-├── DOCS/                # Documentation files
-├── LICENSE              # License file
-├── README.md            # Project documentation
-├── package.json         # Project metadata and dependencies
-└── src/                 # Source code for core functionality
+├── bin/                   # Entry point scripts
+├── src/                   # Source code for the application
+├── integrations/          # Custom integrations for the tool
+├── workflows/             # GitHub Actions workflows for CI/CD
+├── .github/               # GitHub-specific configurations
+├── .vscode/               # VS Code workspace settings
+├── CHANGELOG.md           # Changelog for the project
+├── LICENSE                # License file
+├── README.md              # Project documentation
+├── package.json           # Project metadata and dependencies
+└── other-scripts/         # Utility scripts for packaging and deployment
 ```
 
-Components interact through a combination of CLI commands, configuration files, and external APIs, enabling flexible and extensible remastering processes.
+Components interact through a modular architecture, with the CLI commands invoking specific modules for tasks like system detection, file generation, and network operations. The `integrations` directory contains reusable components for distribution-specific functionality. Workflows automate testing, builds, and repository synchronization.
 <!-- AI:end:architecture -->
 
 ## Install
@@ -83,17 +78,19 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- **`ci.yml`**: Runs the main CI pipeline, including linting, testing, and building the project. No secrets required.
-- **`codeql.yml`**: Performs static code analysis using GitHub's CodeQL to identify potential security vulnerabilities. No secrets required.
-- **`release.yml`**: Automates the release process, including version tagging and publishing artifacts. Requires `NPM_TOKEN` for publishing to npm.
-- **`iso-test.yml`**: Tests ISO builds for supported Linux distributions. No secrets required.
-- **`mirror.yaml`**: Mirrors the repository to other platforms. Requires `MIRROR_TOKEN` for authentication.
-- **`mirror-releases.yml`**: Syncs release artifacts to external repositories. Requires `MIRROR_TOKEN`.
-- **`sync-eggs-docs-to-book.yml`**: Synchronizes documentation to the project book repository. Requires `DOCS_SYNC_TOKEN`.
-- **`rotate-token.yml`**: Rotates access tokens used in workflows. Requires `ADMIN_TOKEN`.
-- **`rate-limit-status.yml`**: Monitors API rate limits for external services. No secrets required.
-- **`frogbot-scan.yml`**: Runs dependency vulnerability scans using Frogbot. Requires `JFROG_API_KEY`.
-- **`trigger-artifact-mirror.yml`**: Triggers artifact mirroring workflows. Requires `MIRROR_TRIGGER_TOKEN`.
+The repository uses GitHub Actions for continuous integration and automation. Below are the workflows and their purposes:
+
+- **ci.yml**: Runs tests and lints the codebase. No secrets required.
+- **codeql.yml**: Performs static code analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
+- **release.yml**: Handles the release process, including version tagging and publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
+- **iso-test.yml**: Tests ISO builds for compatibility and functionality. No secrets required.
+- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
+- **sync-eggs-docs-to-book.yml**: Synchronizes documentation with the project book. No secrets required.
+- **cleanup-pollution.yml**: Cleans up temporary files and artifacts. No secrets required.
+- **rate-limit-status.yml**: Monitors API rate limits. Requires `GH_TOKEN` secret.
+- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `MIRROR_TOKEN` secret.
+
+Refer to individual workflow files in `.github/workflows/` for detailed configurations.
 <!-- AI:end:ci -->
 
 ## Mirror chain
