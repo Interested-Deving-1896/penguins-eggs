@@ -567,17 +567,17 @@ jobs:
           - /var/www/html/repos:/mnt/repos # HostPath:ContainerPath
     
       steps:
-      - name: 1. Install Dependencies
-        run: |
-          pacman-key --init && pacman-key --populate archlinux
-          pacman -Syu --noconfirm
-          pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools
+      # - name: 1. Install Dependencies
+      #   run: |
+      #     pacman-key --init && pacman-key --populate archlinux
+      #     pacman -Syu --noconfirm
+      #     pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools
       
-      - name: 3.1 Download Alpine artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: alpine-package
-          path: /mnt/repos/alpine/
+      # - name: 3.1 Download Alpine artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: alpine-package
+      #     path: /mnt/repos/alpine/
 
       - name: 3.2 Download Arch artifacts
         uses: actions/download-artifact@v4
