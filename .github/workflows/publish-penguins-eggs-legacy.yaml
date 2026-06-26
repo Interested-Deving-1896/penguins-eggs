@@ -217,7 +217,7 @@ jobs:
         run: |
           mkdir -p $HOME/rpmbuild/SOURCES
           tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs-legacy.tar.gz \
-            --transform='s,^\.,penguins-eggs-${{ steps.version.outputs.version }},' \
+            --transform='s,^\.,penguins-eggs-legacy-${{ steps.version.outputs.version }},' \
             --exclude=.git --exclude=.github .
           curl -LO https://github.com/pieroproietti/penguins-bootloaders/releases/download/${{ env.BOOTLOADERS_VERSION }}/bootloaders.tar.gz
           cp bootloaders.tar.gz $HOME/rpmbuild/SOURCES/
@@ -282,23 +282,10 @@ jobs:
         run: |
           mkdir -p $HOME/rpmbuild/SOURCES
           tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs-legacy.tar.gz \
-            --transform='s,^\.,penguins-eggs-${{ steps.version.outputs.version }},' \
+            --transform='s,^\.,penguins-eggs-legacy-${{ steps.version.outputs.version }},' \
             --exclude=.git --exclude=.github .
           curl -LO https://github.com/pieroproietti/penguins-bootloaders/releases/download/${{ env.BOOTLOADERS_VERSION }}/bootloaders.tar.gz
           cp bootloaders.tar.gz $HOME/rpmbuild/SOURCES/
-      - name: 7. Build and Sign RPM package
-        id: build
-        env:
-          GPG_PASSPHRASE_ENV: ${{ secrets.GPG_PASSPHRASE }}
-        run: |
-          mkdir -p ~/.gnupg
-          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
-          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
-          gpg-connect-agent reloadagent /bye
-          echo "$GPG_PASSPHRASE_ENV" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
-          rpmbuild -ba packaging/rpm/penguins-eggs-legacy.spec
-          rpmsign --addsign $(find $HOME/rpmbuild/RPMS -name '*.rpm')
-          echo "rpm_path=$(find $HOME/rpmbuild/RPMS -name '*.rpm')" >> $GITHUB_OUTPUT
       - name: 8. Upload RPM Artifact for publishing
         uses: actions/upload-artifact@v4
         with:
@@ -428,7 +415,7 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           STAGING_DIR="/tmp/staging"
-          SOURCE_DIR_NAME="penguins-eggs-${{ steps.version.outputs.version }}"
+          SOURCE_DIR_NAME="penguins-eggs-legacy-${{ steps.version.outputs.version }}"
           mkdir -p "$STAGING_DIR/$SOURCE_DIR_NAME"
           rsync -av --exclude '.git' --exclude '.github' ./ "$STAGING_DIR/$SOURCE_DIR_NAME/"
           mkdir -p $HOME/rpmbuild/SOURCES
