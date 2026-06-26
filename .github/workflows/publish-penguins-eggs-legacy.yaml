@@ -89,7 +89,7 @@ jobs:
           echo "Updating PKGBUILD to $VERSION-$RELEASE_NUM"
           sed -i "s/^pkgver=.*/pkgver=$VERSION/" ./packaging/arch/PKGBUILD
           sed -i "s/^pkgrel=.*/pkgrel=$RELEASE_NUM/" ./packaging/arch/PKGBUILD
-          sed -i "s|https://github.com/pieroproietti/penguins-eggs.git|file://${GITHUB_WORKSPACE}|" ./packaging/arch/PKGBUILD
+          sed -i "s|https://github.com/pieroproietti/penguins-eggs-legacy.git|file://${GITHUB_WORKSPACE}|" ./packaging/arch/PKGBUILD
       
       - name: 3. Create Build User
         run: |
@@ -216,7 +216,7 @@ jobs:
       - name: 7. Prepare RPM Sources
         run: |
           mkdir -p $HOME/rpmbuild/SOURCES
-          tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs.tar.gz \
+          tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs-legacy.tar.gz \
             --transform='s,^\.,penguins-eggs-${{ steps.version.outputs.version }},' \
             --exclude=.git --exclude=.github .
           curl -LO https://github.com/pieroproietti/penguins-bootloaders/releases/download/${{ env.BOOTLOADERS_VERSION }}/bootloaders.tar.gz
@@ -281,7 +281,7 @@ jobs:
       - name: 6. Prepare RPM Sources
         run: |
           mkdir -p $HOME/rpmbuild/SOURCES
-          tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs.tar.gz \
+          tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs-legacy.tar.gz \
             --transform='s,^\.,penguins-eggs-${{ steps.version.outputs.version }},' \
             --exclude=.git --exclude=.github .
           curl -LO https://github.com/pieroproietti/penguins-bootloaders/releases/download/${{ env.BOOTLOADERS_VERSION }}/bootloaders.tar.gz
@@ -338,7 +338,7 @@ jobs:
           echo "Updating Manjaro PKGBUILD to version: $VERSION, release: $RELEASE_NUM"
           sed -i "s/^pkgver=.*/pkgver=$VERSION/" ./packaging/manjaro/PKGBUILD
           sed -i "s/^pkgrel=.*/pkgrel=$RELEASE_NUM/" ./packaging/manjaro/PKGBUILD
-          sed -i "s|https://github.com/pieroproietti/penguins-eggs.git|file://${GITHUB_WORKSPACE}|" ./packaging/manjaro/PKGBUILD
+          sed -i "s|https://github.com/pieroproietti/penguins-eggs-legacy.git|file://${GITHUB_WORKSPACE}|" ./packaging/manjaro/PKGBUILD
           echo "PKGBUILD updated:"
           grep -E "^(pkgver|pkgrel)=" ./packaging/manjaro/PKGBUILD
       
@@ -432,7 +432,7 @@ jobs:
           mkdir -p "$STAGING_DIR/$SOURCE_DIR_NAME"
           rsync -av --exclude '.git' --exclude '.github' ./ "$STAGING_DIR/$SOURCE_DIR_NAME/"
           mkdir -p $HOME/rpmbuild/SOURCES
-          tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs.tar.gz -C "$STAGING_DIR" "$SOURCE_DIR_NAME"
+          tar -czf $HOME/rpmbuild/SOURCES/penguins-eggs-legacy.tar.gz -C "$STAGING_DIR" "$SOURCE_DIR_NAME"
           curl -LO https://github.com/pieroproietti/penguins-bootloaders/releases/download/${{ env.BOOTLOADERS_VERSION }}/bootloaders.tar.gz
           cp bootloaders.tar.gz $HOME/rpmbuild/SOURCES/
 
@@ -645,7 +645,7 @@ jobs:
           
           rm -f APKINDEX.tar.gz
           apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
-          echo "$ALPINE_SIGNING_KEY_PUB" > penguins-eggs.rsa.pub
+          echo "$ALPINE_SIGNING_KEY_PUB" > penguins-eggs-legacy.rsa.pub
           cd / # Ritorna alla root      
 
       - name: 7. Update Arch Repo (WITH Pruning)
@@ -673,9 +673,9 @@ jobs:
           echo "--- ARCH: Files AFTER cleaning ---"
           ls -l
           
-          rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
-          repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
-          cd / # Ritorna alla root
+          rm -f penguins-eggs-legacy.db.tar.gz penguins-eggs-legacyfiles.tar.gz
+          repo-add --sign --key "$GPG_KEY_ID" penguins-eggs-legacy.db.tar.gz *.pkg.tar.zst
+          cd / # Ritorna alla root 
 
       - name: 8. Update RPM Repos
         run: |
@@ -711,6 +711,6 @@ jobs:
           done
           echo '--- MANJARO: Cleaning complete ---'
           
-          rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
-          repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
+          rm -f penguins-eggs-legacydb.tar.gz penguins-eggs-legacy.files.tar.gz
+          repo-add --sign --key "$GPG_KEY_ID" penguins-eggs-legacy.db.tar.gz *.pkg.tar.zst
           cd / # Ritorna alla root
