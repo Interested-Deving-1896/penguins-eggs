@@ -1,7 +1,7 @@
 # Penguins' eggs
 # tools.yaml
 ---
-penguins_eggs_conf: /etc/penguins-eggs.d/eggs.yaml
+penguins_eggs_conf: /etc/penguins-eggs-legacy.d/eggs.yaml
 
 # path to local iso
 localPathIso: /home/eggs

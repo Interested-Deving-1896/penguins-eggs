@@ -28,7 +28,7 @@ export async function editLiveFs(this: Ovary) {
   const workDir = this.settings.work_dir.merged
 
   if (this.clone || this.homecrypt || this.fullcrypt) {
-    await exec(`touch ${workDir}/etc/penguins-eggs.d/is_clone`, this.echo)
+    await exec(`touch ${workDir}/etc/penguins-eggs-legacy.d/is_clone`, this.echo)
   }
 
   if (Pacman.packageIsInstalled('epoptes')) {

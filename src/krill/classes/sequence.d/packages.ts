@@ -23,7 +23,7 @@ import Sequence from '../../classes/sequence.js'
 export default async function packages(this: Sequence): Promise<void> {
   const echoYes = Utils.setEcho(true)
 
-  let modulePath = '/etc/penguins-eggs.d/krill/'
+  let modulePath = '/etc/penguins-eggs-legacy.d/krill/'
   if (Pacman.packageIsInstalled('calamares')) {
     modulePath = '/etc/calamares/'
   }

@@ -214,7 +214,7 @@ export default class Daddy {
    */
   private displayFinalHelp() {
     console.log()
-    console.log(chalk.cyan('Your configuration was saved on: /etc/penguins-eggs.d'))
+    console.log(chalk.cyan('Your configuration was saved on: /etc/penguins-eggs-legacy.d'))
     console.log(chalk.cyan('You can create a clean ISO with: ') + chalk.white('sudo eggs produce'))
     console.log(chalk.cyan('Or a full personal clone: ') + chalk.white('sudo eggs produce --clone'))
     console.log()

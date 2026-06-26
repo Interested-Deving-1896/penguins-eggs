@@ -24,7 +24,7 @@ export default class Kill extends Command {
     nointeractive: Flags.boolean({ char: 'n', description: 'no user interaction' }),
     verbose: Flags.boolean({ char: 'v', description: 'verbose' })
   }
-  config_file = '/etc/penguins-eggs.d/eggs.yaml' as string
+  config_file = '/etc/penguins-eggs-legacy.d/eggs.yaml' as string
   snapshot_dir = '' as string
 
   async run(): Promise<void> {

@@ -37,7 +37,7 @@ export default class Dad extends Command {
 
     if (Utils.isRoot(this.id)) {
       if (flags.clean || flags.default || flags.mine) {
-        await exec('rm /etc/penguins-eggs.d -rf')
+        await exec('rm /etc/penguins-eggs-legacy.d -rf')
       }
 
       if (isCustom && !fs.existsSync(fileCustom)) {

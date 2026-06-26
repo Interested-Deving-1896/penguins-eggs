@@ -22,7 +22,7 @@ export default class CFS {
    */
   async steps(): Promise<string[]> {
     const cfs: string[] = []
-    let configRoot = '/etc/penguins-eggs.d/krill/'
+    let configRoot = '/etc/penguins-eggs-legacy.d/krill/'
     if (Pacman.calamaresExists()) {
       configRoot = '/etc/calamares/'
     }

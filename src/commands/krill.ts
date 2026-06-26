@@ -58,7 +58,7 @@ export default class KrillCommand extends Command {
     // krillConfig
     let krillConfig = {} as IKrillConfig
 
-    const content = fs.readFileSync('/etc/penguins-eggs.d/krill.yaml', 'utf8')
+    const content = fs.readFileSync('/etc/penguins-eggs-legacy.d/krill.yaml', 'utf8')
     krillConfig = yaml.load(content) as IKrillConfig
 
     // nointeractive

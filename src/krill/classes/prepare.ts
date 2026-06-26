@@ -30,7 +30,7 @@ import { users } from './prepare.d/users.js'
 import { welcome } from './prepare.d/welcome.js'
 import Sequence from './sequence.js'
 
-const config_file = '/etc/penguins-eggs.d/krill.yaml' as string
+const config_file = '/etc/penguins-eggs-legacy.d/krill.yaml' as string
 
 /**
  * Main Krill installer class - Simplified refactoring
@@ -339,7 +339,7 @@ export default class Krill {
     }
 
     // Check calamares/krill configuration
-    let configRoot = '/etc/penguins-eggs.d/krill/'
+    let configRoot = '/etc/penguins-eggs-legacy.d/krill/'
     if (fs.existsSync('/etc/calamares/settings.conf')) {
       configRoot = '/etc/calamares/'
     }

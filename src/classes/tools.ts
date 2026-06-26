@@ -29,7 +29,7 @@ export default class Tools {
   config = {} as IEggsConfigTools
   snapshot_dir = ''
   snapshot_name = ''
-  tools_yaml = '/etc/penguins-eggs.d/tools.yaml'
+  tools_yaml = '/etc/penguins-eggs-legacy.d/tools.yaml'
 
   /*
    * Load configuration from /etc/penguins-eggs.yaml

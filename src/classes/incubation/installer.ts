@@ -10,7 +10,7 @@
  * installer
  *
  * name  = 'calamares' oppure 'krill'
- * configRoot = '/etc/calamares/' oppure '/etc/penguins-eggs.d/krill/'
+ * configRoot = '/etc/calamares/' oppure '/etc/penguins-eggs-legacy.d/krill/'
  * modules = configuration + 'modules/'
  * modulesMultiarch = '/usr/lib/' + arch-linux-gnu + '/' + installer + '/'
  *
@@ -40,7 +40,7 @@ export function installer(): IInstaller {
     installer.multiarch = path.join(Pacman.distro().usrLibPath, 'calamares')
   } else {
     installer.name = 'krill'
-    installer.configRoot = '/etc/penguins-eggs.d/krill'
+    installer.configRoot = '/etc/penguins-eggs-legacy.d/krill'
     installer.multiarch = path.join(Pacman.distro().usrLibPath, 'krill')
   }
 
@@ -52,7 +52,7 @@ export function installer(): IInstaller {
    *
    */
   const distro = new Distro()
-  installer.template = path.join('/etc/penguins-eggs.d/distros', distro.distroUniqueId, 'calamares')
+  installer.template = path.join('/etc/penguins-eggs-legacy.d/distros', distro.distroUniqueId, 'calamares')
   installer.templateModules = path.join(installer.template, 'modules')
   installer.templateMultiarch = path.join(installer.template, 'calamares-modules')
 

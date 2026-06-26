@@ -23,8 +23,8 @@ import Opensuse from './pacman.d/opensuse.js'
 import Settings from './settings.js'
 import Utils from './utils.js'
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
-const config_file = '/etc/penguins-eggs.d/eggs.yaml' as string
-const config_tools = '/etc/penguins-eggs.d/tools.yaml' as string
+const config_file = '/etc/penguins-eggs-legacy.d/eggs.yaml' as string
+const config_tools = '/etc/penguins-eggs-legacy.d/tools.yaml' as string
 
 /**
  * Utils: general porpouse utils
@@ -228,7 +228,7 @@ export default class Pacman {
     config.version = Utils.getPackageVersion()
     config.snapshot_dir = '/home/eggs'
     config.snapshot_prefix = ''
-    config.snapshot_excludes = '/etc/penguins-eggs.d/exclude.list'
+    config.snapshot_excludes = '/etc/penguins-eggs-legacy.d/exclude.list'
     config.snapshot_basename = '' // before default was hostname
     config.user_opt = 'live'
     config.user_opt_passwd = 'evolution'
@@ -254,7 +254,7 @@ export default class Pacman {
    * Creazione del file di configurazione /etc/penguins-eggs
    */
   static async configurationInstall(links = true, verbose = false): Promise<void> {
-    const confRoot = '/etc/penguins-eggs.d'
+    const confRoot = '/etc/penguins-eggs-legacy.d'
     if (!fs.existsSync(confRoot)) {
       execSync(`mkdir ${confRoot}`)
     }
@@ -276,7 +276,7 @@ export default class Pacman {
     execSync(`mkdir -p ${distros}`)
 
     /**
-     * We use /etc/penguins-eggs.d/init for our init scripts:
+     * We use /etc/penguins-eggs-legacy.d/init for our init scripts:
      * # unattended.sh -> eggs install --unattended
      * # cuckoo ->        eggs cuckoo
      */
@@ -295,14 +295,14 @@ export default class Pacman {
     shx.cp(path.resolve(__dirname, '../../conf/yolk.yaml'), confRoot)
 
     // init
-    shx.cp(path.resolve(__dirname, '../../conf/init/unattended.sh'), '/etc/penguins-eggs.d/init')
-    shx.chmod('+x', '/etc/penguins-eggs.d/init/unattended.sh')
-    shx.cp(path.resolve(__dirname, '../../conf/init/cuckoo.sh'), '/etc/penguins-eggs.d/init')
-    shx.chmod('+x', '/etc/penguins-eggs.d/init/cuckoo.sh')
+    shx.cp(path.resolve(__dirname, '../../conf/init/unattended.sh'), '/etc/penguins-eggs-legacy.d/init')
+    shx.chmod('+x', '/etc/penguins-eggs-legacy.d/init/unattended.sh')
+    shx.cp(path.resolve(__dirname, '../../conf/init/cuckoo.sh'), '/etc/penguins-eggs-legacy.d/init')
+    shx.chmod('+x', '/etc/penguins-eggs-legacy.d/init/cuckoo.sh')
 
     // creazione cartella exclude.list.d
-    execSync(`mkdir -p /etc/penguins-eggs.d/exclude.list.d`)
-    shx.cp(path.resolve(__dirname, '../../conf/exclude.list.d/*'), '/etc/penguins-eggs.d/exclude.list.d')
+    execSync(`mkdir -p /etc/penguins-eggs-legacy.d/exclude.list.d`)
+    shx.cp(path.resolve(__dirname, '../../conf/exclude.list.d/*'), '/etc/penguins-eggs-legacy.d/exclude.list.d')
     await this.configurationFresh()
   }
 
@@ -314,8 +314,8 @@ export default class Pacman {
   static async configurationRemove(verbose = false): Promise<void> {
     const echo = Utils.setEcho(verbose)
 
-    if (fs.existsSync('/etc/penguins-eggs.d')) {
-      await exec('rm /etc/penguins-eggs.d -rf', echo)
+    if (fs.existsSync('/etc/penguins-eggs-legacy.d')) {
+      await exec('rm /etc/penguins-eggs-legacy.d -rf', echo)
     }
 
   }
@@ -333,7 +333,7 @@ export default class Pacman {
    */
   static distroTemplateCheck(): boolean {
     const { distroUniqueId } = this.distro()
-    return fs.existsSync(`/etc/penguins-eggs.d/distros/${distroUniqueId}`)
+    return fs.existsSync(`/etc/penguins-eggs-legacy.d/distros/${distroUniqueId}`)
   }
 
   /**
@@ -347,7 +347,7 @@ export default class Pacman {
     const echo = Utils.setEcho(verbose)
 
     const rootPen = Utils.rootPenguin()
-    await exec(`mkdir /etc/penguins-eggs.d/distros/${this.distro().distroUniqueId}`)
+    await exec(`mkdir /etc/penguins-eggs-legacy.d/distros/${this.distro().distroUniqueId}`)
 
     /**
      * Debian 10 - Buster: è il master per tutte le altre
@@ -363,7 +363,7 @@ export default class Pacman {
     switch (distroUniqueId) {
       case 'alpine': {
         // eredita solo da alpine
-        const dest = '/etc/penguins-eggs.d/distros/alpine/'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/alpine/'
         const alpine = `${rootPen}/conf/distros/alpine/`
         await exec(`cp -r ${alpine}/calamares ${dest}/calamares`, echo)
 
@@ -375,7 +375,7 @@ export default class Pacman {
       }
 
       case 'archlinux': {
-        const dest = '/etc/penguins-eggs.d/distros/archlinux/'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/archlinux/'
         const arch = `${rootPen}/conf/distros/archlinux/*`
         await exec(`cp -r ${arch} ${dest}`, echo)
 
@@ -387,7 +387,7 @@ export default class Pacman {
       }
 
       case 'beowulf': {
-        const dest = '/etc/penguins-eggs.d/distros/beowulf'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/beowulf'
         await exec(`cp -r ${buster}/calamares ${dest}/calamares`, echo)
 
         /**
@@ -398,7 +398,7 @@ export default class Pacman {
       }
 
       case 'bookworm': {
-        const dest = '/etc/penguins-eggs.d/distros/bookworm'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/bookworm'
         await exec(`cp -r ${buster}/calamares ${dest}/calamares`, echo)
 
         /**
@@ -409,7 +409,7 @@ export default class Pacman {
       }
 
       case 'bullseye': {
-        const dest = '/etc/penguins-eggs.d/distros/bullseye'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/bullseye'
         await exec(`cp -r ${buster}/calamares ${dest}/calamares`, echo)
 
         /**
@@ -420,7 +420,7 @@ export default class Pacman {
       }
 
       case 'buster': {
-        const dest = '/etc/penguins-eggs.d/distros/buster'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/buster'
         await exec(`cp -r ${buster}/calamares ${dest}/calamares`, echo)
 
         /**
@@ -431,7 +431,7 @@ export default class Pacman {
       }
 
       case 'chimaera': {
-        const dest = '/etc/penguins-eggs.d/distros/chimaera'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/chimaera'
         await exec(`cp -r ${buster}/calamares ${dest}/calamares`, echo)
 
         /**
@@ -442,7 +442,7 @@ export default class Pacman {
       }
 
       case 'daedalus': {
-        const dest = '/etc/penguins-eggs.d/distros/daedalus'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/daedalus'
         await exec(`cp -r ${buster}/calamares ${dest}/calamares`, echo)
         /**
          * Devuan excalibur: eredita tutto da trixie
@@ -452,7 +452,7 @@ export default class Pacman {
       }
 
       case 'excalibur': {
-        const dest = '/etc/penguins-eggs.d/distros/excalibur'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/excalibur'
         await exec(`cp -r ${trixie}/calamares ${dest}/calamares`, echo)
 
         /***********************************************************************************
@@ -463,7 +463,7 @@ export default class Pacman {
       }
 
       case 'fedora': {
-        const dest = '/etc/penguins-eggs.d/distros/fedora/'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/fedora/'
         const fedora = `${rootPen}/conf/distros/fedora/*`
         await exec(`cp -r ${fedora} ${dest}`, echo)
 
@@ -475,7 +475,7 @@ export default class Pacman {
       }
 
       case 'focal': {
-        const dest = '/etc/penguins-eggs.d/distros/focal'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/focal'
         const focal = `${rootPen}/conf/distros/focal`
         await exec(`cp -r ${focal}/* ${dest}`, echo)
 
@@ -487,7 +487,7 @@ export default class Pacman {
       }
 
       case 'forky': {
-        const dest = '/etc/penguins-eggs.d/distros/forky'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/forky'
         await exec(`cp -r ${trixie}/calamares ${dest}/calamares`, echo)
 
         /***********************************************************************************
@@ -502,7 +502,7 @@ export default class Pacman {
       }
 
       case 'jammy': {
-        const dest = '/etc/penguins-eggs.d/distros/jammy'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/jammy'
         const focal = `${rootPen}/conf/distros/focal`
         await exec(`cp -r ${focal}/* ${dest}`, echo)
 
@@ -515,7 +515,7 @@ export default class Pacman {
       }
 
       case 'manjaro': {
-        const dest = '/etc/penguins-eggs.d/distros/manjaro/'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/manjaro/'
         const manjaro = `${rootPen}/conf/distros/manjaro/*`
         await exec(`cp -r ${manjaro} ${dest}`, echo)
 
@@ -532,7 +532,7 @@ export default class Pacman {
 
       case 'openmamba': {
         // eredita solo da openmamba
-        const dest = '/etc/penguins-eggs.d/distros/openmamba/'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/openmamba/'
         const mamba = `${rootPen}/conf/distros/openmamba/*`
         await exec(`cp -r ${mamba} ${dest}`, echo)
 
@@ -544,7 +544,7 @@ export default class Pacman {
       }
 
       case 'opensuse': {
-        const dest = '/etc/penguins-eggs.d/distros/opensuse/'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/opensuse/'
         const suse = `${rootPen}/conf/distros/opensuse/*`
         await exec(`cp -r ${suse} ${dest}`, echo)
 
@@ -560,7 +560,7 @@ export default class Pacman {
       }
 
       case 'trixie': {
-        const dest = '/etc/penguins-eggs.d/distros/trixie'
+        const dest = '/etc/penguins-eggs-legacy.d/distros/trixie'
         await exec(`cp -r ${trixie}/calamares ${dest}/calamares`, echo)
 
         /**
@@ -572,7 +572,7 @@ export default class Pacman {
 
       default: {
         if (this.distro().distroUniqueId === 'noble') {
-          const dest = '/etc/penguins-eggs.d/distros/noble'
+          const dest = '/etc/penguins-eggs-legacy.d/distros/noble'
           const noble = `${rootPen}/conf/distros/noble`
           await exec(`cp -r ${noble}/* ${dest}`, echo)
 
@@ -581,7 +581,7 @@ export default class Pacman {
            *
            */
         } else if (distroUniqueId === 'devel') {
-          const dest = '/etc/penguins-eggs.d/distros/devel'
+          const dest = '/etc/penguins-eggs-legacy.d/distros/devel'
           const noble = `${rootPen}/conf/distros/noble`
           await exec(`cp -r ${noble}/* ${dest}`, echo)
         }

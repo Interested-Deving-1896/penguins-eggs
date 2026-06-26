@@ -7,9 +7,9 @@ export class Constants {
   static readonly CALAMARES_DIR = 'etc/calamares' // Relativo quando siamo in chroot
   /**
    * ⚙️ CONFIG_DIR: La cartella principale di configurazione
-   * Solitamente: /etc/penguins-eggs.d
+   * Solitamente: /etc/penguins-eggs-legacy.d
    */
-  static readonly CONFIG_DIR = '/etc/penguins-eggs.d'
+  static readonly CONFIG_DIR = '/etc/penguins-eggs-legacy.d'
   /**
    * 🚫 EXCLUDE LISTS DIRECTORY
    * Dove si trovano i partials (homes.list, var.list, etc)
@@ -33,7 +33,7 @@ export class Constants {
   /**
    * 📜 LOG_DIR: Dove scriviamo i log
    */
-  static readonly LOG_DIR = '/var/log/penguins-eggs'
+  static readonly LOG_DIR = '/var/log/penguins-eggs-legacy'
   /**
    * 🏠 NEST: Il nido dove avviene la magia (Work Directory)
    * Solitamente: /home/eggs

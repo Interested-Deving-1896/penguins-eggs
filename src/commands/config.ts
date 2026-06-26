@@ -108,7 +108,7 @@ export default class Config extends Command {
     if (Utils.isRoot(this.id)) {
       if (flags.clean) {
         Utils.warning('removing penguins-eggs configurations')
-        await exec('rm -rf /etc/penguins-eggs.d')
+        await exec('rm -rf /etc/penguins-eggs-legacy.d')
       }
 
       const i = await Config.thatWeNeed(nointeractive, verbose)

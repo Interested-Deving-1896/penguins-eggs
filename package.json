@@ -1,5 +1,5 @@
 {
-    "name": "penguins-eggs",
+    "name": "penguins-eggs-legacy",
     "shortName": "eggs",
     "description": "A remaster system tool, compatible with Almalinux, Alpine, Arch, Debian, Devuan, Fedora, Manjaro, Opensuse, Ubuntu and derivatives",
     "version": "26.6.20",
@@ -97,7 +97,7 @@
     "type": "module",
     "oclif": {
         "bin": "eggs",
-        "dirname": "penguins-eggs",
+        "dirname": "penguins-eggs-legacy",
         "commands": "./dist/commands",
         "plugins": [
             "@oclif/plugin-help",

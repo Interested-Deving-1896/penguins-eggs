@@ -1,6 +1,6 @@
 # Based on: https://git.devuan.org/devuan/refractasnapshot-base/src/branch/master/snapshot_exclude.list
 #
-# Location: /etc/penguins-eggs/exclude.list.d/master.list
+# Location: /etc/penguins-eggs-legacy/exclude.list.d/master.list
 #
 # This is a template, from the original exclude.list of refracta-snapshot
 #

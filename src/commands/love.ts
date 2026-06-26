@@ -102,7 +102,7 @@ export default class Love extends Command {
       cmdSudo = 'doas'
     }
 
-    let loveConf = '/etc/penguins-eggs.d/love.yaml'
+    let loveConf = '/etc/penguins-eggs-legacy.d/love.yaml'
     if (!fs.existsSync(loveConf)) {
       loveConf = __dirname + '/../../conf/love.yaml'
     }

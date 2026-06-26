@@ -55,7 +55,7 @@ export default async function addUser(this: Sequence, username = 'live', passwor
 
   let usersConf = '/etc/calamares/modules/users.conf'
   if (!fs.existsSync(usersConf)) {
-    usersConf = '/etc/penguins-eggs.d/krill/modules/users.conf'
+    usersConf = '/etc/penguins-eggs-legacy.d/krill/modules/users.conf'
   }
 
   if (fs.existsSync(usersConf)) {

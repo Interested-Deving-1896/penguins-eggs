@@ -355,8 +355,8 @@ class Distro implements IDistro {
                * derivatives: families archlinux, debian
                */
               let archDebianDerivatives = path.resolve(__dirname, '../../conf/derivatives.yaml')
-              if (fs.existsSync('/etc/penguins-eggs.d/derivatives.yaml')) {
-                archDebianDerivatives = '/etc/penguins-eggs.d/derivatives.yaml'
+              if (fs.existsSync('/etc/penguins-eggs-legacy.d/derivatives.yaml')) {
+                archDebianDerivatives = '/etc/penguins-eggs-legacy.d/derivatives.yaml'
               }
 
               const content = fs.readFileSync(archDebianDerivatives, 'utf8')
@@ -380,8 +380,8 @@ class Distro implements IDistro {
                */
               if (!found) {
                 let fedoraDerivatives = path.resolve(__dirname, '../../conf/derivatives_fedora.yaml')
-                if (fs.existsSync('/etc/penguins-eggs.d/derivatives_fedora.yaml')) {
-                  fedoraDerivatives = '/etc/penguins-eggs.d/derivatives_fedora.yaml'
+                if (fs.existsSync('/etc/penguins-eggs-legacy.d/derivatives_fedora.yaml')) {
+                  fedoraDerivatives = '/etc/penguins-eggs-legacy.d/derivatives_fedora.yaml'
                 }
 
                 const content = fs.readFileSync(fedoraDerivatives, 'utf8')

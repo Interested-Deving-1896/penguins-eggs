@@ -181,8 +181,8 @@ export async function produce(
     /**
      * exclude.list
      */
-    if (!excludes.static && !fs.existsSync('/etc/penguins-eggs/exclude.list')) {
-      const excludeListTemplateDir = '/etc/penguins-eggs.d/exclude.list.d/'
+    if (!excludes.static && !fs.existsSync('/etc/penguins-eggs-legacy/exclude.list')) {
+      const excludeListTemplateDir = '/etc/penguins-eggs-legacy.d/exclude.list.d/'
       const excludeListTemplate = excludeListTemplateDir + 'master.list'
       if (!fs.existsSync(excludeListTemplate)) {
         Utils.warning('Cannot find: ' + excludeListTemplate)
