@@ -188,7 +188,7 @@ jobs:
           dnf install -y nodejs npm
           npm install -g pnpm
           echo "Installing RPM build dependencies from spec file..."
-          for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs.spec | grep -v 'pnpm' | awk '{print $2}'); do
+          for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs-legacy.spec | grep -v 'pnpm' | awk '{print $2}'); do
             echo "Installing $package..."
             dnf install -y --allowerasing "$package"
           done
@@ -204,8 +204,8 @@ jobs:
       - name: 5. Update Version and Release in .spec File
         run: |
           echo "Updating .spec file to version ${{ steps.version.outputs.version }} and release ${{ steps.release.outputs.release_num }}"
-          sed -i "s/^\(Version: *\).*/\1${{ steps.version.outputs.version }}/" packaging/rpm/penguins-eggs.spec
-          sed -i "s/^\(Release: *\).*/\1${{ steps.release.outputs.release_num }}%{?dist}/" packaging/rpm/penguins-eggs.spec
+          sed -i "s/^\(Version: *\).*/\1${{ steps.version.outputs.version }}/" packaging/rpm/penguins-eggs-legacy.spec
+          sed -i "s/^\(Release: *\).*/\1${{ steps.release.outputs.release_num }}%{?dist}/" packaging/rpm/penguins-eggs-legacy.spec
       
       - name: 6. Import GPG Key and Configure RPM
         run: |
@@ -230,7 +230,7 @@ jobs:
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
           gpg-connect-agent reloadagent /bye
           echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
-          rpmbuild -ba packaging/rpm/penguins-eggs.spec
+          rpmbuild -ba packaging/rpm/penguins-eggs-legacy.spec
           rpmsign --addsign $(find $HOME/rpmbuild/RPMS -name '*.rpm')
           echo "rpm_path=$(find $HOME/rpmbuild/RPMS -name '*.rpm')" >> $GITHUB_OUTPUT
 
@@ -256,7 +256,7 @@ jobs:
       - name: 2. Install Build Dependencies (with jq)
         run: |
           dnf install -y 'dnf-plugins-core' rpm-build git tar gzip curl gnupg2 rpmsign jq
-          for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs.spec | awk '{print $2}'); do
+          for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs-legacy.spec | awk '{print $2}'); do
             dnf install -y "$package"
           done
       - name: 3. Get Package Version from package.json
@@ -270,8 +270,8 @@ jobs:
       - name: 4. Update Version and Release in .spec File
         run: |
           echo "Updating .spec file to version ${{ steps.version.outputs.version }} and release ${{ steps.release.outputs.release_num }}"
-          sed -i "s/^\(Version: *\).*/\1${{ steps.version.outputs.version }}/" packaging/rpm/penguins-eggs.spec
-          sed -i "s/^\(Release: *\).*/\1${{ steps.release.outputs.release_num }}%{?dist}/" packaging/rpm/penguins-eggs.spec
+          sed -i "s/^\(Version: *\).*/\1${{ steps.version.outputs.version }}/" packaging/rpm/penguins-eggs-legacy.spec
+          sed -i "s/^\(Release: *\).*/\1${{ steps.release.outputs.release_num }}%{?dist}/" packaging/rpm/penguins-eggs-legacy.spec
       
       - name: 5. Import GPG Key and Configure RPM
         run: |
@@ -296,7 +296,7 @@ jobs:
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
           gpg-connect-agent reloadagent /bye
           echo "$GPG_PASSPHRASE_ENV" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
-          rpmbuild -ba packaging/rpm/penguins-eggs.spec
+          rpmbuild -ba packaging/rpm/penguins-eggs-legacy.spec
           rpmsign --addsign $(find $HOME/rpmbuild/RPMS -name '*.rpm')
           echo "rpm_path=$(find $HOME/rpmbuild/RPMS -name '*.rpm')" >> $GITHUB_OUTPUT
       - name: 8. Upload RPM Artifact for publishing
@@ -405,15 +405,15 @@ jobs:
       - name: 5. Update .spec and Install Dependencies
         run: |
           echo "Updating .spec file to version ${{ steps.version.outputs.version }} and release ${{ steps.release.outputs.release_num }}"
-          sed -i "s/^\(Version: *\).*/\1${{ steps.version.outputs.version }}/" packaging/rpm/penguins-eggs.spec
-          sed -i "s/^\(Release: *\).*/\1${{ steps.release.outputs.release_num }}%{?dist}/" packaging/rpm/penguins-eggs.spec
+          sed -i "s/^\(Version: *\).*/\1${{ steps.version.outputs.version }}/" packaging/rpm/penguins-eggs-legacy.spec
+          sed -i "s/^\(Release: *\).*/\1${{ steps.release.outputs.release_num }}%{?dist}/" packaging/rpm/penguins-eggs-legacy.spec
           
-          cp packaging/rpm/penguins-eggs.spec packaging/rpm/penguins-eggs.spec.suse
-          sed -i -e '/%if 0%{?suse_version}/,/%endif/c\BuildRequires:  nodejs-devel' packaging/rpm/penguins-eggs.spec.suse
-          sed -i -e '/%if %{expr: 0%{?fedora} || 0%{?suse_version}}/,/%endif/c\BuildRequires:  pnpm' packaging/rpm/penguins-eggs.spec.suse
-          sed -i '/BuildRequires: *pnpm/d' packaging/rpm/penguins-eggs.spec.suse
+          cp packaging/rpm/penguins-eggs-legacy.spec packaging/rpm/penguins-eggs-legacy.spec.suse
+          sed -i -e '/%if 0%{?suse_version}/,/%endif/c\BuildRequires:  nodejs-devel' packaging/rpm/penguins-eggs-legacy.spec.suse
+          sed -i -e '/%if %{expr: 0%{?fedora} || 0%{?suse_version}}/,/%endif/c\BuildRequires:  pnpm' packaging/rpm/penguins-eggs-legacy.spec.suse
+          sed -i '/BuildRequires: *pnpm/d' packaging/rpm/penguins-eggs-legacy.spec.suse
           echo "Installing RPM build dependencies from simplified spec file..."
-          for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs.spec.suse | awk '{print $2}'); do
+          for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs-legacy.spec.suse | awk '{print $2}'); do
             echo "Installing $package..."
             zypper --non-interactive install "$package"
           done
@@ -446,7 +446,7 @@ jobs:
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
           gpg-connect-agent reloadagent /bye
           echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
-          rpmbuild -ba packaging/rpm/penguins-eggs.spec.suse
+          rpmbuild -ba packaging/rpm/penguins-eggs-legacy.spec.suse
           echo "rpm_path=$(find $HOME/rpmbuild/RPMS -name '*.rpm')" >> $GITHUB_OUTPUT
 
       - name: 9. Upload RPM Artifact for publishing
