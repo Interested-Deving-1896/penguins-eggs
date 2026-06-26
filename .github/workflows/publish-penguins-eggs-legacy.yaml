@@ -688,10 +688,36 @@ jobs:
         run: |
           set -e
           echo "--- RPM: Re-indexing ---"
-          cd /mnt/repos/rpm/fedora/42; rm -rf repodata; createrepo . || createrepo_c .;
-          cd /mnt/repos/rpm/opensuse/leap; rm -rf repodata; createrepo_c .;
-          cd /mnt/repos/rpm/el9; rm -rf repodata; createrepo . || createrepo_c .;
-          cd / # Ritorna alla root
+          
+          # Controllo di sicurezza: se l'attrezzo manca, lo forgiamo sul momento
+          if ! command -v createrepo_c &> /dev/null && ! command -v createrepo &> /dev/null; then
+            echo "🛠️ createrepo mancante! Installazione d'emergenza in corso..."
+            if command -v apt-get &> /dev/null; then
+              apt-get update && apt-get install -y createrepo-c
+            elif command -v pacman &> /dev/null; then
+              pacman -Sy --noconfirm createrepo_c
+            elif command -v dnf &> /dev/null; then
+              dnf install -y createrepo_c
+            fi
+          fi
+
+          # Rilevamento del nome esatto dell'eseguibile installato
+          CMD="createrepo_c"
+          if ! command -v createrepo_c &> /dev/null; then 
+            CMD="createrepo"
+          fi
+
+          # Generazione dei metadati
+          echo "Processando Fedora 42..."
+          cd /mnt/repos/rpm/fedora/42 && rm -rf repodata && $CMD .
+          
+          echo "Processando openSUSE Leap..."
+          cd /mnt/repos/rpm/opensuse/leap && rm -rf repodata && $CMD .
+          
+          echo "Processando EL9..."
+          cd /mnt/repos/rpm/el9 && rm -rf repodata && $CMD .
+          
+          echo "✅ Re-indexing RPM completato con successo!"
 
 
       - name: 9. Update Manjaro Repo (WITH Pruning)
