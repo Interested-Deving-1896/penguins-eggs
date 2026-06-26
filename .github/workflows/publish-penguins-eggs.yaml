@@ -1,6 +1,6 @@
 # ========================================================
 # NOME: publish-penguins-eggs
-# DESCRIZIONE: Scarica gli archivi zip di oa-tools da GitHub Releases,
+# DESCRIZIONE: Scarica gli archivi zip di penguins-eggs da GitHub Releases,
 #              li estrae e pubblica i pacchetti nella repository VPS.
 # ========================================================
 name: publish-penguins-eggs
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       oa_tools_version:
-        description: 'Tag della release di oa-tools (es. v0.9.1)'
+        description: 'Tag della release di penguins-eggs (es. v0.9.1)'
         required: true
         type: string
 
@@ -18,7 +18,7 @@ jobs:
   # 1.0 JOB DI PUBBLICAZIONE DEBIAN
   # runs-on: self-hosted (runner vps) CON CONTAINER
   # ========================================================
-  publish-oa-tools-debian:
+  publish-penguins-eggs-debian:
     runs-on: self-hosted
     container:
       image: debian:13
@@ -45,18 +45,18 @@ jobs:
           gpg-connect-agent reloadagent /bye
           echo "$GPG_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
 
-      - name: 3. Fetch & Extract oa-tools Debian packages
+      - name: 3. Fetch & Extract penguins-eggs Debian packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento oa-tools-debian.zip versione ${{ inputs.oa_tools_version }}..."
-          mkdir -p /tmp/oa-tools
+          echo "Scaricamento penguins-eggs-debian.zip versione ${{ inputs.oa_tools_version }}..."
+          mkdir -p /tmp/penguins-eggs
           # Scarica il file zip specifico per Debian
-          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/oa-tools --pattern "oa-tools-debian.zip" --dir /tmp/oa-tools || echo "Nessun zip trovato"
+          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian.zip" --dir /tmp/penguins-eggs || echo "Nessun zip trovato"
           
           echo "Estrazione pacchetti..."
-          unzip -o /tmp/oa-tools/oa-tools-debian.zip -d /tmp/oa-tools/ 2>/dev/null || true
-          cp /tmp/oa-tools/*.deb /mnt/deb-repo/pool/main/ 2>/dev/null || true
+          unzip -o /tmp/penguins-eggs/penguins-eggs-debian.zip -d /tmp/penguins-eggs/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/*.deb /mnt/deb-repo/pool/main/ 2>/dev/null || true
 
       - name: 4. Update Debian Repo (NO Pruning)
         env:
@@ -90,7 +90,7 @@ jobs:
   # 2.0 JOB DI PUBBLICAZIONE ALTRE DISTRO
   # runs-on: self-hosted (runner vps) 
   # ========================================================
-  publish-oa-tools-others:
+  publish-penguins-eggs-others:
     runs-on: self-hosted 
     container:
       image: archlinux
@@ -104,29 +104,29 @@ jobs:
           pacman -Syu --noconfirm
           pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools github-cli unzip
 
-      - name: 2. Fetch, Extract & Distribute oa-tools packages
+      - name: 2. Fetch, Extract & Distribute penguins-eggs packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento archivi zip oa-tools versione ${{ inputs.oa_tools_version }}..."
-          mkdir -p /tmp/oa-tools
+          echo "Scaricamento archivi zip penguins-eggs versione ${{ inputs.oa_tools_version }}..."
+          mkdir -p /tmp/penguins-eggs
           # Scarica tutti i file .zip dalla release
-          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/oa-tools --pattern "*.zip" --dir /tmp/oa-tools || echo "Nessun file zip trovato"
+          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/penguins-eggs --pattern "*.zip" --dir /tmp/penguins-eggs || echo "Nessun file zip trovato"
           
-          echo "Estrazione e smistamento dei pacchetti oa-tools nelle rispettive cartelle..."
+          echo "Estrazione e smistamento dei pacchetti penguins-eggs nelle rispettive cartelle..."
           # Estraiamo in sottocartelle per evitare di mescolare file con la stessa estensione (es. .rpm per fedora e opensuse)
-          unzip -o /tmp/oa-tools/oa-tools-alpine.zip -d /tmp/oa-tools/alpine/ 2>/dev/null || true
-          unzip -o /tmp/oa-tools/oa-tools-arch.zip -d /tmp/oa-tools/arch/ 2>/dev/null || true
-          unzip -o /tmp/oa-tools/oa-tools-manjaro.zip -d /tmp/oa-tools/manjaro/ 2>/dev/null || true
-          unzip -o /tmp/oa-tools/oa-tools-fedora.zip -d /tmp/oa-tools/fedora/ 2>/dev/null || true
-          unzip -o /tmp/oa-tools/oa-tools-opensuse.zip -d /tmp/oa-tools/opensuse/ 2>/dev/null || true
+          unzip -o /tmp/penguins-eggs/penguins-eggs-alpine.zip -d /tmp/penguins-eggs/alpine/ 2>/dev/null || true
+          unzip -o /tmp/penguins-eggs/penguins-eggs-arch.zip -d /tmp/penguins-eggs/arch/ 2>/dev/null || true
+          unzip -o /tmp/penguins-eggs/penguins-eggs-manjaro.zip -d /tmp/penguins-eggs/manjaro/ 2>/dev/null || true
+          unzip -o /tmp/penguins-eggs/penguins-eggs-fedora.zip -d /tmp/penguins-eggs/fedora/ 2>/dev/null || true
+          unzip -o /tmp/penguins-eggs/penguins-eggs-opensuse.zip -d /tmp/penguins-eggs/opensuse/ 2>/dev/null || true
           
           echo "Copia nei percorsi del repository..."
-          cp /tmp/oa-tools/alpine/*.apk /mnt/repos/alpine/ 2>/dev/null || true
-          cp /tmp/oa-tools/arch/*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
-          cp /tmp/oa-tools/manjaro/*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
-          cp /tmp/oa-tools/fedora/*.rpm /mnt/repos/rpm/fedora/42/ 2>/dev/null || true
-          cp /tmp/oa-tools/opensuse/*.rpm /mnt/repos/rpm/opensuse/leap/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/alpine/*.apk /mnt/repos/alpine/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/arch/*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/manjaro/*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/fedora/*.rpm /mnt/repos/rpm/fedora/42/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/opensuse/*.rpm /mnt/repos/rpm/opensuse/leap/ 2>/dev/null || true
 
       - name: 3. Import GPG Key
         env:
