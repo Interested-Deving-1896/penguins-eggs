@@ -690,7 +690,7 @@ jobs:
           echo "--- RPM: Re-indexing ---"
           cd /mnt/repos/rpm/fedora/42; rm -rf repodata; createrepo_c .;
           cd /mnt/repos/rpm/opensuse/leap; rm -rf repodata; createrepo_c .;
-          cd /mnt/repos/rpm/el9; rm -rf repodata; createrepo_c .;
+          cd /mnt/repos/rpm/el9; rm -rf repodata; createrepo . || createrepo_c .
           cd / # Ritorna alla root
 
 
