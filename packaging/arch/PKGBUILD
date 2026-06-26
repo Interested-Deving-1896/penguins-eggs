@@ -4,7 +4,7 @@
 # contributor: Piero Proietti <piero.proietti_at_gmail.com>
 _bootloadersver=26.1.16
 
-pkgname=penguins-eggs
+pkgname=penguins-eggs-legacy
 pkgver=26.1.24
 pkgrel=1
 pkgdesc="A console tool that allows you to remaster your system and redistribute it as live images on USB sticks or via PXE"

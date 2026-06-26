@@ -14,7 +14,7 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-%global app_name penguins-eggs
+%global app_name penguins-eggs-legacy
 %global nodejs_prefix %{_prefix}/lib/%{app_name}
 %define pkglibdir %{nodejs_prefix}
 
