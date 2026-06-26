@@ -90,6 +90,7 @@ jobs:
               arch-indexer \
               bash -c "
                 set -e
+                cd /repo  # <--- AGGIUNGI QUESTO
                 echo '--- Container: Importing GPG key from file ---'
                 gpg --import --batch /tmp/gpg.key
                 
@@ -129,7 +130,9 @@ jobs:
               arch-indexer \
               bash -c "
                 set -e
+                cd /repo
                 echo '--- Container: Importing GPG key from file ---'
+                
                 gpg --import --batch /tmp/gpg.key
                 
                 mkdir -p ~/.gnupg
@@ -164,6 +167,7 @@ jobs:
               alpine-indexer \
               sh -c "
                 set -ex 
+                cd /repo  # <--- AGGIUNGI QUESTO
                 
                 # 1. Abilitiamo 'community' (come root)
                 echo '--- ALPINE: Enabling community repository ---'
