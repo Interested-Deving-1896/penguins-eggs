@@ -8,7 +8,7 @@
 
 import fs from 'fs'
 import { Box, render, Text } from 'ink'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 // pjson
 import { createRequire } from 'module';
 import React, {useEffect, useState} from 'react'

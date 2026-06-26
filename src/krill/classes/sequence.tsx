@@ -13,7 +13,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname)
 import cliCursor from 'cli-cursor'
 import fs from 'fs'
 import { Box, render, RenderOptions, Text } from 'ink'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import os from 'os'
 import React from 'react'
 

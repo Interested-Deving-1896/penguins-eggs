@@ -6,7 +6,7 @@
  * license: MIT
  */
 import chalk from 'chalk'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import mustache from 'mustache'
 import fs from 'node:fs'
 import path from 'node:path'

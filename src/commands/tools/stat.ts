@@ -14,7 +14,7 @@ import Utils from '../../classes/utils.js'
 const agent = new https.Agent({
   rejectUnauthorized: false
 })
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 
 /**
  *

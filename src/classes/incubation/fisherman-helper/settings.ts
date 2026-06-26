@@ -12,7 +12,7 @@
  * @param isClone
  */
 
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs'
 import Path from 'node:path'
 

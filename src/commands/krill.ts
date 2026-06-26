@@ -7,7 +7,7 @@
  */
 
 import { Command, Flags, flush } from '@oclif/core'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs'
 import https from 'node:https'
 

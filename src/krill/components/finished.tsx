@@ -8,7 +8,7 @@
 
 import fs from 'fs'
 import { Box, Newline, Spacer, Text } from 'ink'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import React, { useState } from 'react'
 
 import { IBranding, ISettings } from '../../interfaces/index.js'

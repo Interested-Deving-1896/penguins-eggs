@@ -9,7 +9,7 @@
 // libraries
 import { Args, Command, Flags } from '@oclif/core'
 import chalk from 'chalk'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs'
 import path from 'node:path'
 

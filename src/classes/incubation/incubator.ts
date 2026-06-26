@@ -10,7 +10,7 @@
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 // partition
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs'
 import path from 'node:path'
 

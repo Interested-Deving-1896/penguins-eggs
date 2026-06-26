@@ -1,5 +1,5 @@
 import { select } from '@inquirer/prompts'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs'
 
 import { IPartitions } from '../../interfaces/index.js'

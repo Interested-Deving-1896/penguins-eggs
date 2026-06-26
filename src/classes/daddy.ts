@@ -7,7 +7,7 @@
 
 import chalk from 'chalk'
 import inquirer from 'inquirer'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs/promises'
 import path from 'node:path'
 

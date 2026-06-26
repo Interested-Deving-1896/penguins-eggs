@@ -9,7 +9,7 @@
 import fs from 'fs'
 import { Box, Newline, Text } from 'ink'
 import Spinner from 'ink-spinner'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import React, { useState } from 'react'
 
 import { IBranding, ISettings } from '../../interfaces/index.js'

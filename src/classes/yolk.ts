@@ -6,7 +6,7 @@
  * license: MIT
  */
 
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 import fs from 'node:fs'
 
 import { exec, shx } from '../lib/utils.js'
