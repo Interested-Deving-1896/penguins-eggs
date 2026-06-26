@@ -18,7 +18,7 @@ jobs:
   # 1.0 JOB DI PUBBLICAZIONE DEBIAN
   # runs-on: self-hosted (runner vps) CON CONTAINER
   # ========================================================
-  publish-debian-oa-tools:
+  publish-oa-tools-debian:
     runs-on: self-hosted
     container:
       image: debian:13
@@ -90,7 +90,7 @@ jobs:
   # 2.0 JOB DI PUBBLICAZIONE ALTRE DISTRO
   # runs-on: self-hosted (runner vps) 
   # ========================================================
-  publish-others-oa-tools:
+  publish-oa-tools-others:
     runs-on: self-hosted 
     container:
       image: archlinux
