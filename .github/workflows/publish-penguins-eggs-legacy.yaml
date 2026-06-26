@@ -628,32 +628,32 @@ jobs:
 
 
       # Update 
-      - name: 6. Update Alpine Repo (WITH Pruning)
-        env:
-          ALPINE_SIGNING_KEY_PUB: ${{ secrets.ALPINE_SIGNING_KEY_PUB }}
-        run: |
-          set -ex
-          cd /mnt/repos/alpine
+      # - name: 6. Update Alpine Repo (WITH Pruning)
+      #   env:
+      #     ALPINE_SIGNING_KEY_PUB: ${{ secrets.ALPINE_SIGNING_KEY_PUB }}
+      #   run: |
+      #     set -ex
+      #     cd /mnt/repos/alpine
 
-          echo "--- ALPINE: Flattening directory structure ---"
-          find . -mindepth 2 -type f -name '*.apk' -exec mv {} . \;
+      #     echo "--- ALPINE: Flattening directory structure ---"
+      #     find . -mindepth 2 -type f -name '*.apk' -exec mv {} . \;
           
-          echo "--- ALPINE: Files BEFORE cleaning ---"
-          ls -l
+      #     echo "--- ALPINE: Files BEFORE cleaning ---"
+      #     ls -l
 
-          echo '--- ALPINE: Cleaning old packages ---'
-          PKG_BASES=$(find . -maxdepth 1 -name '*.apk' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
-          echo "--- ALPINE: Found package bases: $PKG_BASES"
-          for base in $PKG_BASES; do
-            echo "--- Processing: $base ---"
-            ls ${base}-[0-9]*.apk 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
-          done
-          echo '--- ALPINE: Cleaning complete ---'
+      #     echo '--- ALPINE: Cleaning old packages ---'
+      #     PKG_BASES=$(find . -maxdepth 1 -name '*.apk' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
+      #     echo "--- ALPINE: Found package bases: $PKG_BASES"
+      #     for base in $PKG_BASES; do
+      #       echo "--- Processing: $base ---"
+      #       ls ${base}-[0-9]*.apk 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+      #     done
+      #     echo '--- ALPINE: Cleaning complete ---'
           
-          rm -f APKINDEX.tar.gz
-          apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
-          echo "$ALPINE_SIGNING_KEY_PUB" > penguins-eggs-legacy.rsa.pub
-          cd / # Ritorna alla root      
+      #     rm -f APKINDEX.tar.gz
+      #     apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
+      #     echo "$ALPINE_SIGNING_KEY_PUB" > penguins-eggs-legacy.rsa.pub
+      #     cd / # Ritorna alla root      
 
       - name: 7. Update Arch Repo (WITH Pruning)
         env:
