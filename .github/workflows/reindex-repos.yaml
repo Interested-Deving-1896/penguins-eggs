@@ -116,8 +116,12 @@ jobs:
                 # --- FINE LOGICA DI PULIZIA ---
                 
                 echo '--- ARCH: Indexing remaining packages ---'
-                rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz && \
-                repo-add --sign --key \"\$GPG_KEY_ID\" penguins-eggs.db.tar.gz *.pkg.tar.zst
+                if ls *.pkg.tar.zst 1> /dev/null 2>&1; then
+                  rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
+                  repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
+                else
+                  echo "⚠️ Nessun pacchetto trovato, salto l'indicizzazione."
+                fi
               "
             
             # --- 4. Re-index Manjaro (MODIFICATO CON PULIZIA) ---
@@ -153,8 +157,12 @@ jobs:
                 # --- FINE LOGICA DI PULIZIA ---
 
                 echo '--- MANJARO: Indexing remaining packages ---'
-                rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz && \
-                repo-add --sign --key \"\$GPG_KEY_ID\" penguins-eggs.db.tar.gz *.pkg.tar.zst
+                if ls *.pkg.tar.zst 1> /dev/null 2>&1; then
+                  rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
+                  repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
+                else
+                  echo "⚠️ Nessun pacchetto trovato, salto l'indicizzazione."
+                fi
               "
 
             # --- 5. Re-index Alpine (MODIFICATO CON PULIZIA) ---
