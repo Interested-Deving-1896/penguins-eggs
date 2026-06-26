@@ -286,12 +286,31 @@ jobs:
             --exclude=.git --exclude=.github .
           curl -LO https://github.com/pieroproietti/penguins-bootloaders/releases/download/${{ env.BOOTLOADERS_VERSION }}/bootloaders.tar.gz
           cp bootloaders.tar.gz $HOME/rpmbuild/SOURCES/
+
+      - name: 7. Build and Sign RPM package
+        id: build
+        env:
+          GPG_PASSPHRASE_ENV: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          mkdir -p ~/.gnupg
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+          gpg-connect-agent reloadagent /bye
+          echo "$GPG_PASSPHRASE_ENV" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
+          
+          # Compila ed esegue la firma
+          rpmbuild -ba packaging/rpm/penguins-eggs-legacy.spec
+          rpmsign --addsign $(find $HOME/rpmbuild/RPMS -name '*.rpm')
+          
+          # Passiamo l'intera cartella invece dei singoli file!
+          echo "rpm_dir=$HOME/rpmbuild/RPMS" >> $GITHUB_OUTPUT
+
       - name: 8. Upload RPM Artifact for publishing
         uses: actions/upload-artifact@v4
         with:
           name: fedora-42-rpm-for-repo
-          path: ${{ steps.build.outputs.rpm_path }}
-    # END build-fc42
+          # Usa la variabile della cartella
+          path: ${{ steps.build.outputs.rpm_dir }}    # END build-fc42
 
   # ========================================================
   # build-manjaro
