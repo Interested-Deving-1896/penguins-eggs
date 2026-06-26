@@ -8,7 +8,7 @@ NODE_VERSION="22.22.0"
 #BOOTLOADERS_TAG="v25.9.8"
 BOOTLOADERS_TAG="v26.1.16"
 ARCH="x86_64"
-APP_NAME="penguins-eggs"
+APP_NAME="penguins-eggs-legacy"
 CACHE_DIR="cache"
 
 # Crea directory di cache se non esiste

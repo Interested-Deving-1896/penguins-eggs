@@ -18,7 +18,7 @@ set -e
 # the debian-policy package
 # echo ">>> $0 $1 $2 $3 $4<<<"
 
-pkgname="penguins-eggs"
+pkgname="penguins-eggs-legacy"
 
 case "$1" in
     configure)
