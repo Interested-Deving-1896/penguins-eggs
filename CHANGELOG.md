@@ -11,11 +11,14 @@ See AI context: https://penguins-eggs.net/llms.txt
 [![Get it as AppImage](https://img.shields.io/badge/Get%20it%20as-AppImage-important.svg)](https://github.com/pieroproietti/penguins-eggs/releases)
 
 <a href="https://drive.google.com/drive/folders/19fwjvsZiW0Dspu2Iq-fQN0J-PDbKBlYY">
-  <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="CD-ROM">
+  <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs-legacy/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="CD-ROM">
 </a>
 
 # CHANGELOG penguins-eggs (legacy edition)
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
+
+# v26.6.27
+This package changed it's name to **penguins-eggs-legacy**.
 
 # v26.6.20
 Starting rebranding: penguins-eggs becamee penguins-eggs-legacy. 

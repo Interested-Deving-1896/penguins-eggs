@@ -13,29 +13,14 @@ See AI context: https://penguins-eggs.net/llms.txt
 [![Get it as AppImage](https://img.shields.io/badge/Get%20it%20as-AppImage-important.svg)](https://github.com/pieroproietti/penguins-eggs/releases)
 
 <a href="https://github.com/pieroproietti/coa">
-  <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="penguins-eggs to coa">
+  <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs-legacy/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="penguins-eggs to coa">
 </a>
 
 See AI context: https://penguins-eggs.net/llms.txt
-## ⚡ REBRANDING NOTICE
 
-**`oa-tools` becomes the new `penguins-eggs`**
-
-| Past | Present |
-| :--- | :--- |
-| `oa-tools` (C/Go) | → **`penguins-eggs`**  |
-| `penguins-eggs` (TypeScript) | → **`penguins-eggs-legacy`** maintained |
-
-The `penguins-eggs-legacy` remains supported, the new `penguins-eggs` will be ready soon.
-**Note:** At the moment the packages name are unchanged `penguins-eggs` and `oa-tools`,
-
-*The rebranding is officially underway.*
-
-— Piero Proietti
-
-### 🥚 penguins-eggs
-After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: the old good  penguins-eggs became [penguins-eggs-legacy](https://github.com/pieroproietti/penguins-eggs) and we have [penguins-eggs](https://github.com/pieroproietti/penguins-eggs) oa-edition.
-penguins-eggs is built on **oa**, a high-performance C-native remastering engine, and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
+### 🥚 penguins-eggs-legacy
+After years of passionate work on **penguins-eggs**, I am now undertaking its next evolution: the old good  penguins-eggs became [penguins-eggs-legacy](https://github.com/pieroproietti/penguins-eggs) and we have [penguins-eggs](https://github.com/pieroproietti/penguins-eggs).
+The new penguins-eggs is built on **oa**, a high-performance C-native remastering engine and **coa**, its intelligent Go orchestrator. This new architecture replaces fragile bash scripts with native Linux kernel syscalls and strict zero-copy principles — delivering a significant leap in speed and reliability.
 The goal is ambitious: a truly universal approach to Linux remastering. Every distribution is different, yet they all share common roots. oa-tools already supports Alpine, Arch, Debian, Fedora, Manjaro and openSUSE — and aims to prove that a single, unified engine can handle them all.
 
 [![donate](https://img.shields.io/badge/Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/penguinseggs)
@@ -68,7 +53,7 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 - [FAQ](https://penguins-eggs.net/docs/faq)
 - [Changelog](https://github.com/pieroproietti/penguins-eggs/blob/master/CHANGELOG.md#changelog)
 
-# penguins-eggs (legacy edition)
+# penguins-eggs-legacy
 
 **penguins-eggs** (or simply `eggs`) is a console tool that allows you to
 remaster your system and redistribute it as live images on USB sticks or via
