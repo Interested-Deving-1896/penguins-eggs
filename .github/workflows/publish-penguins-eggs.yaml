@@ -125,7 +125,7 @@ jobs:
           cp /tmp/penguins-eggs/alpine/*.apk /mnt/repos/alpine/ 2>/dev/null || true
           cp /tmp/penguins-eggs/arch/*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
           cp /tmp/penguins-eggs/manjaro/*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
-          cp /tmp/penguins-eggs/fedora/*.rpm /mnt/repos/rpm/fedora/42/ 2>/dev/null || true
+          cp /tmp/penguins-eggs/fedora/*.rpm /mnt/repos/rpm/fedora/42/x86_64/ 2>/dev/null || true
           cp /tmp/penguins-eggs/opensuse/*.rpm /mnt/repos/rpm/opensuse/leap/ 2>/dev/null || true
 
       - name: 3. Import GPG Key
@@ -174,7 +174,7 @@ jobs:
         run: |
           set -e
           echo "--- RPM: Re-indexing ---"
-          cd /mnt/repos/rpm/fedora/42; rm -rf repodata; createrepo_c .;
+          cd /mnt/repos/rpm/fedora/42/x86_64/; rm -rf repodata; createrepo_c .;
           cd /mnt/repos/rpm/opensuse/leap; rm -rf repodata; createrepo_c .;
 
       - name: 7. Update Manjaro Repo (WITH Pruning)

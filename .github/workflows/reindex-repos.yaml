@@ -75,7 +75,7 @@ jobs:
                     dists/stable/Release
                 
                 echo '--- RPM: Indexing ---'
-                cd /repo/rpm/fedora/42; rm -rf repodata; createrepo_c .;
+                cd /repo/rpm/fedora/42/x86_64/; rm -rf repodata; createrepo_c .;
                 cd /repo/rpm/opensuse/leap; rm -rf repodata; createrepo_c .;
                 cd /repo/rpm/el9; rm -rf repodata; createrepo_c .;
               "
