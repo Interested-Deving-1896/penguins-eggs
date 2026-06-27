@@ -76,8 +76,8 @@ jobs:
                 
                 echo '--- RPM: Indexing ---'
                 cd /repo/rpm/fedora/42/x86_64/; rm -rf repodata; createrepo_c .;
-                cd /repo/rpm/opensuse/leap; rm -rf repodata; createrepo_c .;
-                cd /repo/rpm/el9; rm -rf repodata; createrepo_c .;
+                cd /repo/rpm/opensuse/leap/x86_64; rm -rf repodata; createrepo_c .;
+                cd /repo/rpm/el9/x86_64; rm -rf repodata; createrepo_c .;
               "
             
             # --- 3. Re-index Arch (MODIFICATO CON PULIZIA) ---

@@ -591,13 +591,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: fedora-42-rpm-for-repo
-          path: /mnt/repos/rpm/fedora/42/
+          path: /mnt/repos/rpm/fedora/42/x86_64/
 
       - name: 3.4 Download EL9 artifacts
         uses: actions/download-artifact@v4
         with:
           name: el9-rpm-for-repo
-          path: /mnt/repos/rpm/el9/
+          path: /mnt/repos/rpm/el9/x86_64/
 
       - name: 3.5 Download Manjaro artifacts
         uses: actions/download-artifact@v4
@@ -609,7 +609,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: opensuse-leap-rpm-for-repo
-          path: /mnt/repos/rpm/opensuse/leap/
+          path: /mnt/repos/rpm/opensuse/leap/x86_64/
 
       - name: 4. Import GPG Key
         env:
@@ -709,13 +709,13 @@ jobs:
 
           # Generazione dei metadati
           echo "Processando Fedora 42..."
-          cd /mnt/repos/rpm/fedora/42 && rm -rf repodata && $CMD .
+          cd /mnt/repos/rpm/fedora/42/x86_64/ && rm -rf repodata && $CMD .
           
           echo "Processando openSUSE Leap..."
-          cd /mnt/repos/rpm/opensuse/leap && rm -rf repodata && $CMD .
+          cd /mnt/repos/rpm/opensuse/leap/x86_64/ && rm -rf repodata && $CMD .
           
           echo "Processando EL9..."
-          cd /mnt/repos/rpm/el9 && rm -rf repodata && $CMD .
+          cd /mnt/repos/rpm/el9/x86_64/ && rm -rf repodata && $CMD .
           
           echo "✅ Re-indexing RPM completato con successo!"
 
