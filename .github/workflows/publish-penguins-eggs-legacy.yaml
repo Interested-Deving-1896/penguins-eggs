@@ -557,8 +557,7 @@ jobs:
   # runs-on: self-hosted (runner vps) 
   # ========================================================
     publish-all-repos:
-      #needs: [build-alpine, build-arch, build-el9, build-fc42, build-manjaro, build-opensuse, publish-debian-repo]
-      needs: [build-arch, build-el9, build-fc42, build-manjaro, build-opensuse, publish-debian-repo]
+      needs: [build-alpine, build-arch, build-el9, build-fc42, build-manjaro, build-opensuse, publish-debian-repo]
       runs-on: self-hosted 
 
       container:
