@@ -8,8 +8,8 @@ name: publish-penguins-eggs
 on:
   workflow_dispatch:
     inputs:
-      oa_tools_version:
-        description: 'Tag della release di penguins-eggs (es. v0.9.1)'
+      penguins_eggs_version:
+        description: 'Tag della release di penguins-eggs (es. v0.9.2)'
         required: true
         type: string
 
@@ -49,10 +49,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento penguins-eggs-debian.zip versione ${{ inputs.oa_tools_version }}..."
+          echo "Scaricamento penguins-eggs-debian.zip versione ${{ inputs.penguins_eggs_version }}..."
           mkdir -p /tmp/penguins-eggs
           # Scarica il file zip specifico per Debian
-          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian.zip" --dir /tmp/penguins-eggs || echo "Nessun zip trovato"
+          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian.zip" --dir /tmp/penguins-eggs || echo "Nessun zip trovato"
           
           echo "Estrazione pacchetti..."
           unzip -o /tmp/penguins-eggs/penguins-eggs-debian.zip -d /tmp/penguins-eggs/ 2>/dev/null || true
@@ -108,10 +108,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento archivi zip penguins-eggs versione ${{ inputs.oa_tools_version }}..."
+          echo "Scaricamento archivi zip penguins-eggs versione ${{ inputs.penguins_eggs_version }}..."
           mkdir -p /tmp/penguins-eggs
           # Scarica tutti i file .zip dalla release
-          gh release download ${{ inputs.oa_tools_version }} --repo pieroproietti/penguins-eggs --pattern "*.zip" --dir /tmp/penguins-eggs || echo "Nessun file zip trovato"
+          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "*.zip" --dir /tmp/penguins-eggs || echo "Nessun file zip trovato"
           
           echo "Estrazione e smistamento dei pacchetti penguins-eggs nelle rispettive cartelle..."
           # Estraiamo in sottocartelle per evitare di mescolare file con la stessa estensione (es. .rpm per fedora e opensuse)
