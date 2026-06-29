@@ -122,7 +122,7 @@ jobs:
           unzip -o /tmp/penguins-eggs/penguins-eggs-opensuse.zip -d /tmp/penguins-eggs/opensuse/ 2>/dev/null || true
           
           echo "Copia nei percorsi del repository..."
-          cp /tmp/penguins-eggs/alpine/*.apk /mnt/repos/alpine/ 2>/dev/null || true
+          # cp /tmp/penguins-eggs/alpine/*.apk /mnt/repos/alpine/ 2>/dev/null || true
           cp /tmp/penguins-eggs/arch/*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
           cp /tmp/penguins-eggs/manjaro/*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
           cp /tmp/penguins-eggs/fedora/*.rpm /mnt/repos/rpm/fedora/42/x86_64/ 2>/dev/null || true
@@ -145,15 +145,84 @@ jobs:
           ALPINE_SIGNING_KEY_PUB: ${{ secrets.ALPINE_SIGNING_KEY_PUB }}
         run: |
           set -ex
-          cd /mnt/repos/alpine
-          echo '--- ALPINE: Cleaning old packages ---'
-          PKG_BASES=$(find . -maxdepth 1 -name '*.apk' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
-          for base in $PKG_BASES; do
-            ls ${base}-[0-9]*.apk 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+          
+          # 1. Esporta la chiave pubblica nella root della repo Alpine
+          echo "$ALPINE_SIGNING_KEY_PUB" > /mnt/repos/alpine/piero.proietti@gmail.com-66b8815d.rsa.pub
+          
+          # 2. Smista i pacchetti scaricati nelle cartelle delle architetture corrette
+          for apk in /tmp/penguins-eggs/alpine/*.apk; do
+            [ -f "$apk" ] || continue
+            
+            # Estrae l'architettura leggendo il file di metadati interno all'apk
+            ARCH=$(tar -zxf "$apk" .PKGINFO -O | grep '^arch = ' | cut -d' ' -f3)
+            # Fallback di sicurezza (se per qualche motivo non la trova)
+            if [ -z "$ARCH" ]; then ARCH="x86_64"; fi
+            
+            echo "Smisto pacchetto $(basename "$apk") -> Architettura: $ARCH"
+            mkdir -p "/mnt/repos/alpine/$ARCH"
+            cp "$apk" "/mnt/repos/alpine/$ARCH/"
           done
-          rm -f APKINDEX.tar.gz
-          apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
-          echo "$ALPINE_SIGNING_KEY_PUB" > penguins-eggs.rsa.pub
+          
+          # 3. Pulisci e indicizza ogni cartella di architettura trovata
+          for arch_dir in /mnt/repos/alpine/*/; do
+            [ -d "$arch_dir" ] || continue
+            ARCH=$(basename "$arch_dir")
+            echo "--- ALPINE: Elaborazione architettura $ARCH ---"
+            
+            cd "$arch_dir"
+            
+            # Pruning dei vecchi pacchetti in questa specifica architettura
+            PKG_BASES=$(find . -maxdepth 1 -name '*.apk' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
+            for base in $PKG_BASES; do
+              ls ${base}-[0-9]*.apk 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+            done
+            
+            # Generazione del nuovo indice
+            rm -f APKINDEX.tar.gz
+            apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
+          done
+      
+      - name: 4. Update Alpine Repo (WITH Pruning)
+        env:
+          ALPINE_SIGNING_KEY_PUB: ${{ secrets.ALPINE_SIGNING_KEY_PUB }}
+        run: |
+          set -ex
+          
+          # 1. Esporta la chiave pubblica nella root della repo Alpine
+          echo "$ALPINE_SIGNING_KEY_PUB" > /mnt/repos/alpine/piero.proietti@gmail.com-66b8815d.rsa.pub
+          
+          # 2. Smista i pacchetti scaricati nelle cartelle delle architetture corrette
+          for apk in /tmp/penguins-eggs/alpine/*.apk; do
+            [ -f "$apk" ] || continue
+            
+            # Estrae l'architettura leggendo il file di metadati interno all'apk
+            ARCH=$(tar -zxf "$apk" .PKGINFO -O | grep '^arch = ' | cut -d' ' -f3)
+            # Fallback di sicurezza (se per qualche motivo non la trova)
+            if [ -z "$ARCH" ]; then ARCH="x86_64"; fi
+            
+            echo "Smisto pacchetto $(basename "$apk") -> Architettura: $ARCH"
+            mkdir -p "/mnt/repos/alpine/$ARCH"
+            cp "$apk" "/mnt/repos/alpine/$ARCH/"
+          done
+          
+          # 3. Pulisci e indicizza ogni cartella di architettura trovata
+          for arch_dir in /mnt/repos/alpine/*/; do
+            [ -d "$arch_dir" ] || continue
+            ARCH=$(basename "$arch_dir")
+            echo "--- ALPINE: Elaborazione architettura $ARCH ---"
+            
+            cd "$arch_dir"
+            
+            # Pruning dei vecchi pacchetti in questa specifica architettura
+            PKG_BASES=$(find . -maxdepth 1 -name '*.apk' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
+            for base in $PKG_BASES; do
+              ls ${base}-[0-9]*.apk 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+            done
+            
+            # Generazione del nuovo indice
+            rm -f APKINDEX.tar.gz
+            apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
+          done
 
       - name: 5. Update Arch Repo (WITH Pruning)
         env:
