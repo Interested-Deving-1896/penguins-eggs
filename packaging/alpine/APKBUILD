@@ -106,16 +106,16 @@ package() {
 
   # Install bash completion files
   install -d "$pkgdir"/usr/share/bash-completion/completions
-  mv "$pkgdir/usr/lib/$pkgname/scripts/eggs.bash" \
-    "$pkgdir"/usr/share/bash-completion/completions/
+  mv "$pkgdir/usr/lib/$pkgname/scripts/eggs-legacy.bash" \
+    "$pkgdir"/usr/share/bash-completion/completions/eggs-legacy
 
   # Install Zsh completion files
   install -d "$pkgdir"/usr/share/zsh/functions/Completion/Zsh/
-  mv "$pkgdir/usr/lib/$pkgname/scripts/_eggs" \
-    "$pkgdir"/usr/share/zsh/functions/Completion/Zsh/
+  mv "$pkgdir/usr/lib/$pkgname/scripts/_eggs-legacy" \
+    "$pkgdir"/usr/share/zsh/functions/Completion/Zsh/_eggs-legacy
 
   # Install man page
-  install -Dm644 manpages/doc/man/eggs.1.gz -t "$pkgdir"/usr/share/man/man1/
+  install -Dm644 manpages/doc/man/eggs-legacy.1.gz -t "$pkgdir"/usr/share/man/man1/
 
   # create applications
   install -d "${pkgdir}/usr/share/applications"
@@ -136,7 +136,7 @@ package() {
 
   # Symlink executable
    install -d "$pkgdir/"usr/bin
-   ln -s /usr/lib/"$pkgname"/bin/run.js "$pkgdir"/usr/bin/eggs
+   ln -s /usr/lib/"$pkgname"/bin/run.js "$pkgdir"/usr/bin/eggs-legacy
 
 }
 

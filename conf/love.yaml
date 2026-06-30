@@ -1,7 +1,7 @@
 # Penguins' eggs
 # love.yaml
 ---
-- eggs kill
-- eggs dad --default
-- eggs tools clean
-- eggs produce --addons adapt
+- eggs-legacy kill
+- eggs-legacy dad --default
+- eggs-legacy tools clean
+- eggs-legacy produce --addons adapt

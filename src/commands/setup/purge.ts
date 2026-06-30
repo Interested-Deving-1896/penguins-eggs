@@ -62,8 +62,8 @@ export default class Purge extends Command {
         execSync('rm -f /usr/local/bin/g4*')
 
         console.log('penguins-eggs AppImage stuffs was successfully removed.\n')
-        if (appImagePath === '/usr/bin/eggs') {
-          execSync(`rm -f ${appImagePath} /usr/bin/eggs`)
+        if (appImagePath === '/usr/bin/eggs-legacy') {
+          execSync(`rm -f ${appImagePath} /usr/bin/eggs-legacy`)
         } else {
           console.log('You can completely erase AppImage file, using:')
           console.log(`sudo rm ${appImagePath}\n`)

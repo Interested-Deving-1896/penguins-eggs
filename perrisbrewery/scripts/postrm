@@ -55,8 +55,9 @@ case "$1" in
         rm -f /etc/systemd/system/pve-live.service
 
         # sanitize bash completion
-        rm -f /usr/share/bash-completion/completions/eggs.bash
-        rm -f /usr/share/zsh/functions/Completion/Zsh/_eggs
+        rm -f /usr/share/bash-completion/completions/eggs-legacy
+        rm -f /usr/share/bash-completion/completions/eggs-legacy.bash
+        rm -f /usr/share/zsh/functions/Completion/Zsh/_eggs-legacy
 
         # sanitize yolk
         rm -rf /var/local/yolk

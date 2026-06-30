@@ -40,8 +40,6 @@ Source1:        bootloaders.tar.gz
 Provides:       bundled(nodejs-module)
 
 
-Conflicts:      oa-tools
-
 # ==============================================================================
 # DIPENDENZE DI BUILD COMUNI
 # ==============================================================================
@@ -138,18 +136,18 @@ cp -r bootloaders %{buildroot}%{nodejs_prefix}/
 
 # Install executable symlink
 install -d -m 755 %{buildroot}%{_bindir}
-ln -s ../lib/penguins-eggs/bin/run.js %{buildroot}%{_bindir}/eggs
+ln -s ../lib/penguins-eggs/bin/run.js %{buildroot}%{_bindir}/eggs-legacy
 
 # Install shell completions
 install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions
-ln -s ../../../..%{nodejs_prefix}/scripts/eggs.bash %{buildroot}%{_datadir}/bash-completion/completions/eggs
+ln -s ../../../..%{nodejs_prefix}/scripts/eggs-legacy.bash %{buildroot}%{_datadir}/bash-completion/completions/eggs-legacy
 
 install -d -m 755 %{buildroot}%{_datadir}/zsh/site-functions
-ln -s ../../../..%{nodejs_prefix}/scripts/_eggs %{buildroot}%{_datadir}/zsh/site-functions/_eggs
+ln -s ../../../..%{nodejs_prefix}/scripts/_eggs-legacy %{buildroot}%{_datadir}/zsh/site-functions/_eggs-legacy
 
 # Install man page
 install -d -m 755 %{buildroot}%{_mandir}/man1
-install -m 644 manpages/doc/man/eggs.1.gz %{buildroot}%{_mandir}/man1/eggs.1.gz
+install -m 644 manpages/doc/man/eggs-legacy.1.gz %{buildroot}%{_mandir}/man1/eggs-legacy.1.gz
 
 # Install desktop file and icon
 install -d -m 755 %{buildroot}%{_datadir}/applications
@@ -160,7 +158,7 @@ install -m 644 assets/eggs.png %{buildroot}%{_datadir}/pixmaps/eggs.png
 %files
 %license LICENSE
 %doc README.md
-%{_bindir}/eggs
+%{_bindir}/eggs-legacy
 %dir %{nodejs_prefix}
 %{nodejs_prefix}/.oclif.manifest.json
 %{nodejs_prefix}/package.json
@@ -175,10 +173,10 @@ install -m 644 assets/eggs.png %{buildroot}%{_datadir}/pixmaps/eggs.png
 %{nodejs_prefix}/node_modules/
 %{nodejs_prefix}/scripts/
 %{_datadir}/applications/%{app_name}.desktop
-%{_datadir}/bash-completion/completions/eggs
-%{_datadir}/zsh/site-functions/_eggs
+%{_datadir}/bash-completion/completions/eggs-legacy
+%{_datadir}/zsh/site-functions/_eggs-legacy
 %{_datadir}/pixmaps/eggs.png
-%{_mandir}/man1/eggs.1.gz
+%{_mandir}/man1/eggs-legacy.1.gz
 
 %changelog
 * Wed Sep 10 2025 Piero Proietti <piero.proietti@gmail.com> - 25.9.8-1

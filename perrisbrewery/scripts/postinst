@@ -24,28 +24,28 @@ case "$1" in
     configure)
         # Adding bash-completion Debian/Devuan/Ubuntu /etc/bash_completion.d/
         if [ -d "/etc/bash_completion.d/" ]; then
-            if [ -f "/usr/lib/$pkgname/scripts/eggs.bash" ]; then
-                cp /usr/lib/$pkgname/scripts/eggs.bash /etc/bash_completion.d/
+            if [ -f "/usr/lib/$pkgname/scripts/eggs-legacy.bash" ]; then
+                cp /usr/lib/$pkgname/scripts/eggs-legacy.bash /etc/bash_completion.d/
             fi
         fi    
 
         # Adding bash-completion elementary /usr/share/bash-completion/completions/
         if [ -d "/usr/share/bash-completion/completions/" ]; then
-            if [ -f "/usr/lib/$pkgname/scripts/eggs.bash" ]; then
-                cp /usr/lib/$pkgname/scripts/eggs.bash /usr/share/bash-completion/completions/
+            if [ -f "/usr/lib/$pkgname/scripts/eggs-legacy.bash" ]; then
+                cp /usr/lib/$pkgname/scripts/eggs-legacy.bash /usr/share/bash-completion/completions/eggs-legacy
             fi
         fi    
 
         # Adding zsh-completion for eggs
         if [ -d "/usr/share/zsh/functions/Completion/Zsh/" ]; then
-            if [ -f "/usr/lib/$pkgname/scripts/_eggs" ]; then
-                cp /usr/lib/$pkgname/scripts/_eggs /usr/share/zsh/functions/Completion/Zsh/
+            if [ -f "/usr/lib/$pkgname/scripts/_eggs-legacy" ]; then
+                cp /usr/lib/$pkgname/scripts/_eggs-legacy /usr/share/zsh/functions/Completion/Zsh/_eggs-legacy
             fi
         fi
 
         # Install man page
-        if [ -f "/usr/lib/$pkgname/manpages/doc/man/eggs.1.gz" ]; then
-            install -Dm644 /usr/lib/$pkgname/manpages/doc/man/eggs.1.gz /usr/share/man/man1
+        if [ -f "/usr/lib/$pkgname/manpages/doc/man/eggs-legacy.1.gz" ]; then
+            install -Dm644 /usr/lib/$pkgname/manpages/doc/man/eggs-legacy.1.gz /usr/share/man/man1
         fi
 
 
@@ -77,8 +77,8 @@ case "$1" in
         fi
 
 
-        eggs config --nointeractive
-        echo "penguins-eggs was installed..." 
+        eggs-legacy config --nointeractive
+        echo "penguins-eggs-legacy was installed..." 
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

@@ -27,8 +27,8 @@
   <url type="vcs-browser">https://github.com/pieroproietti/penguins-eggs</url>
   
   <provides>
-    <binary>penguins-eggs</binary>
-    <binary>eggs</binary>
+    <binary>penguins-eggs-legacy</binary>
+    <binary>eggs-legacy</binary>
   </provides>
   
   <launchable type="desktop-id">net.penguins_eggs.eggs.desktop</launchable>

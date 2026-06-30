@@ -54,7 +54,7 @@ export default function Title({ title = "", version = "" }): React.JSX.Element {
    if (title === "")
       title = `${pjson.name}`
 
-   const green = ` ${title} (legacy)`.padEnd(25, " ")
+   const green = ` ${title} `.padEnd(25, " ")
    const white = ` Perri's brewery edition `.padEnd(25, " ")
    const red = ` v${pjson.version}${arch} `.padStart(25, " ")
 

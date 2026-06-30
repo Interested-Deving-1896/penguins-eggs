@@ -8,14 +8,14 @@ rm -rf /usr/lib/penguins-eggs/distros
 rm -rf /usr/lib/penguins-eggs/eui
 rm -rf /usr/lib/penguins-eggs/krill
 
-# remove man eggs
-if [ -f "/usr/share/man/man1/eggs.1.gz" ]; then
-    rm -f /usr/share/man/man1/eggs.1.gz
+# remove man eggs-legacy
+if [ -f "/usr/share/man/man1/eggs-legacy.1.gz" ]; then
+    rm -f /usr/share/man/man1/eggs-legacy.1.gz
 fi
 
-# remove eggs.bash 
-if [ -f "/etc/bash_completion.d/eggs.bash" ]; then
-    rm -f /etc/bash_completion.d/eggs.bash
+# remove eggs-legacy.bash 
+if [ -f "/etc/bash_completion.d/eggs-legacy.bash" ]; then
+    rm -f /etc/bash_completion.d/eggs-legacy.bash
 fi
 
 

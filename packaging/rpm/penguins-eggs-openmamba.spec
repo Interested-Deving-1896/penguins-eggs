@@ -75,16 +75,16 @@ cp -r \
 
 # Install bash-completion files
 install -d %{buildroot}%{_datadir}/bash-completion/completions
-ln -s /usr/lib/%{name}/scripts/eggs.bash \
-   %{buildroot}%{_datadir}/bash-completion/completions/
+ln -s /usr/lib/%{name}/scripts/eggs-legacy.bash \
+   %{buildroot}%{_datadir}/bash-completion/completions/eggs-legacy
 
 # Install zsh-completions files
 install -d %{buildroot}%{_datadir}/zsh/functions/Completion/Zsh/
-ln -s ../lib/%{name}/scripts/_eggs \
-   %{buildroot}%{_datadir}/zsh/functions/Completion/Zsh/
+ln -s ../lib/%{name}/scripts/_eggs-legacy \
+   %{buildroot}%{_datadir}/zsh/functions/Completion/Zsh/_eggs-legacy
 
 # Install man page
-install -D -m0644 manpages/doc/man/eggs.1.gz -t %{buildroot}%{_mandir}/man1/
+install -D -m0644 manpages/doc/man/eggs-legacy.1.gz -t %{buildroot}%{_mandir}/man1/
 
 # Install desktop file
 install -D -m0644 assets/%{name}.desktop -t %{buildroot}%{_datadir}/applications/
@@ -94,7 +94,7 @@ install -D -m0644 assets/eggs.png -t %{buildroot}%{_datadir}/pixmaps/
 
 # Symlink executable
 install -d %{buildroot}%{_bindir}
-ln -s ../lib/%{name}/bin/run.js %{buildroot}%{_bindir}/eggs
+ln -s ../lib/%{name}/bin/run.js %{buildroot}%{_bindir}/eggs-legacy
 
 # Remove prebuilt bootoader binaries causing unresolved dependencies in openmamba
 rm -f %{buildroot}%{_prefix}/lib/penguins-eggs/bootloaders/grub/i386-pc/grub-bios-setup
@@ -105,15 +105,15 @@ rm -f %{buildroot}%{_prefix}/lib/penguins-eggs/bootloaders/grub/i386-pc/grub-ntl
 
 %files
 %defattr(-,root,root)
-%{_bindir}/eggs
+%{_bindir}/eggs-legacy
 %{_datadir}/applications/penguins-eggs.desktop
 %dir %{_prefix}/lib/penguins-eggs
 %{_prefix}/lib/penguins-eggs/.oclif.manifest.json
 %{_prefix}/lib/penguins-eggs/*
-%{_datadir}/bash-completion/completions/eggs.bash
-%{_datadir}/zsh/functions/Completion/Zsh/_eggs
+%{_datadir}/bash-completion/completions/eggs-legacy
+%{_datadir}/zsh/functions/Completion/Zsh/_eggs-legacy
 %{_datadir}/pixmaps/eggs.png
-%{_mandir}/man1/eggs.1*
+%{_mandir}/man1/eggs-legacy.1*
 %doc README.md
 
 %changelog

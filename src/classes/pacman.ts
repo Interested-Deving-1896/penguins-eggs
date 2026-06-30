@@ -41,12 +41,12 @@ export default class Pacman {
    */
   static async autocompleteInstall() {
     if (Pacman.packageIsInstalled('bash-completion') && fs.existsSync('/usr/share/bash-completion/completions/')) {
-      await exec(`cp ${__dirname}/../../scripts/eggs.bash /usr/share/bash-completion/completions/`)
+      await exec(`cp ${__dirname}/../../scripts/eggs-legacy.bash /usr/share/bash-completion/completions/eggs-legacy`)
     }
 
     // Su arch è ok, su debian God know
     if (Pacman.packageIsInstalled('zsh-completions') && fs.existsSync('/usr/share/zsh/site-functions')) {
-      await exec(`cp ${__dirname}/../../scripts/_eggs /usr/share/zsh/site-functions/`)
+      await exec(`cp ${__dirname}/../../scripts/_eggs-legacy /usr/share/zsh/site-functions/_eggs-legacy`)
     }
   }
 
@@ -55,8 +55,8 @@ export default class Pacman {
    * @param verbose
    */
   static async autocompleteRemove(verbose = false) {
-    await exec(`rm -f /usr/share/bash-completion/completions/eggs.bash`)
-    await exec(`rm -f /usr/share/zsh/site-functions/._eggs`)
+    await exec(`rm -f /usr/share/bash-completion/completions/eggs-legacy`)
+    await exec(`rm -f /usr/share/zsh/site-functions/_eggs-legacy`)
   }
 
   /**
@@ -783,7 +783,7 @@ export default class Pacman {
    * Installa manPage
    */
   static async manpageInstall() {
-    const manpageSrc = path.resolve(__dirname, '../../manpages/doc/man/eggs.1.gz')
+    const manpageSrc = path.resolve(__dirname, '../../manpages/doc/man/eggs-legacy.1.gz')
     if (fs.existsSync(manpageSrc)) {
       const manpageDest = `/usr/share/man/man1`
       if (!fs.existsSync(manpageDest)) {
@@ -798,7 +798,7 @@ export default class Pacman {
    * manpageRemove
    */
   static async manpageRemove() {
-    const manpageEggs = `/usr/share/man/man1/eggs.1.gz`
+    const manpageEggs = `/usr/share/man/man1/eggs-legacy.1.gz`
     await exec(`rm -rf ${manpageEggs}`)
   }
 

@@ -163,7 +163,7 @@ cp appimage/penguins-eggs.png AppDir/
 cp appimage/penguins-eggs.png AppDir/usr/share/icons/hicolor/256x256/apps/
 
 # Link per l'eseguibile
-ln -sf ../lib/penguins-eggs/dist/bin/dev.js AppDir/usr/bin/eggs
+ln -sf ../lib/penguins-eggs/dist/bin/dev.js AppDir/usr/bin/eggs-legacy
 
 # Copia driver
 cp -r appimage/distro-packages AppDir/

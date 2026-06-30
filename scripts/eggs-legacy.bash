@@ -4,7 +4,7 @@
 # e.g. ARRAY=(one two three) -> join_by ":" ${ARRAY[@]} -> "one:two:three"
 function join_by { local IFS="$1"; shift; echo "$*"; }
 
-_eggs_autocomplete()
+_eggs_legacy_autocomplete()
 {
 
   local cur="${COMP_WORDS[COMP_CWORD]}" opts normalizedCommand colonPrefix IFS=$' \t\n'
@@ -103,4 +103,4 @@ help --nested-commands
   COMPREPLY=($(compgen -W "$opts" -- "${cur}"))
 }
 
-complete -F _eggs_autocomplete eggs
+complete -F _eggs_legacy_autocomplete eggs-legacy

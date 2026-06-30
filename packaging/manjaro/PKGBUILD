@@ -92,36 +92,36 @@ cp -r "$srcdir/bootloaders" "$pkgdir/usr/lib/$pkgname/"
  # Install documentation
  install -Dm644 README.md -t "$pkgdir/"usr/share/doc/"$pkgname/"
 
- # Install bash-completion files
- install -d "$pkgdir/"usr/share/bash-completion/completions
- ln -s /usr/lib/"$pkgname/"scripts/eggs.bash \
-  "$pkgdir/"usr/share/bash-completion/completions/
+  # Install bash-completion files
+  install -d "$pkgdir/"usr/share/bash-completion/completions
+  ln -s /usr/lib/"$pkgname/"scripts/eggs-legacy.bash \
+   "$pkgdir/"usr/share/bash-completion/completions/eggs-legacy
 
- # Install zsh-completion files
- install -d "$pkgdir/"usr/share/zsh/functions/Completion/Zsh/
- ln -s /usr/lib/"$pkgname/"scripts/_eggs \
-  "$pkgdir/"usr/share/zsh/functions/Completion/Zsh/
+  # Install zsh-completion files
+  install -d "$pkgdir/"usr/share/zsh/functions/Completion/Zsh/
+  ln -s /usr/lib/"$pkgname/"scripts/_eggs-legacy \
+   "$pkgdir/"usr/share/zsh/functions/Completion/Zsh/_eggs-legacy
 
- # Install man page
- install -Dm644 manpages/doc/man/eggs.1.gz -t "$pkgdir/"usr/share/man/man1/
+  # Install man page
+  install -Dm644 manpages/doc/man/eggs-legacy.1.gz -t "$pkgdir/"usr/share/man/man1/
 
- # Install desktop file
- install -Dm644 assets/"$pkgname".desktop -t "$pkgdir/"usr/share/applications/
+  # Install desktop file
+  install -Dm644 assets/"$pkgname".desktop -t "$pkgdir/"usr/share/applications/
 
- # Install icon
- install -Dm644 assets/eggs.png -t "$pkgdir/"usr/share/pixmaps/
+  # Install icon
+  install -Dm644 assets/eggs.png -t "$pkgdir/"usr/share/pixmaps/
 
- # revitalize mom
- chmod +x "$pkgdir/"usr/lib/"$pkgname/"scripts/mom.sh
+  # revitalize mom
+  chmod +x "$pkgdir/"usr/lib/"$pkgname/"scripts/mom.sh
 
- # revitalize eui
- chmod +x "$pkgdir"/usr/lib/"$pkgname/"eui/eui-create-image.sh
- chmod +x "$pkgdir"/usr/lib/"$pkgname/"eui/eui-start.sh
- chmod 0400 "$pkgdir"/usr/lib/"$pkgname/"eui/eui-users
+  # revitalize eui
+  chmod +x "$pkgdir"/usr/lib/"$pkgname/"eui/eui-create-image.sh
+  chmod +x "$pkgdir"/usr/lib/"$pkgname/"eui/eui-start.sh
+  chmod 0400 "$pkgdir"/usr/lib/"$pkgname/"eui/eui-users
 
- # Symlink executable
- install -d "$pkgdir/"usr/bin
- ln -s /usr/lib/"$pkgname"/bin/run.js "$pkgdir"/usr/bin/eggs
+  # Symlink executable
+  install -d "$pkgdir/"usr/bin
+  ln -s /usr/lib/"$pkgname"/bin/run.js "$pkgdir"/usr/bin/eggs-legacy
 
  # Symlink to adapt
  ln -s /usr/lib/"$pkgname/"addons/eggs/adapt/bin/adapt "$pkgdir/"usr/bin/adapt

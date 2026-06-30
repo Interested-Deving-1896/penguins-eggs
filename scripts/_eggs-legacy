@@ -1,4 +1,5 @@
-#compdef eggs
+#compdef eggs-legacy
+
 
 
 _eggs_export() {
