@@ -45,26 +45,38 @@ jobs:
           gpg-connect-agent reloadagent /bye
           echo "$GPG_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
 
-      - name: 3. Fetch & Extract penguins-eggs Debian packages
+      - name: 3. Fetch, Extract & Debug penguins-eggs Debian packages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Scaricamento archivi Debian versione ${{ inputs.penguins_eggs_version }}..."
           mkdir -p /tmp/penguins-eggs
           
-          # LA MAGIA DEL WILDCARD: Scarica amd64, arm64 e riscv64 in un colpo solo
-          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian*.zip" --dir /tmp/penguins-eggs || echo "Nessun zip trovato"
+          # Togliamo il silenziatore: vediamo se GH scarica davvero 3 file
+          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian*.zip" --dir /tmp/penguins-eggs
           
-          echo "Estrazione pacchetti..."
-          # Estraiamo dinamicamente tutti gli zip debian trovati
+          echo "--- INVENTARIO ZIP SCARICATI ---"
+          ls -lh /tmp/penguins-eggs/
+          
+          echo "--- ESTRAZIONE PACCHETTI ---"
           for zipfile in /tmp/penguins-eggs/penguins-eggs-debian*.zip; do
             [ -f "$zipfile" ] || continue
-            unzip -o "$zipfile" -d /tmp/penguins-eggs/ 2>/dev/null || true
+            echo "Estraendo: $zipfile"
+            unzip -o "$zipfile" -d /tmp/penguins-eggs/
           done
           
-          # Riversiamo tutto il bottino nel pool
-          cp /tmp/penguins-eggs/*.deb /mnt/deb-repo/pool/main/ 2>/dev/null || true
-
+          echo "--- INVENTARIO .DEB ESTRATTI ---"
+          ls -lh /tmp/penguins-eggs/*.deb
+          
+          echo "--- CONTROLLO ARCHITETTURA INTERNA DEI DEB ---"
+          for deb in /tmp/penguins-eggs/*.deb; do
+            echo "File: $deb"
+            dpkg-deb -I "$deb" | grep "Architecture:"
+          done
+          
+          echo "--- COPIA NEL POOL ---"
+          cp /tmp/penguins-eggs/*.deb /mnt/deb-repo/pool/main/
+          
       - name: 4. Update Debian Repo (NO Pruning)
         env:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
