@@ -49,13 +49,20 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento penguins-eggs-debian.zip versione ${{ inputs.penguins_eggs_version }}..."
+          echo "Scaricamento archivi Debian versione ${{ inputs.penguins_eggs_version }}..."
           mkdir -p /tmp/penguins-eggs
-          # Scarica il file zip specifico per Debian (valido anche per Ubuntu e Devuan)
-          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian.zip" --dir /tmp/penguins-eggs || echo "Nessun zip trovato"
+          
+          # LA MAGIA DEL WILDCARD: Scarica amd64, arm64 e riscv64 in un colpo solo
+          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian*.zip" --dir /tmp/penguins-eggs || echo "Nessun zip trovato"
           
           echo "Estrazione pacchetti..."
-          unzip -o /tmp/penguins-eggs/penguins-eggs-debian.zip -d /tmp/penguins-eggs/ 2>/dev/null || true
+          # Estraiamo dinamicamente tutti gli zip debian trovati
+          for zipfile in /tmp/penguins-eggs/penguins-eggs-debian*.zip; do
+            [ -f "$zipfile" ] || continue
+            unzip -o "$zipfile" -d /tmp/penguins-eggs/ 2>/dev/null || true
+          done
+          
+          # Riversiamo tutto il bottino nel pool
           cp /tmp/penguins-eggs/*.deb /mnt/deb-repo/pool/main/ 2>/dev/null || true
 
       - name: 4. Update Debian Repo (NO Pruning)
@@ -65,9 +72,24 @@ jobs:
         working-directory: /mnt/deb-repo
         run: |
           set -e
-          echo "--- DEBIAN: Genero file Packages ---"
+          echo "--- DEBIAN: Genero file Packages per le architetture ---"
+          
+          # Creiamo le cartelle se non esistono (fondamentale per le nuove architetture)
+          mkdir -p dists/stable/main/binary-amd64
+          mkdir -p dists/stable/main/binary-arm64
+          mkdir -p dists/stable/main/binary-riscv64
+          
+          # Indicizzazione AMD64
           dpkg-scanpackages -a amd64 pool/main > dists/stable/main/binary-amd64/Packages
           gzip -9c dists/stable/main/binary-amd64/Packages > dists/stable/main/binary-amd64/Packages.gz
+          
+          # Indicizzazione ARM64
+          dpkg-scanpackages -a arm64 pool/main > dists/stable/main/binary-arm64/Packages
+          gzip -9c dists/stable/main/binary-arm64/Packages > dists/stable/main/binary-arm64/Packages.gz
+          
+          # Indicizzazione RISCV64
+          dpkg-scanpackages -a riscv64 pool/main > dists/stable/main/binary-riscv64/Packages
+          gzip -9c dists/stable/main/binary-riscv64/Packages > dists/stable/main/binary-riscv64/Packages.gz
           
           echo "--- DEBIAN: Genero file Release ---"
           apt-ftparchive \
@@ -75,7 +97,7 @@ jobs:
             -o APT::FTPArchive::Release::Label="Penguins-Eggs" \
             -o APT::FTPArchive::Release::Suite="stable" \
             -o APT::FTPArchive::Release::Codename="stable" \
-            -o APT::FTPArchive::Release::Architectures="amd64 arm64 i386" \
+            -o APT::FTPArchive::Release::Architectures="amd64 arm64 riscv64 i386" \
             -o APT::FTPArchive::Release::Components="main" \
             release dists/stable > dists/stable/Release
             
