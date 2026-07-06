@@ -4,32 +4,32 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-Penguins Eggs is a remastering tool designed to create custom Linux distributions and live ISO images. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by developers, system administrators, and Linux enthusiasts to build and distribute tailored operating system images for specific use cases.
+Penguins Eggs is a remastering tool that enables users to create custom Linux distributions or live ISO images based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for system administrators, developers, and power users who need to create tailored operating system images for deployment or personal use.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project is structured as a command-line tool built with TypeScript and the oclif framework. It facilitates the creation of Linux system remasters, supporting multiple distributions. The main entry point is defined in `package.json` as `./bin/run.js`. The tool uses various dependencies for CLI interactions, system information retrieval, templating, and network communication. It also includes custom integrations and audit utilities.
-
-The repository is organized as follows:
+The project consists of several key components designed to facilitate system remastering across multiple Linux distributions. The core functionality is implemented in TypeScript, leveraging the `@oclif/core` framework for CLI operations. The main entry point is defined in `bin/run.js`. Dependencies include libraries for CLI interaction (`inquirer`, `chalk`), system information retrieval (`systeminformation`, `linux-release-info`), and file manipulation (`js-yaml`, `mustache`). The `integrations` directory contains custom modules for distribution-specific functionality. The repository includes GitHub workflows for CI/CD, artifact mirroring, and documentation synchronization. The directory structure is organized as follows:
 
 ```plaintext
-.
-├── bin/                   # Entry point scripts
-├── src/                   # Source code for the application
-├── integrations/          # Custom integrations for the tool
-├── workflows/             # GitHub Actions workflows for CI/CD
-├── .github/               # GitHub-specific configurations
-├── .vscode/               # VS Code workspace settings
-├── CHANGELOG.md           # Changelog for the project
-├── LICENSE                # License file
-├── README.md              # Project documentation
-├── package.json           # Project metadata and dependencies
-└── other-scripts/         # Utility scripts for packaging and deployment
+penguins-eggs/
+├── bin/
+│   └── run.js
+├── integrations/
+├── workflows/
+├── .github/
+├── src/
+│   ├── commands/
+│   ├── utils/
+│   └── core/
+├── tests/
+├── package.json
+├── README.md
+└── LICENSE
 ```
 
-Components interact through a modular architecture, with the CLI commands invoking specific modules for tasks like system detection, file generation, and network operations. The `integrations` directory contains reusable components for distribution-specific functionality. Workflows automate testing, builds, and repository synchronization.
+Components interact through modular imports, with CLI commands invoking utilities and integrations to perform remastering tasks.
 <!-- AI:end:architecture -->
 
 ## Install
@@ -78,19 +78,16 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-The repository uses GitHub Actions for continuous integration and automation. Below are the workflows and their purposes:
-
-- **ci.yml**: Runs tests and lints the codebase. No secrets required.
-- **codeql.yml**: Performs static code analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
-- **release.yml**: Handles the release process, including version tagging and publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
-- **iso-test.yml**: Tests ISO builds for compatibility and functionality. No secrets required.
+- **ci.yml**: Runs linting, tests, and builds for the project on every push and pull request. No secrets required.
+- **codeql.yml**: Performs static code analysis using GitHub's CodeQL to identify potential vulnerabilities. No secrets required.
+- **release.yml**: Automates the release process, including version tagging and publishing to npm. Requires `NPM_TOKEN` secret.
+- **iso-test.yml**: Tests ISO builds for supported distributions. No secrets required.
 - **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
-- **sync-eggs-docs-to-book.yml**: Synchronizes documentation with the project book. No secrets required.
-- **cleanup-pollution.yml**: Cleans up temporary files and artifacts. No secrets required.
-- **rate-limit-status.yml**: Monitors API rate limits. Requires `GH_TOKEN` secret.
-- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `MIRROR_TOKEN` secret.
-
-Refer to individual workflow files in `.github/workflows/` for detailed configurations.
+- **mirror-releases.yml**: Syncs release assets to external repositories. Requires `MIRROR_TOKEN` secret.
+- **sync-eggs-docs-to-book.yml**: Syncs documentation to an external book repository. Requires `DOCS_SYNC_TOKEN` secret.
+- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. No secrets required.
+- **rotate-token.yml**: Rotates API tokens used in workflows. Requires `ADMIN_TOKEN` secret.
+- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
 <!-- AI:end:ci -->
 
 ## Mirror chain
@@ -112,7 +109,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 <!-- AI:start:contributors -->
 [@monstermunchkin](https://github.com/monstermunchkin) (818 commits)  
 [@stgraber](https://github.com/stgraber) (785 commits)  
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) (342 commits)  
+[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) (352 commits)  
 [@itoffshore](https://github.com/itoffshore) (155 commits)  
 [@pieroproietti](https://github.com/pieroproietti) (56 commits)  
 [@ona-agent](https://github.com/ona-agent) (50 commits)  
@@ -141,7 +138,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 [@timbretimber](https://github.com/timbretimber) (3 commits)  
 [@foxtrotcz](https://github.com/foxtrotcz) (3 commits)  
 
-*Note: This repository may be a mirror. Please refer to the upstream source for the original contributions.*
+*Note: This repository is a mirror. Please refer to the upstream source for the original project.*
 <!-- AI:end:contributors -->
 
 ## Origins
