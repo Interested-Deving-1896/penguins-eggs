@@ -64,6 +64,10 @@ jobs:
         with:
           platforms: ${{ matrix.arch }}
 
+      - name: Set CPU_ARCH environment variable (QEMU)
+        if: ${{ matrix.qemu == true }}
+        run: echo "CPU_ARCH=${{ matrix.arch }}" >> $GITHUB_ENV
+
       - name: Run hw-detect (native amd64 / arm64)
         if: ${{ matrix.qemu != true }}
         run: |
