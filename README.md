@@ -4,35 +4,29 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-Penguins Eggs is a remastering tool for creating custom Linux distributions based on various operating systems, including Debian, Ubuntu, Arch, Fedora, and more. It enables users, such as system administrators and developers, to generate personalized ISO images of their systems for deployment or backup purposes. The project continues the legacy of tools like Remastersys and Systemback, providing a modern solution for system remastering.
+This project provides a tool for creating custom Linux system remasters, supporting distributions such as Debian, Ubuntu, Arch, Fedora, and others. It enables users, including system administrators and developers, to generate personalized ISO images or live systems tailored to specific use cases or environments.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project consists of several key components organized into a modular directory structure. The main functionality is implemented in TypeScript, leveraging the oclif framework for CLI operations. The `bin/run.js` file serves as the entry point for the CLI. Dependencies include libraries for user prompts, HTTP requests, file system operations, and Linux system information.
+The project is structured as a command-line tool for creating and managing Linux system remasters. It is built using TypeScript and leverages the oclif framework for CLI functionality. The main entry point is `./bin/run.js`, defined in the `package.json`. The tool integrates with various Linux distributions and uses dependencies like `express`, `axios`, and `js-yaml` for handling HTTP requests, configuration parsing, and other utilities. Custom integrations are located in the `integrations` directory.
 
-The directory structure is as follows:
+The repository includes workflows for CI/CD, documentation generation, artifact mirroring, and repository synchronization. These workflows are defined in YAML files under `.github/workflows`. Configuration files for linting, formatting, and testing are present at the root level, alongside scripts for packaging and deployment.
 
+Directory structure:
 ```plaintext
 .
-├── bin/                     # CLI entry point
-├── integrations/            # Custom integrations for the project
-├── src/                     # Main source code
-│   ├── commands/            # CLI command implementations
-│   ├── utils/               # Utility functions
-│   └── config/              # Configuration files and templates
-├── workflows/               # CI/CD workflows
-├── docs/                    # Documentation files
-├── tests/                   # Test cases and related utilities
-├── .github/                 # GitHub-specific configuration
-├── .vscode/                 # VSCode workspace settings
-├── CHANGELOG.md             # Changelog for the project
-├── LICENSE                  # License file
-└── README.md                # Project documentation
+├── bin/                 # CLI entry point
+├── integrations/        # Custom integrations for Linux distributions
+├── .github/workflows/   # CI/CD workflows
+├── docs/                # Documentation files
+├── src/                 # Source code
+├── test/                # Test cases
+├── CHANGELOG.md         # Changelog
+├── LICENSE              # License file
+└── README.md            # Project documentation
 ```
-
-Components interact through a modular architecture, with the CLI commands invoking utilities and integrations as needed. External dependencies are managed via `package.json`. CI/CD workflows automate tasks such as testing, building, and publishing.
 <!-- AI:end:architecture -->
 
 ## Install
@@ -83,22 +77,17 @@ sudo eggs produce
 <!-- AI:start:ci -->
 The repository uses GitHub Actions for continuous integration and automation. Below are the workflows and their purposes:
 
-- **ci.yml**: Runs tests and lints the codebase to ensure code quality.
-- **codeql.yml**: Performs static code analysis for security vulnerabilities using CodeQL.
-- **release.yml**: Automates the release process, including version tagging and artifact creation.
-- **iso-test.yml**: Tests ISO builds for compatibility and functionality.
-- **mirror.yaml**: Mirrors the repository to other platforms for redundancy.
-- **sync-eggs-docs-to-book.yml**: Synchronizes project documentation with the book repository.
-- **cleanup-pollution.yml**: Removes temporary or unnecessary files from the repository.
-- **rate-limit-status.yml**: Monitors API rate limits and logs the status.
-- **rotate-token.yml**: Rotates access tokens for security purposes.
-- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows.
+- **ci.yml**: Runs tests and lints the codebase. No secrets required.
+- **codeql.yml**: Performs static code analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
+- **release.yml**: Automates the release process, including version tagging and changelog generation. Requires `GH_TOKEN` secret.
+- **iso-test.yml**: Tests ISO builds for supported distributions. No secrets required.
+- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
+- **cleanup-pollution.yml**: Cleans up temporary or unused resources. No secrets required.
+- **sync-eggs-docs-to-book.yml**: Syncs project documentation to the book repository. Requires `DOCS_SYNC_TOKEN` secret.
+- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `MIRROR_TRIGGER_TOKEN` secret.
+- **rotate-token.yml**: Rotates access tokens for security purposes. Requires `ADMIN_TOKEN` secret.
 
-Required secrets:
-- `GH_TOKEN`: GitHub token for repository access.
-- `GITLAB_TOKEN`: GitLab token for mirroring workflows.
-- `NPM_TOKEN`: Token for publishing packages to npm.
-- `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD`: Credentials for Docker Hub integration.
+Refer to individual workflow files in the `.github/workflows/` directory for detailed configurations.
 <!-- AI:end:ci -->
 
 ## Mirror chain
@@ -118,38 +107,38 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-[@monstermunchkin](https://github.com/monstermunchkin) - 818 commits  
-[@stgraber](https://github.com/stgraber) - 785 commits  
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 353 commits  
-[@itoffshore](https://github.com/itoffshore) - 155 commits  
-[@pieroproietti](https://github.com/pieroproietti) - 56 commits  
-[@ona-agent](https://github.com/ona-agent) - 50 commits  
-[@simondeziel](https://github.com/simondeziel) - 32 commits  
-[@nanjj](https://github.com/nanjj) - 23 commits  
-[@masnax](https://github.com/masnax) - 16 commits  
-[@brauner](https://github.com/brauner) - 13 commits  
-[@mjrider](https://github.com/mjrider) - 11 commits  
-[@tew42](https://github.com/tew42) - 10 commits  
-[@ona-bot](https://github.com/ona-bot) - 9 commits  
-[@chaosoffire](https://github.com/chaosoffire) - 9 commits  
-[@stefanor](https://github.com/stefanor) - 6 commits  
-[@rietbergenm](https://github.com/rietbergenm) - 5 commits  
-[@Obirvalger](https://github.com/Obirvalger) - 5 commits  
-[@nbuwe](https://github.com/nbuwe) - 5 commits  
-[@adamcstephens](https://github.com/adamcstephens) - 5 commits  
-[@gibmat](https://github.com/gibmat) - 5 commits  
-[@hallyn](https://github.com/hallyn) - 5 commits  
-[@dependabot[bot]](https://github.com/dependabot[bot]) - 4 commits  
-[@web-flow](https://github.com/web-flow) - 4 commits  
-[@geaaru](https://github.com/geaaru) - 4 commits  
-[@eddyg](https://github.com/eddyg) - 3 commits  
-[@tenforward](https://github.com/tenforward) - 3 commits  
-[@marcosps](https://github.com/marcosps) - 3 commits  
-[@stiltr](https://github.com/stiltr) - 3 commits  
-[@timbretimber](https://github.com/timbretimber) - 3 commits  
-[@foxtrotcz](https://github.com/foxtrotcz) - 3 commits  
+[@monstermunchkin](https://github.com/monstermunchkin) (818 commits)  
+[@stgraber](https://github.com/stgraber) (785 commits)  
+[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) (353 commits)  
+[@itoffshore](https://github.com/itoffshore) (155 commits)  
+[@pieroproietti](https://github.com/pieroproietti) (56 commits)  
+[@ona-agent](https://github.com/ona-agent) (50 commits)  
+[@simondeziel](https://github.com/simondeziel) (32 commits)  
+[@nanjj](https://github.com/nanjj) (23 commits)  
+[@masnax](https://github.com/masnax) (16 commits)  
+[@brauner](https://github.com/brauner) (13 commits)  
+[@mjrider](https://github.com/mjrider) (11 commits)  
+[@tew42](https://github.com/tew42) (10 commits)  
+[@ona-bot](https://github.com/ona-bot) (9 commits)  
+[@chaosoffire](https://github.com/chaosoffire) (9 commits)  
+[@stefanor](https://github.com/stefanor) (6 commits)  
+[@rietbergenm](https://github.com/rietbergenm) (5 commits)  
+[@Obirvalger](https://github.com/Obirvalger) (5 commits)  
+[@nbuwe](https://github.com/nbuwe) (5 commits)  
+[@adamcstephens](https://github.com/adamcstephens) (5 commits)  
+[@gibmat](https://github.com/gibmat) (5 commits)  
+[@hallyn](https://github.com/hallyn) (5 commits)  
+[@dependabot[bot]](https://github.com/dependabot[bot]) (4 commits)  
+[@web-flow](https://github.com/web-flow) (4 commits)  
+[@geaaru](https://github.com/geaaru) (4 commits)  
+[@eddyg](https://github.com/eddyg) (3 commits)  
+[@tenforward](https://github.com/tenforward) (3 commits)  
+[@marcosps](https://github.com/marcosps) (3 commits)  
+[@stiltr](https://github.com/stiltr) (3 commits)  
+[@timbretimber](https://github.com/timbretimber) (3 commits)  
+[@foxtrotcz](https://github.com/foxtrotcz) (3 commits)  
 
-*Note: This repository may be a mirror. Please check the upstream source for additional context.*
+This repository may be a mirror. Please check the [upstream source](https://github.com/Interested-Deving-1896/penguins-eggs) for additional details.
 <!-- AI:end:contributors -->
 
 ## Origins
