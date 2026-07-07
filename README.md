@@ -75,16 +75,16 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- **ci.yml**: Runs linting, unit tests, and build checks for the project. No secrets required.
-- **codeql.yml**: Performs static code analysis for security vulnerabilities using GitHub CodeQL. No secrets required.
-- **release.yml**: Automates the release process, including version tagging and publishing to npm. Requires `NPM_TOKEN` secret.
-- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
-- **docs.yml**: Generates and updates project documentation. No secrets required.
+- **ci.yml**: Runs linting, unit tests, and builds the project. No secrets required.
+- **codeql.yml**: Performs CodeQL analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
+- **release.yml**: Automates the release process, including tagging and publishing. Requires `NPM_TOKEN` and `GH_TOKEN` secrets.
 - **iso-test.yml**: Tests ISO builds for supported distributions. No secrets required.
-- **sync-eggs-docs-to-book.yml**: Syncs project documentation to an external book repository. Requires `GITLAB_TOKEN` secret.
-- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `MIRROR_TOKEN` secret.
-- **rotate-token.yml**: Rotates API tokens for external integrations. Requires `ADMIN_TOKEN` secret.
+- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
+- **docs.yml**: Builds and deploys documentation. Requires `GH_TOKEN` secret.
 - **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
+- **sync-eggs-docs-to-book.yml**: Syncs project documentation to an external book repository. Requires `GH_TOKEN` secret.
+- **mirror-releases.yml**: Mirrors release artifacts to external storage. Requires `STORAGE_TOKEN` secret.
+- **rotate-token.yml**: Rotates API tokens for external integrations. Requires `ADMIN_TOKEN` secret.
 <!-- AI:end:ci -->
 
 ## Mirror chain
