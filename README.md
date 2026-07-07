@@ -75,19 +75,16 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-The repository uses GitHub Actions for continuous integration and automation. Below are the workflows and their purposes:
-
-- **ci.yml**: Runs tests and lints the codebase. No secrets required.
-- **codeql.yml**: Performs static code analysis for security vulnerabilities. Requires `GH_TOKEN` secret.
-- **release.yml**: Automates the release process, including version tagging and changelog generation. Requires `GH_TOKEN` secret.
-- **iso-test.yml**: Tests ISO builds for supported distributions. No secrets required.
+- **ci.yml**: Runs linting, unit tests, and build checks for the project. No secrets required.
+- **codeql.yml**: Performs static code analysis for security vulnerabilities using GitHub CodeQL. No secrets required.
+- **release.yml**: Automates the release process, including version tagging and publishing to npm. Requires `NPM_TOKEN` secret.
 - **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` secret.
-- **cleanup-pollution.yml**: Cleans up temporary or unused resources. No secrets required.
-- **sync-eggs-docs-to-book.yml**: Syncs project documentation to the book repository. Requires `DOCS_SYNC_TOKEN` secret.
-- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `MIRROR_TRIGGER_TOKEN` secret.
-- **rotate-token.yml**: Rotates access tokens for security purposes. Requires `ADMIN_TOKEN` secret.
-
-Refer to individual workflow files in the `.github/workflows/` directory for detailed configurations.
+- **docs.yml**: Generates and updates project documentation. No secrets required.
+- **iso-test.yml**: Tests ISO builds for supported distributions. No secrets required.
+- **sync-eggs-docs-to-book.yml**: Syncs project documentation to an external book repository. Requires `GITLAB_TOKEN` secret.
+- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `MIRROR_TOKEN` secret.
+- **rotate-token.yml**: Rotates API tokens for external integrations. Requires `ADMIN_TOKEN` secret.
+- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
 <!-- AI:end:ci -->
 
 ## Mirror chain
