@@ -145,7 +145,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 [@timbretimber](https://github.com/timbretimber) - 3 commits  
 [@foxtrotcz](https://github.com/foxtrotcz) - 3 commits  
 
-This repository may be a mirror. Please check the [upstream source](https://github.com/Interested-Deving-1896/penguins-eggs) for additional details.
+*Note: This repository may be a mirror. Please refer to the upstream source for additional contributions.*
 <!-- AI:end:contributors -->
 
 ## Origins
