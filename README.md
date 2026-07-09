@@ -4,28 +4,32 @@
 [![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
 
 <!-- AI:start:what-it-does -->
-This project provides a remastering tool for creating custom Linux distributions or live systems. It supports a wide range of Linux distributions, including Debian, Ubuntu, Arch, Fedora, and their derivatives. It is used by system administrators, developers, and enthusiasts to generate ISO images tailored to specific use cases or environments.
+Penguins-Eggs is a remastering tool that enables users to create custom Linux distributions or live ISO images based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for system administrators, developers, and Linux enthusiasts who need to customize operating systems for deployment or distribution.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project is structured as a command-line tool built with TypeScript, leveraging the oclif framework for CLI functionality. It supports remastering Linux distributions and integrates with various tools and libraries for system information, file system operations, and user interaction. The main entry point is defined in `package.json` as `./bin/run.js`. The project uses `vite` for bundling and includes dependencies for React-based UI components, such as `ink` and related plugins. Custom integrations are located in the `integrations` directory. CI/CD workflows are defined in the `.github/workflows` directory, and the repository includes configuration files for linting, formatting, and testing.
+The project is structured as a TypeScript-based CLI tool for creating Linux system remasters. It uses the `@oclif/core` framework for command-line interface functionality and integrates various dependencies for system information, file manipulation, and user interaction. The main entry point is defined in `package.json` as `./bin/run.js`. The project supports multiple Linux distributions and includes custom integrations located in the `integrations` directory.
 
-Directory structure:
+The repository is organized as follows:
+
 ```plaintext
 .
-├── bin/                  # CLI entry point
-├── integrations/         # Custom integrations
-├── src/                  # Source code
-├── test/                 # Test files
-├── .github/workflows/    # CI/CD workflows
-├── DOCS/                 # Documentation files
-├── CHANGELOG.md          # Changelog
+├── bin/                  # CLI entry point and executable scripts
+├── src/                  # Source code for the application
+├── integrations/         # Custom integrations for supported distributions
+├── workflows/            # CI/CD workflows for automation
+├── .github/              # GitHub-specific configurations and actions
+├── .vscode/              # VS Code workspace settings
+├── CHANGELOG.md          # Changelog for the project
 ├── LICENSE               # License file
-├── README.md             # Project README
-└── package.json          # Project metadata and dependencies
+├── README.md             # Project documentation
+├── package.json          # Project metadata and dependencies
+└── SECURITY.md           # Security policy and guidelines
 ```
+
+Key components include the CLI commands (defined in `src`), custom integrations for distribution-specific functionality, and CI/CD workflows for automated testing, building, and deployment. The project uses `oclif` plugins for features like autocompletion and versioning.
 <!-- AI:end:architecture -->
 
 ## Install
@@ -74,16 +78,24 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-- **ci.yml**: Runs tests and lints the codebase on push and pull request events. No secrets required.
-- **codeql.yml**: Performs static code analysis using GitHub's CodeQL to identify potential vulnerabilities. No secrets required.
-- **release.yml**: Automates the release process, including version tagging and publishing. Requires `NPM_TOKEN` secret for publishing to npm.
-- **iso-test.yml**: Builds and tests ISO images for supported distributions. No secrets required.
-- **mirror.yaml**: Mirrors the repository to other platforms. Requires `MIRROR_TOKEN` secret for authentication.
-- **sync-eggs-docs-to-book.yml**: Synchronizes project documentation to an external book repository. Requires `DOCS_REPO_TOKEN` secret.
-- **trigger-artifact-mirror.yml**: Triggers artifact mirroring workflows. Requires `ARTIFACT_MIRROR_TOKEN` secret.
-- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_TOKEN` secret.
-- **rotate-token.yml**: Rotates API tokens for security purposes. Requires `ADMIN_TOKEN` secret.
-- **upstream-prs.yml**: Automates the creation of pull requests to upstream repositories. Requires `UPSTREAM_TOKEN` secret.
+The repository uses GitHub Actions for continuous integration. Below are the workflows and their purposes:
+
+- **ci.yml**: Runs tests and lints the codebase to ensure code quality.
+- **codeql.yml**: Performs static code analysis for security vulnerabilities using CodeQL.
+- **release.yml**: Automates the release process, including version tagging and artifact creation.
+- **iso-test.yml**: Tests ISO builds for compatibility and functionality.
+- **mirror.yaml**: Mirrors the repository to external platforms for redundancy.
+- **sync-eggs-docs-to-book.yml**: Syncs documentation from the repository to the project's book.
+- **mirror-artifacts.yml**: Mirrors build artifacts to external storage.
+- **rotate-token.yml**: Rotates API tokens for security purposes.
+- **trigger-book-sync.yml**: Triggers synchronization of the project's book repository.
+- **frogbot-scan.yml**: Scans dependencies for known vulnerabilities using Frogbot.
+
+Required secrets:
+- `GITHUB_TOKEN`: Automatically provided by GitHub for repository-level actions.
+- `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD`: Required for workflows involving Docker image publishing.
+- `IPFS_API_KEY`: Required for IPFS-related workflows.
+- `GITLAB_TOKEN`: Required for GitLab synchronization workflows.
 <!-- AI:end:ci -->
 
 ## Mirror chain
