@@ -1,7 +1,8 @@
 [update-readmes]   Mode: rewrite — migrating to template structure...
 # penguins-eggs
 
-[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs)
+[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/penguins-eggs) [![KDE Eco](https://img.shields.io/badge/KDE%20Eco-certified-brightgreen?logo=kde&logoColor=white&style=flat-square)](https://eco.kde.org/) [![Blue Angel](https://img.shields.io/badge/Blue%20Angel-DE--UZ%20215-0055a4?style=flat-square)](https://www.blauer-engel.de/en/certification/criteria) [![Energy](https://api.green-coding.io/v1/ci/badge/get?repo=Interested-Deving-1896%2Fpenguins-eggs&branch=main&workflow=eco-audit.yml)](https://metrics.green-coding.io/ci-index.html)
+
 
 <!-- AI:start:what-it-does -->
 Penguins-Eggs is a remastering tool that enables users to create custom Linux distributions or live ISO images based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for system administrators, developers, and Linux enthusiasts who need to customize operating systems for deployment or distribution.
@@ -115,36 +116,36 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-[@monstermunchkin](https://github.com/monstermunchkin) - 818 commits  
-[@stgraber](https://github.com/stgraber) - 785 commits  
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 359 commits  
-[@itoffshore](https://github.com/itoffshore) - 155 commits  
-[@pieroproietti](https://github.com/pieroproietti) - 56 commits  
-[@ona-agent](https://github.com/ona-agent) - 50 commits  
-[@simondeziel](https://github.com/simondeziel) - 32 commits  
-[@nanjj](https://github.com/nanjj) - 23 commits  
-[@masnax](https://github.com/masnax) - 16 commits  
-[@brauner](https://github.com/brauner) - 13 commits  
-[@mjrider](https://github.com/mjrider) - 11 commits  
-[@tew42](https://github.com/tew42) - 10 commits  
-[@ona-bot](https://github.com/ona-bot) - 9 commits  
-[@chaosoffire](https://github.com/chaosoffire) - 9 commits  
-[@stefanor](https://github.com/stefanor) - 6 commits  
-[@rietbergenm](https://github.com/rietbergenm) - 5 commits  
-[@Obirvalger](https://github.com/Obirvalger) - 5 commits  
-[@nbuwe](https://github.com/nbuwe) - 5 commits  
-[@adamcstephens](https://github.com/adamcstephens) - 5 commits  
-[@gibmat](https://github.com/gibmat) - 5 commits  
-[@hallyn](https://github.com/hallyn) - 5 commits  
-[@dependabot[bot]](https://github.com/dependabot[bot]) - 4 commits  
-[@web-flow](https://github.com/web-flow) - 4 commits  
-[@geaaru](https://github.com/geaaru) - 4 commits  
-[@eddyg](https://github.com/eddyg) - 3 commits  
-[@tenforward](https://github.com/tenforward) - 3 commits  
-[@marcosps](https://github.com/marcosps) - 3 commits  
-[@stiltr](https://github.com/stiltr) - 3 commits  
-[@timbretimber](https://github.com/timbretimber) - 3 commits  
-[@foxtrotcz](https://github.com/foxtrotcz) - 3 commits  
+[@monstermunchkin](https://github.com/monstermunchkin) - 818 commits
+[@stgraber](https://github.com/stgraber) - 785 commits
+[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 359 commits
+[@itoffshore](https://github.com/itoffshore) - 155 commits
+[@pieroproietti](https://github.com/pieroproietti) - 56 commits
+[@ona-agent](https://github.com/ona-agent) - 50 commits
+[@simondeziel](https://github.com/simondeziel) - 32 commits
+[@nanjj](https://github.com/nanjj) - 23 commits
+[@masnax](https://github.com/masnax) - 16 commits
+[@brauner](https://github.com/brauner) - 13 commits
+[@mjrider](https://github.com/mjrider) - 11 commits
+[@tew42](https://github.com/tew42) - 10 commits
+[@ona-bot](https://github.com/ona-bot) - 9 commits
+[@chaosoffire](https://github.com/chaosoffire) - 9 commits
+[@stefanor](https://github.com/stefanor) - 6 commits
+[@rietbergenm](https://github.com/rietbergenm) - 5 commits
+[@Obirvalger](https://github.com/Obirvalger) - 5 commits
+[@nbuwe](https://github.com/nbuwe) - 5 commits
+[@adamcstephens](https://github.com/adamcstephens) - 5 commits
+[@gibmat](https://github.com/gibmat) - 5 commits
+[@hallyn](https://github.com/hallyn) - 5 commits
+[@dependabot[bot]](https://github.com/dependabot[bot]) - 4 commits
+[@web-flow](https://github.com/web-flow) - 4 commits
+[@geaaru](https://github.com/geaaru) - 4 commits
+[@eddyg](https://github.com/eddyg) - 3 commits
+[@tenforward](https://github.com/tenforward) - 3 commits
+[@marcosps](https://github.com/marcosps) - 3 commits
+[@stiltr](https://github.com/stiltr) - 3 commits
+[@timbretimber](https://github.com/timbretimber) - 3 commits
+[@foxtrotcz](https://github.com/foxtrotcz) - 3 commits
 
 This repository may be a mirror. Please check the upstream source for additional contributions.
 <!-- AI:end:contributors -->
@@ -160,6 +161,20 @@ _Original project — no upstream fork._
 <!-- AI:start:resources -->
 _No additional resource files found._
 <!-- AI:end:resources -->
+
+<!-- AI:start:accessibility -->
+This repo uses automated accessibility auditing via `check-accessibility.yml`.
+
+Checks include: CODEOWNERS ownership coverage, README screen-reader compatibility,
+WCAG 2.1 AA HTML compliance, audio overview (espeak-ng), and Braille output (liblouis).
+
+
+
+
+Run the [Check Accessibility](https://github.com/Interested-Deving-1896/penguins-eggs/actions/workflows/check-accessibility.yml)
+workflow to generate the first report and accessibility artifacts.
+See [DOCS/accessibility.md](https://github.com/Interested-Deving-1896/penguins-eggs/blob/main/DOCS/accessibility.md) for the full reference.
+<!-- AI:end:accessibility -->
 
 ## License
 
