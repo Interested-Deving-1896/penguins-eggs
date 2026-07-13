@@ -5,32 +5,30 @@
 
 
 <!-- AI:start:what-it-does -->
-Penguins-Eggs is a remastering tool that enables users to create custom Linux distributions or live ISO images based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for system administrators, developers, and Linux enthusiasts who need to customize operating systems for deployment or distribution.
+This project provides a remastering tool for creating custom Linux distributions. It supports various Linux-based operating systems, including Debian, Ubuntu, Arch, Fedora, and more. It is used by developers and system administrators to generate tailored ISO images or live systems for deployment or distribution.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project is structured as a TypeScript-based CLI tool for creating Linux system remasters. It uses the `@oclif/core` framework for command-line interface functionality and integrates various dependencies for system information, file manipulation, and user interaction. The main entry point is defined in `package.json` as `./bin/run.js`. The project supports multiple Linux distributions and includes custom integrations located in the `integrations` directory.
+The project consists of a CLI tool for creating and managing Linux system remasters. It uses the `@oclif/core` framework for CLI functionality and integrates with various Linux distributions. The main entry point is `bin/run.js`, defined in `package.json`. The architecture includes modular components for system information, file system operations, and user interaction, leveraging dependencies like `systeminformation`, `js-yaml`, and `inquirer`. Custom integrations are located in the `integrations` directory. Workflows automate tasks like CI/CD, repository synchronization, and artifact mirroring.
 
-The repository is organized as follows:
+The directory structure is as follows:
 
 ```plaintext
 .
-├── bin/                  # CLI entry point and executable scripts
-├── src/                  # Source code for the application
-├── integrations/         # Custom integrations for supported distributions
-├── workflows/            # CI/CD workflows for automation
-├── .github/              # GitHub-specific configurations and actions
-├── .vscode/              # VS Code workspace settings
-├── CHANGELOG.md          # Changelog for the project
+├── bin/                  # CLI entry point and scripts
+├── integrations/         # Custom integration modules
+├── workflows/            # GitHub Actions workflows
+├── docs/                 # Documentation files
+├── src/                  # Source code for core functionality
+├── test/                 # Test cases and utilities
+├── .github/              # GitHub configuration
+├── CHANGELOG.md          # Changelog for releases
 ├── LICENSE               # License file
-├── README.md             # Project documentation
-├── package.json          # Project metadata and dependencies
-└── SECURITY.md           # Security policy and guidelines
+├── README.md             # Project overview
+└── package.json          # Project metadata and dependencies
 ```
-
-Key components include the CLI commands (defined in `src`), custom integrations for distribution-specific functionality, and CI/CD workflows for automated testing, building, and deployment. The project uses `oclif` plugins for features like autocompletion and versioning.
 <!-- AI:end:architecture -->
 
 ## Install
