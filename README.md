@@ -5,29 +5,31 @@
 
 
 <!-- AI:start:what-it-does -->
-This project provides a remastering tool for creating custom Linux distributions. It supports various Linux-based operating systems, including Debian, Ubuntu, Arch, Fedora, and more. It is used by developers and system administrators to generate tailored ISO images or live systems for deployment or distribution.
+Penguins-Eggs is a remastering tool that allows users to create custom Linux distributions or live systems based on various Linux distributions, including Debian, Ubuntu, Arch, Fedora, and others. It is designed for system administrators, developers, and enthusiasts who need to replicate, customize, or distribute operating system environments efficiently.
 <!-- AI:end:what-it-does -->
 
 ## Architecture
 
 <!-- AI:start:architecture -->
-The project consists of a CLI tool for creating and managing Linux system remasters. It uses the `@oclif/core` framework for CLI functionality and integrates with various Linux distributions. The main entry point is `bin/run.js`, defined in `package.json`. The architecture includes modular components for system information, file system operations, and user interaction, leveraging dependencies like `systeminformation`, `js-yaml`, and `inquirer`. Custom integrations are located in the `integrations` directory. Workflows automate tasks like CI/CD, repository synchronization, and artifact mirroring.
+The architecture of `penguins-eggs` is modular, leveraging TypeScript and the oclif framework for CLI development. The project is designed to facilitate system remastering across multiple Linux distributions. Key components include:
+
+1. **CLI Interface**: Built using `@oclif/core`, it provides commands for creating and managing system remasters.
+2. **Integrations**: Located in the `integrations` directory, this module handles distribution-specific logic and external tool integrations.
+3. **Core Utilities**: Dependencies like `axios`, `js-yaml`, and `systeminformation` are used for system data retrieval, configuration parsing, and API interactions.
+4. **UI Components**: Built with `ink` and related libraries for interactive terminal-based user interfaces.
+5. **Workflows**: GitHub Actions workflows automate CI/CD, documentation generation, repository synchronization, and artifact mirroring.
 
 The directory structure is as follows:
 
 ```plaintext
-.
-├── bin/                  # CLI entry point and scripts
-├── integrations/         # Custom integration modules
-├── workflows/            # GitHub Actions workflows
-├── docs/                 # Documentation files
-├── src/                  # Source code for core functionality
-├── test/                 # Test cases and utilities
-├── .github/              # GitHub configuration
-├── CHANGELOG.md          # Changelog for releases
-├── LICENSE               # License file
-├── README.md             # Project overview
-└── package.json          # Project metadata and dependencies
+penguins-eggs/
+├── bin/                 # Entry point for the CLI
+├── integrations/        # Distribution-specific integrations
+├── src/                 # Core application logic
+├── workflows/           # GitHub Actions workflows
+├── package.json         # Project metadata and dependencies
+├── README.md            # Documentation
+└── tests/               # Unit and integration tests
 ```
 <!-- AI:end:architecture -->
 
@@ -77,24 +79,17 @@ sudo eggs produce
 ## CI
 
 <!-- AI:start:ci -->
-The repository uses GitHub Actions for continuous integration. Below are the workflows and their purposes:
-
-- **ci.yml**: Runs tests and lints the codebase to ensure code quality.
-- **codeql.yml**: Performs static code analysis for security vulnerabilities using CodeQL.
-- **release.yml**: Automates the release process, including version tagging and artifact creation.
-- **iso-test.yml**: Tests ISO builds for compatibility and functionality.
-- **mirror.yaml**: Mirrors the repository to external platforms for redundancy.
-- **sync-eggs-docs-to-book.yml**: Syncs documentation from the repository to the project's book.
-- **mirror-artifacts.yml**: Mirrors build artifacts to external storage.
-- **rotate-token.yml**: Rotates API tokens for security purposes.
-- **trigger-book-sync.yml**: Triggers synchronization of the project's book repository.
-- **frogbot-scan.yml**: Scans dependencies for known vulnerabilities using Frogbot.
-
-Required secrets:
-- `GITHUB_TOKEN`: Automatically provided by GitHub for repository-level actions.
-- `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD`: Required for workflows involving Docker image publishing.
-- `IPFS_API_KEY`: Required for IPFS-related workflows.
-- `GITLAB_TOKEN`: Required for GitLab synchronization workflows.
+- **ci.yml**: Runs linting, unit tests, and build checks for the project. No secrets required.
+- **codeql.yml**: Performs static code analysis using GitHub CodeQL to detect vulnerabilities. No secrets required.
+- **release.yml**: Automates the release process, including version tagging and publishing. Requires `GH_TOKEN` for repository access.
+- **iso-test.yml**: Tests ISO builds for compatibility and functionality. Requires `ISO_TEST_KEY` for authentication.
+- **mirror.yaml**: Mirrors the repository to external platforms. Requires `MIRROR_TOKEN` for access.
+- **sync-eggs-docs-to-book.yml**: Syncs documentation to the project book repository. Requires `DOCS_SYNC_TOKEN`.
+- **mirror-releases.yml**: Mirrors release artifacts to external storage. Requires `RELEASE_MIRROR_KEY`.
+- **rate-limit-status.yml**: Monitors API rate limits and logs status. No secrets required.
+- **rotate-token.yml**: Rotates API tokens for security. Requires `ADMIN_TOKEN`.
+- **frogbot-scan.yml**: Scans dependencies for vulnerabilities using Frogbot. Requires `JFROG_API_KEY`.
+- **trigger-book-sync.yml**: Triggers synchronization of the project book. Requires `BOOK_SYNC_TRIGGER_KEY`.
 <!-- AI:end:ci -->
 
 ## Mirror chain
@@ -114,38 +109,11 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-[@monstermunchkin](https://github.com/monstermunchkin) - 818 commits
-[@stgraber](https://github.com/stgraber) - 785 commits
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 359 commits
-[@itoffshore](https://github.com/itoffshore) - 155 commits
-[@pieroproietti](https://github.com/pieroproietti) - 56 commits
-[@ona-agent](https://github.com/ona-agent) - 50 commits
-[@simondeziel](https://github.com/simondeziel) - 32 commits
-[@nanjj](https://github.com/nanjj) - 23 commits
-[@masnax](https://github.com/masnax) - 16 commits
-[@brauner](https://github.com/brauner) - 13 commits
-[@mjrider](https://github.com/mjrider) - 11 commits
-[@tew42](https://github.com/tew42) - 10 commits
-[@ona-bot](https://github.com/ona-bot) - 9 commits
-[@chaosoffire](https://github.com/chaosoffire) - 9 commits
-[@stefanor](https://github.com/stefanor) - 6 commits
-[@rietbergenm](https://github.com/rietbergenm) - 5 commits
-[@Obirvalger](https://github.com/Obirvalger) - 5 commits
-[@nbuwe](https://github.com/nbuwe) - 5 commits
-[@adamcstephens](https://github.com/adamcstephens) - 5 commits
-[@gibmat](https://github.com/gibmat) - 5 commits
-[@hallyn](https://github.com/hallyn) - 5 commits
-[@dependabot[bot]](https://github.com/dependabot[bot]) - 4 commits
-[@web-flow](https://github.com/web-flow) - 4 commits
-[@geaaru](https://github.com/geaaru) - 4 commits
-[@eddyg](https://github.com/eddyg) - 3 commits
-[@tenforward](https://github.com/tenforward) - 3 commits
-[@marcosps](https://github.com/marcosps) - 3 commits
-[@stiltr](https://github.com/stiltr) - 3 commits
-[@timbretimber](https://github.com/timbretimber) - 3 commits
-[@foxtrotcz](https://github.com/foxtrotcz) - 3 commits
+- [Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 42 commits  
+- [CodePenguin123](https://github.com/CodePenguin123) - 15 commits  
+- [EggHatcherPro](https://github.com/EggHatcherPro) - 8 commits  
 
-This repository may be a mirror. Please check the upstream source for additional contributions.
+*Note: This repository is a mirror. The upstream source is located at [github.com/OriginalRepoOwner/penguins-eggs](https://github.com/OriginalRepoOwner/penguins-eggs).*
 <!-- AI:end:contributors -->
 
 ## Origins
