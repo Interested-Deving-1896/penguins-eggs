@@ -109,9 +109,9 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-- [Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 42 commits  
-- [CodePenguin123](https://github.com/CodePenguin123) - 15 commits  
-- [EggHatcherPro](https://github.com/EggHatcherPro) - 8 commits  
+- [Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 42 commits
+- [CodePenguin123](https://github.com/CodePenguin123) - 15 commits
+- [EggHatcherPro](https://github.com/EggHatcherPro) - 8 commits
 
 *Note: This repository is a mirror. The upstream source is located at [github.com/OriginalRepoOwner/penguins-eggs](https://github.com/OriginalRepoOwner/penguins-eggs).*
 <!-- AI:end:contributors -->
@@ -119,7 +119,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Origins
 
 <!-- AI:start:origins -->
-_Original project — no upstream fork._
+_Original project — no upstream influences recorded._
 <!-- AI:end:origins -->
 
 ## Resources
