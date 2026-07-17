@@ -17,6 +17,9 @@ See AI context: https://penguins-eggs.net/llms.txt
 # CHANGELOG penguins-eggs (legacy edition)
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
 
+# v26.7.17
+Just an update of node packages.
+
 # v26.6.27
 This package changed it's name to **penguins-eggs-legacy**.
 
