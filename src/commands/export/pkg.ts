@@ -17,7 +17,7 @@ import { IEggsConfigTools } from '../../interfaces/i-config-tools.js'
 import { exec, execSync } from '../../lib/utils.js'
 
 export default class ExportPkg extends Command {
-  static description = 'export penguins-eggs package to the destination host'
+  static description = 'export penguins-eggs-legacy package to the destination host'
   static examples = ['eggs export pkg', 'eggs export pkg --clean', 'eggs export pkg --all']
   static flags = {
     all: Flags.boolean({ char: 'a', description: 'export all archs' }),
@@ -74,7 +74,7 @@ export default class ExportPkg extends Command {
         Utils.warning(`exporting Alpine APK packages`)
         localPath = `/home/${this.user}/packages/aports/${arch}`
         remotePath = `${this.Tu.config.remotePathPackages}/alpine/${arch}`
-        filter = `penguins-eggs-+([0-9.])-*.apk`
+        filter = `penguins-eggs-legacy-+([0-9.])-*.apk`
         break
       }
 
@@ -87,17 +87,17 @@ export default class ExportPkg extends Command {
          */
         if (Diversions.isManjaroBased(distroId)) {
           Utils.warning(`exporting Manjaro .pkg.tar.zst packages`)
-          localPath = `/home/${this.user}/penguins-packs/manjaro/penguins-eggs`
+          localPath = `/home/${this.user}/penguins-packs/manjaro/penguins-eggs-legacy`
           remotePath = this.Tu.config.remotePathPackages + '/manjaro'
-          filter = `penguins-eggs-+([0-9.])-*-any.pkg.tar.*`
+          filter = `penguins-eggs-legacy+([0-9.])-*-any.pkg.tar.*`
         } else {
           /**
            * Arch/Manjaro:Arch
            */
           Utils.warning(`exporting Arch .pkg.tar.zst packages`)
-          localPath = `/home/${this.user}/penguins-packs/aur/penguins-eggs`
+          localPath = `/home/${this.user}/penguins-packs/aur/penguins-eggs-legacy`
           remotePath = this.Tu.config.remotePathPackages + '/aur'
-          filter = `penguins-eggs-+([0-9.])-*-any.pkg.tar.zst`
+          filter = `penguins-eggs-legacy+([0-9.])-*-any.pkg.tar.zst`
         }
 
         break
@@ -108,14 +108,14 @@ export default class ExportPkg extends Command {
        */
       case 'debian': {
         Utils.warning(`exporting Devuan/Debian/Ubuntu DEB packages`)
-        localPath = `/home/${this.user}/penguins-eggs/releases`
+        localPath = `/home/${this.user}/forge/penguins-eggs-legacy/releases`
         remotePath = this.Tu.config.remotePathPackages + '/debs'
         let arch = Utils.uefiArch()
         if (this.all) {
           arch = '*'
         }
 
-        filter = `penguins-eggs_+([0-9.])-?_${arch}.deb`
+        filter = `penguins-eggs-legacy_+([0-9.])-?_${arch}.deb`
         break
       }
 
@@ -135,7 +135,7 @@ export default class ExportPkg extends Command {
         Utils.warning(warning)
         localPath = `/home/${this.user}/rpmbuild/RPMS/x86_64`
         remotePath = this.Tu.config.remotePathPackages + `/` + repo
-        filter = `penguins-eggs-+([0-9.])-*.${ftype}.x86_64.rpm`
+        filter = `penguins-eggs-legacy-+([0-9.])-*.${ftype}.x86_64.rpm`
         // filter = `penguins-eggs-[0-9][0-9].[0-9]*.[0-9]*-*.${ftype}.x86_64.rpm`
 
 
@@ -149,7 +149,7 @@ export default class ExportPkg extends Command {
         Utils.warning(`exporting Openmamba RPM packages`)
         localPath = `/home/${this.user}/rpmbuild/RPMS/x86_64`
         remotePath = this.Tu.config.remotePathPackages + '/openmamba'
-        filter = `penguins-eggs-+([0-9.])-*.mamba.*.rpm`
+        filter = `penguins-eggs-legacy-+([0-9.])-*.mamba.*.rpm`
         // filter = `penguins-eggs-[0-9][0-9].@([0-9]|[0-1][0-9]).@([0-9]|[0-3][0-9])-*mamba.*.rpm`
 
 
@@ -163,7 +163,7 @@ export default class ExportPkg extends Command {
         Utils.warning(`exporting OpenSuSE RPM packages`)
         localPath = `/home/${this.user}/rpmbuild/RPMS/x86_64`
         remotePath = this.Tu.config.remotePathPackages + '/opensuse'
-        filter = `penguins-eggs-+([0-9.])-*.rpm`
+        filter = `penguins-eggs-legacy-+([0-9.])-*.rpm`
         break
       }
       // No default

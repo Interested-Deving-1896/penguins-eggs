@@ -10,7 +10,7 @@ Depends: {{{depends}}}
 Suggests: calamares
 Conflicts: calamares-settings-debian, calamares-settings-ubuntu
 Description: {{{description}}}
- Penguins-eggs is a versatile remastering tool that allows users to create
+ Penguins-eggs-legacy is a versatile remastering tool that allows users to create
  custom live ISO images. It supports multiple Linux distributions, including
  Alpine, Arch, Debian, Devuan, Fedora, Manjaro, Opensuse, Ubuntu, and derivatives.
  
