@@ -304,7 +304,7 @@ export async function produce(
           await this.createXdgAutostart(this.settings.config.theme, myAddons, myLinks, noicons)
         } else {
           // add cli-autologin
-          this.cliAutologin.add(this.settings.distro.distroId, this.settings.distro.codenameId, this.settings.config.user_opt, this.settings.config.user_opt_passwd, this.settings.config.root_passwd, this.settings.work_dir.merged)
+          await this.cliAutologin.add(this.settings.distro.distroId, this.settings.distro.codenameId, this.settings.config.user_opt, this.settings.config.user_opt_passwd, this.settings.config.root_passwd, this.settings.work_dir.merged)
         }
       }
 
