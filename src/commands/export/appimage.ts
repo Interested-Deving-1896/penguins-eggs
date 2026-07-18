@@ -7,6 +7,7 @@
  */
 
 import { Command, Flags } from '@oclif/core'
+import fs from 'node:fs'
 import os from 'node:os'
 
 import Distro from '../../classes/distro.js'
@@ -52,37 +53,40 @@ export default class ExportAppimage extends Command {
     this.echo = Utils.setEcho(this.verbose)
     await this.Tu.loadSettings()
 
-    const remoteMountpoint = `/tmp/eggs-${(Math.random() + 1).toString(36).slice(7)}`
-
-    const localPath = '$HOME/penguins-eggs'
+    const localPath = `/home/${this.user}/penguins-eggs`
     const remotePath = '/eggs/'
-    const filter = `penguins-eggs-+([0-9.])-*.AppImage`
 
-    let cmd = `#!/bin/bash\n`
-    cmd += `set -e\n`
-    cmd += 'shopt -s extglob\n'
-    cmd += `mkdir ${remoteMountpoint}\n`
-    cmd += `sshfs ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${remotePath} ${remoteMountpoint}\n`
-    if (this.clean) {
-      cmd += `# Delete old AppImage\n`
-      cmd += `rm -f ${remoteMountpoint}/${filter}\n`
+    const files: string[] = []
+    if (fs.existsSync(localPath)) {
+      const allFiles = fs.readdirSync(localPath)
+      const regex = /^penguins-eggs(-legacy)?-([0-9.]+)-.*\.AppImage$/
+      for (const file of allFiles) {
+        if (regex.test(file)) {
+          files.push(`${localPath}/${file}`)
+        }
+      }
     }
 
-    cmd += `# Export packages\n`
-    cmd += `cp ${localPath}/${filter} ${remoteMountpoint}\n`
-    cmd += 'sync\n'
-    cmd += `\n`
-    cmd += `# wait before to umount\n`
-    cmd += 'sleep 2s\n'
-    cmd += `fusermount3 -u ${remoteMountpoint}\n`
-    cmd += `# remove mountpoint\n`
-    cmd += `rm -rf ${remoteMountpoint}\n`
+    if (files.length === 0) {
+      console.log(`No AppImage files found in ${localPath}`)
+      return
+    }
+
+    const remote = `${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}`
+    let cmd = `#!/bin/bash\nset -e\n`
+    let sshCmd = `mkdir -p ${remotePath}`
+    if (this.clean) {
+      sshCmd += ` && rm -f ${remotePath}/penguins-eggs-*.AppImage`
+    }
+    cmd += `ssh ${remote} "${sshCmd}"\n`
+    cmd += `scp ${files.join(' ')} ${remote}:${remotePath}\n`
+
     if (!this.verbose) {
       if (this.clean) {
-        console.log(`remove: ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${filter}`)
+        console.log(`remove: ${remote}:${remotePath}/penguins-eggs-*.AppImage`)
       }
 
-      console.log(`copy: ${localPath}/${filter} to ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${remotePath}`)
+      console.log(`copy: ${files.join(', ')} to ${remote}:${remotePath}`)
     }
 
     await exec(cmd, this.echo)

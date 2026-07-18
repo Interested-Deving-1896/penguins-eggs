@@ -7,6 +7,7 @@
  */
 
 import { Command, Flags } from '@oclif/core'
+import fs from 'node:fs'
 
 import Tools from '../../classes/tools.js'
 import Utils from '../../classes/utils.js'
@@ -32,36 +33,43 @@ export default class ExportIso extends Command {
 
     const echo = Utils.setEcho(flags.verbose)
 
-    const rmount = `/tmp/eggs-${(Math.random() + 1).toString(36).slice(7)}`
-    let cmd = `rm -f ${rmount}\n`
-    const filters = ['*.iso', '*.img', '*.md5', '*.sha256']
-    cmd += `mkdir ${rmount}\n`
-    cmd += `sshfs ${Tu.config.remoteUser}@${Tu.config.remoteHost}:${Tu.config.remotePathIso} ${rmount}\n`
+    const files: string[] = []
+    if (fs.existsSync(Tu.snapshot_dir)) {
+      const allFiles = fs.readdirSync(Tu.snapshot_dir)
+      const baseName = Tu.snapshot_name
+      for (const file of allFiles) {
+        if (file.startsWith(baseName)) {
+          if (file.endsWith('.iso') || file.endsWith('.img') || (flags.checksum && (file.endsWith('.md5') || file.endsWith('.sha256')))) {
+            files.push(Tu.snapshot_dir + file)
+          }
+        }
+      }
+    }
+
+    if (files.length === 0) {
+      console.log(`No files found matching ${Tu.snapshot_dir}${Tu.snapshot_name}*`)
+      return
+    }
+
+    const remote = `${Tu.config.remoteUser}@${Tu.config.remoteHost}`
+    let cmd = `#!/bin/bash\nset -e\n`
+    let sshCmd = `mkdir -p ${Tu.config.remotePathIso}`
     if (flags.clean) {
-      cmd += `rm -f ${rmount}/${Tu.snapshot_name}*\n`
+      sshCmd += ` && rm -f ${Tu.config.remotePathIso}/${Tu.snapshot_name}*`
     }
-
-    cmd += `cp ${Tu.snapshot_dir}${Tu.snapshot_name}${filters[0]} ${rmount} 2>/dev/null || true\n`
-    cmd += `cp ${Tu.snapshot_dir}${Tu.snapshot_name}${filters[1]} ${rmount} 2>/dev/null || true\n`
-    if (flags.checksum) {
-      cmd += `cp ${Tu.snapshot_dir}${Tu.snapshot_name}${filters[2]} ${rmount} 2>/dev/null || true\n`
-      cmd += `cp ${Tu.snapshot_dir}${Tu.snapshot_name}${filters[3]} ${rmount} 2>/dev/null || true\n`
-    }
-
-    cmd += 'sync\n'
-    cmd += `umount ${rmount}\n`
-    cmd += `rm -f ${rmount}\m`
+    cmd += `ssh ${remote} "${sshCmd}"\n`
+    cmd += `scp ${files.join(' ')} ${remote}:${Tu.config.remotePathIso}\n`
 
     if (!flags.verbose) {
       if (flags.clean) {
-        console.log(`remove  ${Tu.config.remoteUser}@${Tu.config.remoteHost}:${Tu.config.remotePathIso}${Tu.snapshot_name}${filters[0]}|img`)
+        console.log(`remove  ${remote}:${Tu.config.remotePathIso}/${Tu.snapshot_name}*`)
       }
 
       if (flags.checksum) {
-        console.log(`export  ${Tu.config.localPathIso}/${Tu.snapshot_name}${filters[2]}/${filters[3]} to ${Tu.config.remoteUser}@${Tu.config.remoteHost}:${Tu.config.remotePathIso}`)
+        console.log(`export  ${Tu.snapshot_dir}${Tu.snapshot_name}*.md5/sha256 to ${remote}:${Tu.config.remotePathIso}`)
       }
 
-      console.log(`scp     ${Tu.config.localPathIso}/${Tu.snapshot_name}${filters[0]}|img ${Tu.config.remoteUser}@${Tu.config.remoteHost}:${Tu.config.remotePathIso}`)
+      console.log(`scp     ${files.join(' ')} to ${remote}:${Tu.config.remotePathIso}`)
     }
 
     await exec(cmd, echo)

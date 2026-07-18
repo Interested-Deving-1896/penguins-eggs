@@ -7,6 +7,7 @@
  */
 
 import { Command, Flags } from '@oclif/core'
+import fs from 'node:fs'
 import os from 'node:os'
 
 import Distro from '../../classes/distro.js'
@@ -58,11 +59,12 @@ export default class ExportPkg extends Command {
     const distro = new Distro()
     const { familyId } = distro
     const { distroId } = distro
-    const remoteMountpoint = `/tmp/eggs-${(Math.random() + 1).toString(36).slice(7)}`
 
     let localPath = ''
     let remotePath = ''
     let filter = ''
+    let regex: RegExp | undefined = undefined
+    let cleanFilter = ''
 
     switch (familyId) {
       case 'alpine': {
@@ -75,6 +77,8 @@ export default class ExportPkg extends Command {
         localPath = `/home/${this.user}/packages/aports/${arch}`
         remotePath = `${this.Tu.config.remotePathPackages}/alpine/${arch}`
         filter = `penguins-eggs-legacy-+([0-9.])-*.apk`
+        regex = /^penguins-eggs-legacy-([0-9.]+)-.*\.apk$/
+        cleanFilter = 'penguins-eggs-legacy*.apk'
         break
       }
 
@@ -90,6 +94,8 @@ export default class ExportPkg extends Command {
           localPath = `/home/${this.user}/penguins-packs/manjaro/penguins-eggs-legacy`
           remotePath = this.Tu.config.remotePathPackages + '/manjaro'
           filter = `penguins-eggs-legacy+([0-9.])-*-any.pkg.tar.*`
+          regex = /^penguins-eggs-legacy-?([0-9.]+)-.*-any\.pkg\.tar\..*$/
+          cleanFilter = 'penguins-eggs-legacy*.pkg.tar.*'
         } else {
           /**
            * Arch/Manjaro:Arch
@@ -98,6 +104,8 @@ export default class ExportPkg extends Command {
           localPath = `/home/${this.user}/penguins-packs/aur/penguins-eggs-legacy`
           remotePath = this.Tu.config.remotePathPackages + '/aur'
           filter = `penguins-eggs-legacy+([0-9.])-*-any.pkg.tar.zst`
+          regex = /^penguins-eggs-legacy-?([0-9.]+)-.*-any\.pkg\.tar\.zst$/
+          cleanFilter = 'penguins-eggs-legacy*.pkg.tar.zst'
         }
 
         break
@@ -116,6 +124,9 @@ export default class ExportPkg extends Command {
         }
 
         filter = `penguins-eggs-legacy_+([0-9.])-?_${arch}.deb`
+        const archPattern = arch === '*' ? '.*' : arch
+        regex = new RegExp('^penguins-eggs-legacy_([a-zA-Z0-9.~+-]+)_' + archPattern + '\\.deb$')
+        cleanFilter = `penguins-eggs-legacy*_${arch}.deb`
         break
       }
 
@@ -136,9 +147,9 @@ export default class ExportPkg extends Command {
         localPath = `/home/${this.user}/rpmbuild/RPMS/x86_64`
         remotePath = this.Tu.config.remotePathPackages + `/` + repo
         filter = `penguins-eggs-legacy-+([0-9.])-*.${ftype}.x86_64.rpm`
-        // filter = `penguins-eggs-[0-9][0-9].[0-9]*.[0-9]*-*.${ftype}.x86_64.rpm`
-
-
+        const ftypePattern = ftype.replace(/\?/g, '.')
+        regex = new RegExp('^penguins-eggs-legacy-([0-9.]+)-.*\\.' + ftypePattern + '\\.x86_64\\.rpm$')
+        cleanFilter = `penguins-eggs-legacy*.${ftype.replace(/\?/g, '*')}.x86_64.rpm`
         break
       }
 
@@ -150,9 +161,8 @@ export default class ExportPkg extends Command {
         localPath = `/home/${this.user}/rpmbuild/RPMS/x86_64`
         remotePath = this.Tu.config.remotePathPackages + '/openmamba'
         filter = `penguins-eggs-legacy-+([0-9.])-*.mamba.*.rpm`
-        // filter = `penguins-eggs-[0-9][0-9].@([0-9]|[0-1][0-9]).@([0-9]|[0-3][0-9])-*mamba.*.rpm`
-
-
+        regex = /^penguins-eggs-legacy-([0-9.]+)-.*\.mamba\..*\.rpm$/
+        cleanFilter = 'penguins-eggs-legacy*.mamba.*.rpm'
         break
       }
 
@@ -164,46 +174,50 @@ export default class ExportPkg extends Command {
         localPath = `/home/${this.user}/rpmbuild/RPMS/x86_64`
         remotePath = this.Tu.config.remotePathPackages + '/opensuse'
         filter = `penguins-eggs-legacy-+([0-9.])-*.rpm`
+        regex = /^penguins-eggs-legacy-([0-9.]+)-.*\.rpm$/
+        cleanFilter = 'penguins-eggs-legacy*.rpm'
         break
       }
       // No default
     }
 
-    let cmd = `#!/bin/bash\n`
-    cmd += `set -e\n`
-    cmd += 'shopt -s extglob\n'
-    cmd += `mkdir ${remoteMountpoint}\n`
-    cmd += `sshfs ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${remotePath} ${remoteMountpoint}\n`
-    const archDest = 'x86_64'
+    const files: string[] = []
+    if (fs.existsSync(localPath)) {
+      const allFiles = fs.readdirSync(localPath)
+      for (const file of allFiles) {
+        if (regex && regex.test(file)) {
+          files.push(`${localPath}/${file}`)
+        }
+      }
+    }
+
+    if (files.length === 0) {
+      console.log(`No package files found in ${localPath}`)
+      return
+    }
+
+    const remote = `${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}`
+    let cmd = `#!/bin/bash\nset -e\n`
+    let sshCmd = `mkdir -p ${remotePath}`
     if (this.clean) {
-      const archDest = ''
+      let archDest = ''
       if (distro.familyId === 'alpine') {
-        let archDest = 'x86_64/'
+        archDest = 'x86_64/'
         if (process.arch === 'ia32') {
           archDest = 'i386/'
         }
       }
-
-      cmd += `# Delete old packages\n`
-      cmd += `rm -f ${remoteMountpoint}/${archDest}${filter}\n`
+      sshCmd += ` && rm -f ${remotePath}/${archDest}${cleanFilter}`
     }
+    cmd += `ssh ${remote} "${sshCmd}"\n`
+    cmd += `scp ${files.join(' ')} ${remote}:${remotePath}\n`
 
-    cmd += `# Export packages\n`
-    cmd += `shopt -s extglob\n`
-    cmd += `cp ${localPath}/${filter} ${remoteMountpoint}\n`
-    cmd += 'sync\n'
-    cmd += `\n`
-    cmd += `# wait before to umount\n`
-    cmd += 'sleep 2s\n'
-    cmd += `fusermount3 -u ${remoteMountpoint}\n`
-    cmd += `# remove mountpoint\n`
-    cmd += `rm -rf ${remoteMountpoint}\n`
     if (!this.verbose) {
       if (this.clean) {
-        console.log(`remove: ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${filter}`)
+        console.log(`remove: ${remote}:${remotePath}/${cleanFilter}`)
       }
 
-      console.log(`copy: ${localPath}/${filter} to ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${remotePath}`)
+      console.log(`copy: ${files.join(', ')} to ${remote}:${remotePath}`)
     }
 
     await exec(cmd, this.echo)

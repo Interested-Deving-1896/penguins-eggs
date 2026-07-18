@@ -58,7 +58,6 @@ export default class ExportTarballs extends Command {
     this.echo = Utils.setEcho(this.verbose)
     await this.Tu.loadSettings()
 
-    const remoteMountpoint = `/tmp/eggs-${(Math.random() + 1).toString(36).slice(7)}`
     const localPath = `/home/${this.user}/penguins-eggs/dist/`
     const remotePath = `${this.Tu.config.remotePathPackages}/tarballs/`
     const tarNamePattern = `penguins-eggs_[0-9][0-9].[0-9]*.[0-9]*-*-linux-x64.tar.gz`
@@ -68,21 +67,24 @@ export default class ExportTarballs extends Command {
     if (matchingFiles.length === 0) {
       console.log(`No ${searchPattern} exists!`)
       console.log(`Create it using: pnpm tarballs`)
-      // process.exit(1)
+      return
     }
 
-    let cmd = `mkdir ${remoteMountpoint}\n`
-    cmd += `sshfs ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${remotePath} ${remoteMountpoint}\n`
+    const remote = `${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}`
+    let cmd = `#!/bin/bash\nset -e\n`
+    let sshCmd = `mkdir -p ${remotePath}`
     if (this.clean) {
-      cmd += `rm -f ${remoteMountpoint}/penguins-eggs_*-linux-x64.tar.gz\n`
+      sshCmd += ` && rm -f ${remotePath}/penguins-eggs_*-linux-x64.tar.gz`
     }
+    cmd += `ssh ${remote} "${sshCmd}"\n`
+    cmd += `scp ${matchingFiles.join(' ')} ${remote}:${remotePath}\n`
 
-    cmd += `cp ${localPath}${tarNamePattern} ${remoteMountpoint}/\n`
-    cmd += 'sync\n'
-    cmd += `umount ${remoteMountpoint}\n`
-    cmd += `rm -rf ${remoteMountpoint}\n`
-    if (!this.verbose && this.clean) {
-      console.log(`remove: ${this.Tu.config.remoteUser}@${this.Tu.config.remoteHost}:${remotePath}/${tarNamePattern}`)
+    if (!this.verbose) {
+      if (this.clean) {
+        console.log(`remove: ${remote}:${remotePath}/penguins-eggs_*-linux-x64.tar.gz`)
+      }
+
+      console.log(`copy: ${matchingFiles.join(', ')} to ${remote}:${remotePath}`)
     }
 
     await exec(cmd, this.echo)
