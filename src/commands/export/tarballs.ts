@@ -58,7 +58,7 @@ export default class ExportTarballs extends Command {
     this.echo = Utils.setEcho(this.verbose)
     await this.Tu.loadSettings()
 
-    const localPath = `/home/${this.user}/penguins-eggs/dist/`
+    const localPath = `/home/${this.user}/forge/penguins-eggs-legacy/dist/`
     const remotePath = `${this.Tu.config.remotePathPackages}/tarballs/`
     const tarNamePattern = `penguins-eggs_[0-9][0-9].[0-9]*.[0-9]*-*-linux-x64.tar.gz`
 

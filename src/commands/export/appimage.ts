@@ -53,7 +53,7 @@ export default class ExportAppimage extends Command {
     this.echo = Utils.setEcho(this.verbose)
     await this.Tu.loadSettings()
 
-    const localPath = `/home/${this.user}/penguins-eggs`
+    const localPath = `/home/${this.user}/forge/penguins-eggs-legacy`
     const remotePath = '/eggs/'
 
     const files: string[] = []
