@@ -17,6 +17,11 @@ See AI context: https://penguins-eggs.net/llms.txt
 # CHANGELOG penguins-eggs (legacy edition)
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
 
+# v26.7.18
+- Simplified export commands (iso, pkg, appimage, tarballs) by replacing sshfs with scp/ssh.
+- Fixed package matching regex in export:pkg to properly identify deb packages containing revision numbers.
+- Added missing await to cliAutologin.add in produce to prevent race conditions during console autologin setup.
+
 # v26.7.17
 Just an update of node packages.
 
