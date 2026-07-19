@@ -26,19 +26,20 @@
   distroLike: Debian
   family: debian
   ids:
-    - kali-rolling # kali
-    - faye # LMDE 6
-    - orion-belt # SparkyLinux 7
     - ara # Parrot ara
+    - faye # LMDE 6
+    - kali-rolling # kali
+    - orion-belt # SparkyLinux 7
 
 # trixie
 - id: trixie
   distroLike: Debian
   family: debian
   ids:
+    - abellha
+    - echo # Parrot 7.0
     - gigi # LMDE 7
     - lory # Parrot lory
-    - echo # Parrot 7.0
     - orchid # VanillaOS
     - yirmibes # pardus-25
 
