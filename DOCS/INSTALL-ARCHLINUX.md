@@ -40,28 +40,6 @@ Install the package:
 sudo pacman -S penguins-eggs
 ```
 
-# Using Chaotic-AUR
-penguins-eggs, is published on [AUR](https://aur.archlinux.org/packages/penguins-eggs), so you can add [Chaotic-AUR](https://aur.chaotic.cx/) to get it.
+# AUR Repository Removed
 
-
-Follow, this steps:
-
-* start by retrieving the primary key to enable the installation of our keyring and mirror list.
-
-```
-sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-sudo pacman-key --lsign-key 3056513887B78AEB
-```
-* this allows us to install our chaotic-keyring and chaotic-mirrorlist packages.
-```
-sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-```
-* then, we append (adding at the end) the following to /etc/pacman.conf:
-
-```
-[chaotic-aur]
-Include = /etc/pacman.d/chaotic-mirrorlist
-```
-
-That's it! penguins-eggs is now installed and will be automatically updated along with your other system packages whenever you run `sudo pacman -Syu`.
+The previous `penguins-eggs` package on AUR has been removed to avoid conflicts. Please use the universal native repository at https://penguins-eggs.net/basket/repository/ for Arch Linux and all other supported distributions.

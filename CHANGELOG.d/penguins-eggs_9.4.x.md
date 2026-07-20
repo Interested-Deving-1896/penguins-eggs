@@ -66,7 +66,7 @@ Report problems and bugs, suggestions, etc., after all, being able to handle mor
 
 ### eggs-9.4.3
 * Manjaro: penguins-eggs was included in the [Manjaro community repo](https://gitlab.manjaro.org/packages/community/penguins-eggs);
-* Arch: penguins-eggs is currently in [AUR](https://aur.archlinux.org/packages/penguins-eggs) repository;
+* Arch: penguins-eggs uses the universal native repository at [https://penguins-eggs.net/basket/repository/](https://penguins-eggs.net/basket/repository/) (AUR package removed);
 * Debian/Devuan/Ubuntu: penguins-eggs for that distros and derivaties is included on [penguins-eggs-ppa](https://github.com/pieroproietti/penguins-eggs-ppa);
 * bugfix: various bugfix and typos.
 
