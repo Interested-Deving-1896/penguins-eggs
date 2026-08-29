@@ -56,13 +56,8 @@ export default class Calamares extends Command {
 
     if (flags.theme !== undefined) {
       theme = flags.theme
-      if (theme.includes('/')) {
-        if (theme.endsWith('/')) {
-          theme = theme.slice(0, Math.max(0, theme.length - 1))
-        }
-      } else {
-        const wpath = `/home/${await Utils.getPrimaryUser()}/.wardrobe/vendors/`
-        theme = wpath + flags.theme
+      if (theme.endsWith('/')) {
+        theme = theme.slice(0, Math.max(0, theme.length - 1))
       }
 
       theme = path.resolve(theme)

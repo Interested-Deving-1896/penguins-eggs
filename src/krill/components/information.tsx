@@ -134,14 +134,12 @@ export default async function information(verbose = false): Promise<void> {
             <Box ><Text> </Text></Box>
             <Box borderStyle="round" flexDirection="column" marginRight={2}>
                 <Box ><Text color="cyan">eggs krill</Text><Text> install your CLI system with TUI installer krill, on GUI use calamares</Text></Box>
-                <Box><Text color="cyan">eggs wardrobe</Text><Text> build your personal system starting from cli</Text></Box>
                 <Box ><Text> </Text></Box>
                 <Box flexDirection="row">
                     <Box marginRight={1}><Text>Info: </Text></Box>
                     <Box flexDirection="column">
                         <Box marginRight={2}><Text>blog    </Text><Text color="cyan">https://penguins-eggs.net</Text></Box>
                         <Box marginRight={2}><Text>sources </Text><Text color="cyan">https://github.com/pieroproietti/penguins-eggs</Text></Box>
-                        <Box marginRight={2}><Text>wardrobe </Text><Text color="cyan">https://github.com/pieroproietti/penguins-wardrobe</Text></Box>
                     </Box>
                 </Box>
             </Box>

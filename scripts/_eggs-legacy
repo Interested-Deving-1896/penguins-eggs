@@ -1,8 +1,7 @@
 #compdef eggs-legacy
 
 
-
-_eggs_export() {
+_eggs-legacy_export() {
   local context state state_descr line
   typeset -A opt_args
 
@@ -13,7 +12,7 @@ _eggs_export() {
 _values "completions" \
 "appimage[export penguins-eggs AppImage to the destination host]" \
 "iso[export remastered ISO in the destination host]" \
-"pkg[export penguins-eggs package to the destination host]" \
+"pkg[export penguins-eggs-legacy package to the destination host]" \
 "tarballs[export pkg/iso/tarballs to the destination host]" \
 
       ;;
@@ -59,7 +58,7 @@ _values "completions" \
   esac
 }
 
-_eggs_setup() {
+_eggs-legacy_setup() {
   local context state state_descr line
   typeset -A opt_args
 
@@ -90,7 +89,7 @@ _values "completions" \
   esac
 }
 
-_eggs_tools() {
+_eggs-legacy_tools() {
   local context state state_descr line
   typeset -A opt_args
 
@@ -155,65 +154,8 @@ _values "completions" \
   esac
 }
 
-_eggs_wardrobe() {
-  local context state state_descr line
-  typeset -A opt_args
 
-  _arguments -C "1: :->cmds" "*::arg:->args"
-
-  case "$state" in
-    cmds)
-_values "completions" \
-"get[get warorobe]" \
-"list[list costumes and accessoires in wardrobe]" \
-"show[show costumes/accessories in wardrobe]" \
-"wear[wear costume/accessories from wardrobe]" \
-
-      ;;
-    args)
-      case $line[1] in
-        "get")
-          _arguments -S \
-"(-h --help)"{-h,--help}"[Show CLI help.]" \
-"(-v --verbose)"{-v,--verbose}"[]" \
---help"[Show help for command]" \
-"*: :_files"
-        ;;
-        "list")
-          _arguments -S \
-"(-d --distro)"{-d,--distro}"[distro]:file:_files" \
-"(-h --help)"{-h,--help}"[Show CLI help.]" \
-"(-v --verbose)"{-v,--verbose}"[]" \
---help"[Show help for command]" \
-"*: :_files"
-        ;;
-        "show")
-          _arguments -S \
-"(-h --help)"{-h,--help}"[Show CLI help.]" \
-"(-j --json)"{-j,--json}"[output JSON]" \
-"(-v --verbose)"{-v,--verbose}"[]" \
-"(-w --wardrobe)"{-w,--wardrobe}"[wardrobe]:file:_files" \
---help"[Show help for command]" \
-"*: :_files"
-        ;;
-        "wear")
-          _arguments -S \
-"(-h --help)"{-h,--help}"[Show CLI help.]" \
-"(-a --no_accessories)"{-a,--no_accessories}"[not install accessories]" \
-"(-f --no_firmwares)"{-f,--no_firmwares}"[not install firmwares]" \
-"(-v --verbose)"{-v,--verbose}"[]" \
-"(-w --wardrobe)"{-w,--wardrobe}"[wardrobe]:file:_files" \
---help"[Show help for command]" \
-"*: :_files"
-        ;;
-
-      esac
-      ;;
-  esac
-}
-
-
-_eggs() {
+_eggs-legacy() {
   local context state state_descr line
   typeset -A opt_args
 
@@ -225,7 +167,6 @@ _eggs() {
 "export[export penguins-eggs AppImage to the destination host]" \
 "setup[Automatically check and install system prerequisites]" \
 "tools[clean system log, apt, etc]" \
-"wardrobe[get warorobe]" \
 "adapt[adapt monitor resolution for VM only]" \
 "calamares[a GUI system installer - install and configure calamares]" \
 "config[Configure eggs to run it]" \
@@ -239,23 +180,20 @@ _eggs() {
 "status[informations about eggs status]" \
 "update[update the Penguins' eggs tool]" \
 "autocomplete[Display autocomplete installation instructions.]" \
+"help[Display help for eggs-legacy.]" \
 "version[]" \
-"help[Display help for eggs.]" \
 
     ;;
     args)
       case $line[1] in
 export)
-  _eggs_export
+  _eggs-legacy_export
   ;;
 setup)
-  _eggs_setup
+  _eggs-legacy_setup
   ;;
 tools)
-  _eggs_tools
-  ;;
-wardrobe)
-  _eggs_wardrobe
+  _eggs-legacy_tools
   ;;
 adapt)
 _arguments -S \
@@ -389,15 +327,15 @@ _arguments -S \
 "(-r --refresh-cache)"{-r,--refresh-cache}"[Refresh cache (ignores displaying instructions)]" \
 --help"[Show help for command]" \
 "*: :_files" ;; 
+help)
+_arguments -S \
+"(-n --nested-commands)"{-n,--nested-commands}"[Include all nested commands in the output.]" \
+--help"[Show help for command]" \
+"*: :_files" ;; 
 version)
 _arguments -S \
 --json"[Format output as json.]" \
 --verbose"[Show additional information about the CLI.]" \
---help"[Show help for command]" \
-"*: :_files" ;; 
-help)
-_arguments -S \
-"(-n --nested-commands)"{-n,--nested-commands}"[Include all nested commands in the output.]" \
 --help"[Show help for command]" \
 "*: :_files" ;; 
 esac
@@ -406,4 +344,4 @@ esac
   esac
 }
 
-_eggs
+_eggs-legacy

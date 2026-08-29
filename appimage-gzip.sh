@@ -10,8 +10,8 @@ CACHE_DIR="cache"
 
 # Check Node.js version
 MAJOR_NODE_VERSION=$(echo "$NODE_VERSION" | cut -d. -f1)
-if [ "$MAJOR_NODE_VERSION" -lt 22 ]; then
-    echo "ERROR: NODE_VERSION must be >= 22. Found $NODE_VERSION"
+if [ "$MAJOR_NODE_VERSION" -lt 20 ]; then
+    echo "ERROR: NODE_VERSION must be >= 20. Found $NODE_VERSION"
     exit 1
 fi
 

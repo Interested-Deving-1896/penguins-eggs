@@ -4,7 +4,7 @@
 # e.g. ARRAY=(one two three) -> join_by ":" ${ARRAY[@]} -> "one:two:three"
 function join_by { local IFS="$1"; shift; echo "$*"; }
 
-_eggs_legacy_autocomplete()
+_eggs-legacy_autocomplete()
 {
 
   local cur="${COMP_WORDS[COMP_CWORD]}" opts normalizedCommand colonPrefix IFS=$' \t\n'
@@ -34,13 +34,9 @@ tools:skel --help --user --verbose
 tools:stat --help --month --year
 tools:yolk --help --verbose
 update --help --verbose
-wardrobe:get --help --verbose
-wardrobe:list --distro --help --verbose
-wardrobe:show --help --json --verbose --wardrobe
-wardrobe:wear --help --no_accessories --no_firmwares --verbose --wardrobe
 autocomplete --refresh-cache
-version --json --verbose
 help --nested-commands
+version --json --verbose
 "
 
   function __trim_colon_commands()
@@ -103,4 +99,4 @@ help --nested-commands
   COMPREPLY=($(compgen -W "$opts" -- "${cur}"))
 }
 
-complete -F _eggs_legacy_autocomplete eggs-legacy
+complete -F _eggs-legacy_autocomplete eggs-legacy

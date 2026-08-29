@@ -89,10 +89,6 @@ sudo eggs dad
       <li><a href="#eggs-tools-yolk"><code>eggs tools yolk</code></a></li>
       <li><a href="#eggs-update"><code>eggs update</code></a></li>
       <li><a href="#eggs-version"><code>eggs version</code></a></li>
-      <li><a href="#eggs-wardrobe-get-repo"><code>eggs wardrobe get [REPO]</code></a></li>
-      <li><a href="#eggs-wardrobe-list-repo"><code>eggs wardrobe list [REPO]</code></a></li>
-      <li><a href="#eggs-wardrobe-show-repo"><code>eggs wardrobe show [REPO]</code></a></li>
-      <li><a href="#eggs-wardrobe-wear-repo"><code>eggs wardrobe wear [REPO]</code></a></li>
     </ul>
     <h2><code>eggs adapt</code></h2>
     <p>adapt monitor resolution for VM only</p>
@@ -608,98 +604,6 @@ FLAG DESCRIPTIONS
   --verbose  Show additional information about the CLI.
 
     Additionally shows the architecture, node version, operating system, and versions of plugins that the CLI is using.
-</code></pre>
-    <h2><code>eggs wardrobe get [REPO]</code></h2>
-    <p>get warorobe</p>
-    <pre><code>USAGE
-  $ eggs wardrobe get [REPO] [-h] [-v]
-
-ARGUMENTS
-  [REPO]  repository to get
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  get warorobe
-
-EXAMPLES
-  $ eggs wardrobe get
-
-  $ eggs wardrobe get your-wardrobe
-</code></pre>
-    <h2><code>eggs wardrobe list [REPO]</code></h2>
-    <p>list costumes and accessoires in wardrobe</p>
-    <pre><code>USAGE
-  $ eggs wardrobe list [REPO] [-d &#x3C;value>] [-h] [-v]
-
-ARGUMENTS
-  [REPO]  wardrobe to get
-
-FLAGS
-  -d, --distro=&#x3C;value>  distro
-  -h, --help            Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  list costumes and accessoires in wardrobe
-
-EXAMPLES
-  $ eggs wardrobe list
-
-  $ eggs wardrobe list your-wardrobe
-
-  $ eggs wardrobe list --distro arch
-</code></pre>
-    <h2><code>eggs wardrobe show [REPO]</code></h2>
-    <p>show costumes/accessories in wardrobe</p>
-    <pre><code>USAGE
-  $ eggs wardrobe show [REPO] [-h] [-j] [-v] [-w &#x3C;value>]
-
-ARGUMENTS
-  [REPO]  costume to show
-
-FLAGS
-  -h, --help              Show CLI help.
-  -j, --json              output JSON
-  -v, --verbose
-  -w, --wardrobe=&#x3C;value>  wardrobe
-
-DESCRIPTION
-  show costumes/accessories in wardrobe
-
-EXAMPLES
-  $ eggs wardrobe show colibri
-
-  $ eggs wardrobe show accessories/firmwares
-
-  $ eggs wardrobe show accessories/
-</code></pre>
-    <h2><code>eggs wardrobe wear [REPO]</code></h2>
-    <p>wear costume/accessories from wardrobe</p>
-    <pre><code>USAGE
-  $ eggs wardrobe wear [REPO] [-h] [-a] [-f] [-v] [-w &#x3C;value>]
-
-ARGUMENTS
-  [REPO]  costume to wear
-
-FLAGS
-  -a, --no_accessories    not install accessories
-  -f, --no_firmwares      not install firmwares
-  -h, --help              Show CLI help.
-  -v, --verbose
-  -w, --wardrobe=&#x3C;value>  wardrobe
-
-DESCRIPTION
-  wear costume/accessories from wardrobe
-
-EXAMPLES
-  sudo eggs wardrobe wear duck
-
-  sudo eggs wardrobe wear accessories/firmwares
-
-  sudo eggs wardrobe wear wagtail/waydroid
 </code></pre>
     <h1>FILES</h1>
     <pre><code>  /etc/penguins-eggs.d

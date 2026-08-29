@@ -45,13 +45,13 @@
 - **`incubation/`** (the "incubator", aka fisherman): generates the Calamares configuration per distro (`incubator.d/`: alpine, archlinux, buster, fedora, manjaro, …) → `coa/pkg/calamares`.
 - **`settings.ts`** + `conf/`: `eggs.yaml`, per-codename distro templates in `conf/distros/` (alpine … buster/focal/noble/trixie), `krill.yaml`, `love.yaml`, `tools.yaml`, `exclude.list.d/`.
 - **`yolk.ts`**: local offline repo (`/var/local/yolk`) so Debian installs work without network.
-- **`bleach.ts`** (cleanup), **`tailor.ts`** + wardrobe (themes/costumes → `coa/pkg/tailor`), **`pxe.ts`** + `src/dhcpd-proxy/` (PXE boot served by the live system), **`cli-autologin.ts`**, **`xdg.ts`**.
+- **`bleach.ts`** (cleanup), **`pxe.ts`** + `src/dhcpd-proxy/` (PXE boot served by the live system), **`cli-autologin.ts`**, **`xdg.ts`**.
 
 ### Krill: the TUI Installer (`src/krill/`)
 Ink/React wizard — components `welcome`, `location`, `keyboard`, `partitions`, `network`, `users`, `summary`, `install`, `finished`; `classes/sequence.tsx` orchestrates the actual installation, `classes/prepare.ts`/`prepare.d/` the gathering. Invoked as `eggs install` (alias krill). Supports unattended mode.
 
 ### Command Surface (`src/commands/`)
-`produce` (the remaster itself), `kill` (destroy workdir), `love` (one-shot: the simplest way to get an egg), `dad` (TUI configuration helper), `mom` (TUI help), `krill.ts` (installer), `calamares`, `adapt` (VM display), `cuckoo` (PXE proxy-DHCP), `export iso|pkg|tarballs|appimage`, `tools clean|repo|skel|stat|yolk`, `wardrobe get|list|show|wear`, `config`, `update`, `status`, `setup install|purge`.
+`produce` (the remaster itself), `kill` (destroy workdir), `love` (one-shot: the simplest way to get an egg), `dad` (TUI configuration helper), `mom` (TUI help), `krill.ts` (installer), `calamares`, `adapt` (VM display), `cuckoo` (PXE proxy-DHCP), `export iso|pkg|tarballs|appimage`, `tools clean|repo|skel|stat|yolk`, `config`, `update`, `status`, `setup install|purge`.
 
 ### Packaging & Unattended
 - **`perrisbrewery/`**: templates and maintainer scripts to brew the Debian package.

@@ -1219,22 +1219,6 @@ export default class Utils {
 
    /**
     *
-    * @returns wardrobe
-    */
-   static async wardrobe(): Promise<string> {
-      let wardrobe = `${os.homedir()}/.wardrobe`
-      if (Utils.isRoot()) {
-         wardrobe = `/home/${await Utils.getPrimaryUser()}/.wardrobe`
-      }
-
-      return wardrobe
-   }
-
-
-
-
-   /**
-    *
     * @param msg
     */
    static warning(msg = '') {

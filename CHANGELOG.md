@@ -17,6 +17,11 @@ See AI context: https://penguins-eggs.net/llms.txt
 # CHANGELOG penguins-eggs (legacy edition)
 The version is based on the year, month, day, and release number. They are listed in reverse order, with the first being the most recent.
 
+# v26.8.29
+- **Node.js >= 20**: Set minimum required Node.js version to `>= 20` (removed the Node.js 22 constraint to ensure compatibility across Debian, Ubuntu, and derivatives).
+- **Removed `wardrobe` command**: The `wardrobe` command and all its subcommands (`get`, `list`, `show`, `wear`) have been completely removed. It is now replaced by the dedicated standalone tool [penguins-tailor](https://github.com/pieroproietti/penguins-tailor).
+- **Dependencies Update**: Updated all npm packages, Oclif core plugins, and dependencies to their latest versions.
+
 # v26.7.29
 Just an update of node packages.
 

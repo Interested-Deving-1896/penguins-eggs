@@ -2,7 +2,7 @@
     "name": "penguins-eggs-legacy",
     "shortName": "eggs-legacy",
     "description": "A remaster system tool, compatible with Almalinux, Alpine, Arch, Debian, Devuan, Fedora, Manjaro, Opensuse, Ubuntu and derivatives",
-    "version": "26.8.11",
+    "version": "26.8.29",
     "author": "Piero Proietti",
     "bin": {
         "eggs-legacy": "./bin/run.js"
@@ -32,7 +32,7 @@
         "netmask": "^2.1.1",
         "react": "^19.2.8",
         "read": "^6.0.0",
-        "systeminformation": "^5.33.5",
+        "systeminformation": "^5.33.6",
         "tftp": "^0.1.2",
         "ws": "^8.21.3"
     },
@@ -59,7 +59,7 @@
         "globals": "^17.11.0",
         "mocha": "^11.8.0",
         "oclif": "^4.24.0",
-        "perrisbrewery": "^26.1.28",
+        "perrisbrewery": "^26.8.29-1",
         "prettier": "^3.9.6",
         "shx": "^0.4.0",
         "ts-node": "10.9.2",
@@ -68,7 +68,7 @@
         "typescript-eslint": "^8.68.0"
     },
     "engines": {
-        "node": ">=22"
+        "node": ">=20"
     },
     "files": [
         ".oclif.manifest.json",

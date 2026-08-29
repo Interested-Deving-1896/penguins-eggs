@@ -35,7 +35,7 @@ common:
 
 arch:
   amd64:
-  - nodejs (>= 22)
+  - nodejs (>= 20)
   - grub-efi-amd64-bin
   - isolinux
   - shim-signed
@@ -43,14 +43,14 @@ arch:
   
   
   i386:
-  - nodejs (>= 22)
+  - nodejs (>= 20)
   - grub-pc-bin
   - isolinux
   - grub-efi-ia32-bin
   - syslinux
   
   arm64:
-  - nodejs (>= 22)
+  - nodejs (>= 20)
   - grub-efi-arm64-bin
   - shim-signed
   - u-boot-tools

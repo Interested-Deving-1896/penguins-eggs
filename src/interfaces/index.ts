@@ -20,7 +20,6 @@ export { IInitrd } from './i-initrd.js'
 export { IInstall } from './i-install.js'
 export { IInstaller } from './i-installer.js'
 export { ILuksPassphrase } from './i-luks-passphrase.js'
-export { IMateria, IRepos } from './i-materia.js'
 export { INet } from './i-net.js'
 
 export { IPartitions } from './i-partitions.js'

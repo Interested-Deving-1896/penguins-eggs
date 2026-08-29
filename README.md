@@ -32,7 +32,7 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 <!-- toc -->
 * [README](#readme)
 * [Penguin&#39;s eggs are generated and new birds are ready to fly...](#penguin39s-eggs-are-generated-and-new-birds-are-ready-to-fly)
-* [penguins-eggs](#penguins-eggs)
+* [penguins-eggs-legacy](#penguins-eggs-legacy)
 * [Installation](#installation)
 * [Usage](#usage)
 * [The Aviary: Tools & Terminology](#the-aviary-tools--terminology)
@@ -49,7 +49,6 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 - [Blog](https://penguins-eggs.net/blog)
 - [Cook eggs in 5 minutes!](https://penguins-eggs.net/docs/Tutorial/eggs5)
 - [Users guide](https://penguins-eggs.net/docs/Tutorial/eggs-users-guide)
-- [Wardrobe users' guide](https://penguins-eggs.net/docs/Tutorial/wardrobe-users-guide)
 - [FAQ](https://penguins-eggs.net/docs/faq)
 - [Changelog](https://github.com/pieroproietti/penguins-eggs/blob/master/CHANGELOG.md#changelog)
 
@@ -167,10 +166,6 @@ To keep your user data, configurations, and files:
 
 `penguins-eggs` uses a bird-themed naming convention for its internal tools:
 
-- **Wardrobe:** A tool to organize customizations, scripts, and themes. It
-  allows you to switch between configurations (e.g., from a bare CLI system to a
-  full GUI). See
-  [penguins-wardrobe](https://github.com/pieroproietti/penguins-wardrobe).
 - **Cuckoo:** A PXE boot server feature. It allows you to boot your generated
   ISO on other computers over the local network without needing a USB drive.
 - **Yolk:** A local repository bundled inside the ISO containing essential
@@ -211,49 +206,45 @@ manager and repository lists.
 - **SourceForge ISOs:**
   [Download Examples](https://sourceforge.net/projects/penguins-eggs/files/ISOS/)
 - **User Guide:**
-  [Wardrobe User Guide](https://penguins-eggs.net/docs/Tutorial/wardrobe-users-guide)
+  [Users Guide](https://penguins-eggs.net/docs/Tutorial/eggs-users-guide)
 
 # Commands
 
 <!-- commands -->
-* [`eggs adapt`](#eggs-adapt)
-* [`eggs autocomplete [SHELL]`](#eggs-autocomplete-shell)
-* [`eggs calamares`](#eggs-calamares)
-* [`eggs config`](#eggs-config)
-* [`eggs cuckoo`](#eggs-cuckoo)
-* [`eggs dad`](#eggs-dad)
-* [`eggs export appimage`](#eggs-export-appimage)
-* [`eggs export iso`](#eggs-export-iso)
-* [`eggs export pkg`](#eggs-export-pkg)
-* [`eggs export tarballs`](#eggs-export-tarballs)
-* [`eggs help [COMMAND]`](#eggs-help-command)
-* [`eggs kill`](#eggs-kill)
-* [`eggs krill`](#eggs-krill)
-* [`eggs love`](#eggs-love)
-* [`eggs mom`](#eggs-mom)
-* [`eggs produce`](#eggs-produce)
-* [`eggs setup install`](#eggs-setup-install)
-* [`eggs setup purge`](#eggs-setup-purge)
-* [`eggs status`](#eggs-status)
-* [`eggs tools clean`](#eggs-tools-clean)
-* [`eggs tools repo`](#eggs-tools-repo)
-* [`eggs tools skel`](#eggs-tools-skel)
-* [`eggs tools stat`](#eggs-tools-stat)
-* [`eggs tools yolk`](#eggs-tools-yolk)
-* [`eggs update`](#eggs-update)
-* [`eggs version`](#eggs-version)
-* [`eggs wardrobe get [REPO]`](#eggs-wardrobe-get-repo)
-* [`eggs wardrobe list [REPO]`](#eggs-wardrobe-list-repo)
-* [`eggs wardrobe show [REPO]`](#eggs-wardrobe-show-repo)
-* [`eggs wardrobe wear [REPO]`](#eggs-wardrobe-wear-repo)
+* [`eggs-legacy adapt`](#eggs-legacy-adapt)
+* [`eggs-legacy autocomplete [SHELL]`](#eggs-legacy-autocomplete-shell)
+* [`eggs-legacy calamares`](#eggs-legacy-calamares)
+* [`eggs-legacy config`](#eggs-legacy-config)
+* [`eggs-legacy cuckoo`](#eggs-legacy-cuckoo)
+* [`eggs-legacy dad`](#eggs-legacy-dad)
+* [`eggs-legacy export appimage`](#eggs-legacy-export-appimage)
+* [`eggs-legacy export iso`](#eggs-legacy-export-iso)
+* [`eggs-legacy export pkg`](#eggs-legacy-export-pkg)
+* [`eggs-legacy export tarballs`](#eggs-legacy-export-tarballs)
+* [`eggs-legacy help [COMMAND]`](#eggs-legacy-help-command)
+* [`eggs-legacy kill`](#eggs-legacy-kill)
+* [`eggs-legacy krill`](#eggs-legacy-krill)
+* [`eggs-legacy love`](#eggs-legacy-love)
+* [`eggs-legacy mom`](#eggs-legacy-mom)
+* [`eggs-legacy produce`](#eggs-legacy-produce)
+* [`eggs-legacy setup install`](#eggs-legacy-setup-install)
+* [`eggs-legacy setup purge`](#eggs-legacy-setup-purge)
+* [`eggs-legacy status`](#eggs-legacy-status)
+* [`eggs-legacy tools clean`](#eggs-legacy-tools-clean)
+* [`eggs-legacy tools repo`](#eggs-legacy-tools-repo)
+* [`eggs-legacy tools skel`](#eggs-legacy-tools-skel)
+* [`eggs-legacy tools stat`](#eggs-legacy-tools-stat)
+* [`eggs-legacy tools yolk`](#eggs-legacy-tools-yolk)
+* [`eggs-legacy update`](#eggs-legacy-update)
+* [`eggs-legacy version`](#eggs-legacy-version)
 
-## `eggs adapt`
+## `eggs-legacy adapt`
 
 adapt monitor resolution for VM only
 
 ```
 USAGE
-  $ eggs adapt [-h] [-v]
+  $ eggs-legacy adapt [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -263,18 +254,18 @@ DESCRIPTION
   adapt monitor resolution for VM only
 
 EXAMPLES
-  $ eggs adapt
+  eggs adapt
 ```
 
-_See code: [src/commands/adapt.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/adapt.ts)_
+_See code: [src/commands/adapt.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/adapt.ts)_
 
-## `eggs autocomplete [SHELL]`
+## `eggs-legacy autocomplete [SHELL]`
 
 Display autocomplete installation instructions.
 
 ```
 USAGE
-  $ eggs autocomplete [SHELL] [-r]
+  $ eggs-legacy autocomplete [SHELL] [-r]
 
 ARGUMENTS
   [SHELL]  (zsh|bash|powershell) Shell type
@@ -286,26 +277,26 @@ DESCRIPTION
   Display autocomplete installation instructions.
 
 EXAMPLES
-  $ eggs autocomplete
+  $ eggs-legacy autocomplete
 
-  $ eggs autocomplete bash
+  $ eggs-legacy autocomplete bash
 
-  $ eggs autocomplete zsh
+  $ eggs-legacy autocomplete zsh
 
-  $ eggs autocomplete powershell
+  $ eggs-legacy autocomplete powershell
 
-  $ eggs autocomplete --refresh-cache
+  $ eggs-legacy autocomplete --refresh-cache
 ```
 
-_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.2.41/src/commands/autocomplete/index.ts)_
+_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.3.0/src/commands/autocomplete/index.ts)_
 
-## `eggs calamares`
+## `eggs-legacy calamares`
 
 a GUI system installer - install and configure calamares
 
 ```
 USAGE
-  $ eggs calamares [-h] [-i] [-n] [-p] [-r] [--remove] [--theme <value>] [-v]
+  $ eggs-legacy calamares [-h] [-i] [-n] [-p] [-r] [--remove] [--theme <value>] [-v]
 
 FLAGS
   -h, --help           Show CLI help.
@@ -330,15 +321,15 @@ EXAMPLES
   sudo eggs calamares --remove
 ```
 
-_See code: [src/commands/calamares.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/calamares.ts)_
+_See code: [src/commands/calamares.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/calamares.ts)_
 
-## `eggs config`
+## `eggs-legacy config`
 
 Configure eggs to run it
 
 ```
 USAGE
-  $ eggs config [-c] [-h] [-n] [-v]
+  $ eggs-legacy config [-c] [-h] [-n] [-v]
 
 FLAGS
   -c, --clean          remove old configuration before to create new one
@@ -357,15 +348,15 @@ EXAMPLES
   sudo eggs config --clean --nointeractive
 ```
 
-_See code: [src/commands/config.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/config.ts)_
+_See code: [src/commands/config.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/config.ts)_
 
-## `eggs cuckoo`
+## `eggs-legacy cuckoo`
 
 PXE start with proxy-dhcp
 
 ```
 USAGE
-  $ eggs cuckoo [-h] [-v]
+  $ eggs-legacy cuckoo [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -378,15 +369,15 @@ EXAMPLES
   sudo eggs cuckoo
 ```
 
-_See code: [src/commands/cuckoo.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/cuckoo.ts)_
+_See code: [src/commands/cuckoo.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/cuckoo.ts)_
 
-## `eggs dad`
+## `eggs-legacy dad`
 
 ask help from daddy - TUI configuration helper
 
 ```
 USAGE
-  $ eggs dad [-c] [-d] [-f <value>] [-h] [-n] [-v]
+  $ eggs-legacy dad [-c] [-d] [-f <value>] [-h] [-n] [-v]
 
 FLAGS
   -c, --clean          remove old configuration before to create
@@ -407,15 +398,15 @@ EXAMPLES
   sudo eggs dad --default
 ```
 
-_See code: [src/commands/dad.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/dad.ts)_
+_See code: [src/commands/dad.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/dad.ts)_
 
-## `eggs export appimage`
+## `eggs-legacy export appimage`
 
 export penguins-eggs AppImage to the destination host
 
 ```
 USAGE
-  $ eggs export appimage [-c] [-h] [-v]
+  $ eggs-legacy export appimage [-c] [-h] [-v]
 
 FLAGS
   -c, --clean    remove old .AppImage before to copy
@@ -426,22 +417,22 @@ DESCRIPTION
   export penguins-eggs AppImage to the destination host
 
 EXAMPLES
-  $ eggs export pkg
+  eggs export pkg
 
-  $ eggs export pkg --clean
+  eggs export pkg --clean
 
-  $ eggs export pkg --all
+  eggs export pkg --all
 ```
 
-_See code: [src/commands/export/appimage.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/export/appimage.ts)_
+_See code: [src/commands/export/appimage.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/appimage.ts)_
 
-## `eggs export iso`
+## `eggs-legacy export iso`
 
 export remastered ISO in the destination host
 
 ```
 USAGE
-  $ eggs export iso [-C] [-c] [-h] [-v]
+  $ eggs-legacy export iso [-C] [-c] [-h] [-v]
 
 FLAGS
   -C, --checksum  export checksums md5 and sha256
@@ -453,20 +444,20 @@ DESCRIPTION
   export remastered ISO in the destination host
 
 EXAMPLES
-  $ eggs export iso
+  eggs export iso
 
-  $ eggs export iso --clean
+  eggs export iso --clean
 ```
 
-_See code: [src/commands/export/iso.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/export/iso.ts)_
+_See code: [src/commands/export/iso.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/iso.ts)_
 
-## `eggs export pkg`
+## `eggs-legacy export pkg`
 
-export penguins-eggs package to the destination host
+export penguins-eggs-legacy package to the destination host
 
 ```
 USAGE
-  $ eggs export pkg [-a] [-c] [-h] [-v]
+  $ eggs-legacy export pkg [-a] [-c] [-h] [-v]
 
 FLAGS
   -a, --all      export all archs
@@ -475,25 +466,25 @@ FLAGS
   -v, --verbose  verbose
 
 DESCRIPTION
-  export penguins-eggs package to the destination host
+  export penguins-eggs-legacy package to the destination host
 
 EXAMPLES
-  $ eggs export pkg
+  eggs export pkg
 
-  $ eggs export pkg --clean
+  eggs export pkg --clean
 
-  $ eggs export pkg --all
+  eggs export pkg --all
 ```
 
-_See code: [src/commands/export/pkg.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/export/pkg.ts)_
+_See code: [src/commands/export/pkg.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/pkg.ts)_
 
-## `eggs export tarballs`
+## `eggs-legacy export tarballs`
 
 export pkg/iso/tarballs to the destination host
 
 ```
 USAGE
-  $ eggs export tarballs [-c] [-h] [-v]
+  $ eggs-legacy export tarballs [-c] [-h] [-v]
 
 FLAGS
   -c, --clean    remove old .deb before to copy
@@ -504,20 +495,20 @@ DESCRIPTION
   export pkg/iso/tarballs to the destination host
 
 EXAMPLES
-  $ eggs export tarballs
+  eggs export tarballs
 
-  $ eggs export tarballs --clean
+  eggs export tarballs --clean
 ```
 
-_See code: [src/commands/export/tarballs.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/export/tarballs.ts)_
+_See code: [src/commands/export/tarballs.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/tarballs.ts)_
 
-## `eggs help [COMMAND]`
+## `eggs-legacy help [COMMAND]`
 
-Display help for eggs.
+Display help for eggs-legacy.
 
 ```
 USAGE
-  $ eggs help [COMMAND...] [-n]
+  $ eggs-legacy help [COMMAND...] [-n]
 
 ARGUMENTS
   [COMMAND...]  Command to show help for.
@@ -526,18 +517,18 @@ FLAGS
   -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  Display help for eggs.
+  Display help for eggs-legacy.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/6.2.38/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/6.3.0/src/commands/help.ts)_
 
-## `eggs kill`
+## `eggs-legacy kill`
 
 kill the eggs/free the nest
 
 ```
 USAGE
-  $ eggs kill [-h] [-i] [-n] [-v]
+  $ eggs-legacy kill [-h] [-i] [-n] [-v]
 
 FLAGS
   -h, --help           Show CLI help.
@@ -552,16 +543,16 @@ EXAMPLES
   sudo eggs kill
 ```
 
-_See code: [src/commands/kill.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/kill.ts)_
+_See code: [src/commands/kill.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/kill.ts)_
 
-## `eggs krill`
+## `eggs-legacy krill`
 
 a TUI system installer - install the system
 
 ```
 USAGE
-  $ eggs krill [-b] [-c] [-k] [-d <value>] [-H] [-h] [-i] [-n] [-N] [-p] [-r] [-R <value>] [-s] [-S] [-t]
-    [-u] [-v]
+  $ eggs-legacy krill [-b] [-c] [-k] [-d <value>] [-H] [-h] [-i] [-n] [-N] [-p] [-r] [-R <value>] [-s] [-S]
+    [-t] [-u] [-v]
 
 FLAGS
   -H, --halt             Halt the system after installation
@@ -593,15 +584,15 @@ EXAMPLES
   sudo eggs install --chroot
 ```
 
-_See code: [src/commands/krill.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/krill.ts)_
+_See code: [src/commands/krill.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/krill.ts)_
 
-## `eggs love`
+## `eggs-legacy love`
 
 the simplest way to get an egg!
 
 ```
 USAGE
-  $ eggs love [-c] [--fdt <value>] [-f] [-h] [-H] [-k] [-n] [-v]
+  $ eggs-legacy love [-c] [--fdt <value>] [-f] [-h] [-H] [-k] [-n] [-v]
 
 FLAGS
   -H, --hidden         stealth mode
@@ -617,18 +608,18 @@ DESCRIPTION
   the simplest way to get an egg!
 
 EXAMPLES
-  $ eggs love
+  eggs love
 ```
 
-_See code: [src/commands/love.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/love.ts)_
+_See code: [src/commands/love.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/love.ts)_
 
-## `eggs mom`
+## `eggs-legacy mom`
 
 ask help from mommy - TUI helper
 
 ```
 USAGE
-  $ eggs mom [-h]
+  $ eggs-legacy mom [-h]
 
 FLAGS
   -h, --help  Show CLI help.
@@ -637,20 +628,20 @@ DESCRIPTION
   ask help from mommy - TUI helper
 
 EXAMPLES
-  $ eggs mom
+  eggs mom
 ```
 
-_See code: [src/commands/mom.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/mom.ts)_
+_See code: [src/commands/mom.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/mom.ts)_
 
-## `eggs produce`
+## `eggs-legacy produce`
 
 produce a live image from your system
 
 ```
 USAGE
-  $ eggs produce [--addons <value>...] [--basename <value>] [--fdt <value>] [-c] [--excludes <value>...] [-f]
-    [-h] [-H] [-k] [-i] [-K <value>] [--links <value>...] [-m] [-N] [-n] [-p] [-P <value>] [--release] [-s] [-S]
-    [--theme <value>] [-v] [-y]
+  $ eggs-legacy produce [--addons <value>...] [--basename <value>] [-c] [--excludes <value>...] [--fdt
+    <value>] [-f] [-h] [-H] [-k] [-i] [-K <value>] [--links <value>...] [-m] [-N] [-n] [-p] [-P <value>] [--release]
+    [-s] [-S] [--theme <value>] [-v] [-y]
 
 FLAGS
   -H, --hidden               stealth mode
@@ -694,57 +685,57 @@ EXAMPLES
   sudo eggs produce --basename=colibri
 ```
 
-_See code: [src/commands/produce.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/produce.ts)_
+_See code: [src/commands/produce.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/produce.ts)_
 
-## `eggs setup install`
+## `eggs-legacy setup install`
 
 Automatically check and install system prerequisites
 
 ```
 USAGE
-  $ eggs setup install
+  $ eggs-legacy setup install
 
 DESCRIPTION
   Automatically check and install system prerequisites
 
 EXAMPLES
-  $ eggs setup                           # this help
+  eggs setup                           # this help
 
   sudo eggs setup install              # install native dependencies, autocomplete, man, etc
 
   sudo eggs setup purge                # purge all configurations, autocomplete, man, etc installed from penguins-eggs AppImage
 ```
 
-_See code: [src/commands/setup/install.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/setup/install.ts)_
+_See code: [src/commands/setup/install.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/setup/install.ts)_
 
-## `eggs setup purge`
+## `eggs-legacy setup purge`
 
 Automatically check and install system prerequisites
 
 ```
 USAGE
-  $ eggs setup purge
+  $ eggs-legacy setup purge
 
 DESCRIPTION
   Automatically check and install system prerequisites
 
 EXAMPLES
-  $ eggs setup                           # this help
+  eggs setup                           # this help
 
   sudo eggs setup install              # install native dependencies, autocomplete, man, etc
 
   sudo eggs setup purge                # purge all configurations, autocomplete, man, etc installed from penguins-eggs AppImage
 ```
 
-_See code: [src/commands/setup/purge.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/setup/purge.ts)_
+_See code: [src/commands/setup/purge.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/setup/purge.ts)_
 
-## `eggs status`
+## `eggs-legacy status`
 
 informations about eggs status
 
 ```
 USAGE
-  $ eggs status [-h] [-v]
+  $ eggs-legacy status [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -754,18 +745,18 @@ DESCRIPTION
   informations about eggs status
 
 EXAMPLES
-  $ eggs status
+  eggs status
 ```
 
-_See code: [src/commands/status.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/status.ts)_
+_See code: [src/commands/status.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/status.ts)_
 
-## `eggs tools clean`
+## `eggs-legacy tools clean`
 
 clean system log, apt, etc
 
 ```
 USAGE
-  $ eggs tools clean [-h] [-n] [-v]
+  $ eggs-legacy tools clean [-h] [-n] [-v]
 
 FLAGS
   -h, --help           Show CLI help.
@@ -779,15 +770,15 @@ EXAMPLES
   sudo eggs tools clean
 ```
 
-_See code: [src/commands/tools/clean.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/tools/clean.ts)_
+_See code: [src/commands/tools/clean.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/clean.ts)_
 
-## `eggs tools repo`
+## `eggs-legacy tools repo`
 
 add/remove penguins-repos
 
 ```
 USAGE
-  $ eggs tools repo [-a] [-h] [-n] [-r] [-v]
+  $ eggs-legacy tools repo [-a] [-h] [-n] [-r] [-v]
 
 FLAGS
   -a, --add            add penguins-repos
@@ -805,15 +796,15 @@ EXAMPLES
   sudo eggs tools repo --remove
 ```
 
-_See code: [src/commands/tools/repo.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/tools/repo.ts)_
+_See code: [src/commands/tools/repo.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/repo.ts)_
 
-## `eggs tools skel`
+## `eggs-legacy tools skel`
 
 update skel from home configuration
 
 ```
 USAGE
-  $ eggs tools skel [-h] [-u <value>] [-v]
+  $ eggs-legacy tools skel [-h] [-u <value>] [-v]
 
 FLAGS
   -h, --help          Show CLI help.
@@ -829,15 +820,15 @@ EXAMPLES
   sudo eggs tools skel --user user-to-be-copied
 ```
 
-_See code: [src/commands/tools/skel.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/tools/skel.ts)_
+_See code: [src/commands/tools/skel.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/skel.ts)_
 
-## `eggs tools stat`
+## `eggs-legacy tools stat`
 
 get statistics from sourceforge
 
 ```
 USAGE
-  $ eggs tools stat [-h] [-m] [-y]
+  $ eggs-legacy tools stat [-h] [-m] [-y]
 
 FLAGS
   -h, --help   Show CLI help.
@@ -848,22 +839,22 @@ DESCRIPTION
   get statistics from sourceforge
 
 EXAMPLES
-  $ eggs tools stat
+  eggs tools stat
 
-  $ eggs tools stat --month
+  eggs tools stat --month
 
-  $ eggs tools stat --year
+  eggs tools stat --year
 ```
 
-_See code: [src/commands/tools/stat.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/tools/stat.ts)_
+_See code: [src/commands/tools/stat.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/stat.ts)_
 
-## `eggs tools yolk`
+## `eggs-legacy tools yolk`
 
 configure eggs to install without internet
 
 ```
 USAGE
-  $ eggs tools yolk [-h] [-v]
+  $ eggs-legacy tools yolk [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -876,15 +867,15 @@ EXAMPLES
   sudo eggs tools yolk
 ```
 
-_See code: [src/commands/tools/yolk.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/tools/yolk.ts)_
+_See code: [src/commands/tools/yolk.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/yolk.ts)_
 
-## `eggs update`
+## `eggs-legacy update`
 
 update the Penguins' eggs tool
 
 ```
 USAGE
-  $ eggs update [-h] [-v]
+  $ eggs-legacy update [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
@@ -894,16 +885,16 @@ DESCRIPTION
   update the Penguins' eggs tool
 
 EXAMPLES
-  $ eggs update
+  eggs update
 ```
 
-_See code: [src/commands/update.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/update.ts)_
 
-## `eggs version`
+## `eggs-legacy version`
 
 ```
 USAGE
-  $ eggs version [--json] [--verbose]
+  $ eggs-legacy version [--json] [--verbose]
 
 FLAGS
   --verbose  Show additional information about the CLI.
@@ -917,123 +908,7 @@ FLAG DESCRIPTIONS
     Additionally shows the architecture, node version, operating system, and versions of plugins that the CLI is using.
 ```
 
-_See code: [@oclif/plugin-version](https://github.com/oclif/plugin-version/blob/2.2.38/src/commands/version.ts)_
-
-## `eggs wardrobe get [REPO]`
-
-get warorobe
-
-```
-USAGE
-  $ eggs wardrobe get [REPO] [-h] [-v]
-
-ARGUMENTS
-  [REPO]  repository to get
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  get warorobe
-
-EXAMPLES
-  $ eggs wardrobe get
-
-  $ eggs wardrobe get your-wardrobe
-```
-
-_See code: [src/commands/wardrobe/get.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/wardrobe/get.ts)_
-
-## `eggs wardrobe list [REPO]`
-
-list costumes and accessoires in wardrobe
-
-```
-USAGE
-  $ eggs wardrobe list [REPO] [-d <value>] [-h] [-v]
-
-ARGUMENTS
-  [REPO]  wardrobe to get
-
-FLAGS
-  -d, --distro=<value>  distro
-  -h, --help            Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  list costumes and accessoires in wardrobe
-
-EXAMPLES
-  $ eggs wardrobe list
-
-  $ eggs wardrobe list your-wardrobe
-
-  $ eggs wardrobe list --distro arch
-```
-
-_See code: [src/commands/wardrobe/list.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/wardrobe/list.ts)_
-
-## `eggs wardrobe show [REPO]`
-
-show costumes/accessories in wardrobe
-
-```
-USAGE
-  $ eggs wardrobe show [REPO] [-h] [-j] [-v] [-w <value>]
-
-ARGUMENTS
-  [REPO]  costume to show
-
-FLAGS
-  -h, --help              Show CLI help.
-  -j, --json              output JSON
-  -v, --verbose
-  -w, --wardrobe=<value>  wardrobe
-
-DESCRIPTION
-  show costumes/accessories in wardrobe
-
-EXAMPLES
-  $ eggs wardrobe show colibri
-
-  $ eggs wardrobe show accessories/firmwares
-
-  $ eggs wardrobe show accessories/
-```
-
-_See code: [src/commands/wardrobe/show.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/wardrobe/show.ts)_
-
-## `eggs wardrobe wear [REPO]`
-
-wear costume/accessories from wardrobe
-
-```
-USAGE
-  $ eggs wardrobe wear [REPO] [-h] [-a] [-f] [-v] [-w <value>]
-
-ARGUMENTS
-  [REPO]  costume to wear
-
-FLAGS
-  -a, --no_accessories    not install accessories
-  -f, --no_firmwares      not install firmwares
-  -h, --help              Show CLI help.
-  -v, --verbose
-  -w, --wardrobe=<value>  wardrobe
-
-DESCRIPTION
-  wear costume/accessories from wardrobe
-
-EXAMPLES
-  sudo eggs wardrobe wear duck
-
-  sudo eggs wardrobe wear accessories/firmwares
-
-  sudo eggs wardrobe wear wagtail/waydroid
-```
-
-_See code: [src/commands/wardrobe/wear.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.3.21/src/commands/wardrobe/wear.ts)_
+_See code: [@oclif/plugin-version](https://github.com/oclif/plugin-version/blob/2.4.0/src/commands/version.ts)_
 <!-- commandsstop -->
 
 # GUI
