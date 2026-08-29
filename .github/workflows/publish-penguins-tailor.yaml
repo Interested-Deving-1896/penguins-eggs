@@ -105,8 +105,8 @@ jobs:
           
           echo "--- DEBIAN: Genero file Release ---"
           apt-ftparchive \
-            -o APT::FTPArchive::Release::Origin="penguins-tailor" \
-            -o APT::FTPArchive::Release::Label="penguins-tailor" \
+            -o APT::FTPArchive::Release::Origin="Penguins-Eggs" \
+            -o APT::FTPArchive::Release::Label="Penguins-Eggs" \
             -o APT::FTPArchive::Release::Suite="stable" \
             -o APT::FTPArchive::Release::Codename="stable" \
             -o APT::FTPArchive::Release::Architectures="amd64 arm64 riscv64 i386" \
@@ -227,8 +227,8 @@ jobs:
             ls ${base}-[0-9]*.pkg.tar.zst 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
             ls ${base}-*.pkg.tar.zst.sig 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
           done
-          rm -f penguins-tailor.db.tar.gz penguins-tailor.files.tar.gz
-          repo-add --sign --key "$GPG_KEY_ID" penguins-tailor.db.tar.gz *.pkg.tar.zst
+          rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
+          repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
 
       - name: 6. Update RPM Repos
         run: |
@@ -249,6 +249,6 @@ jobs:
             ls ${base}-[0-9]*.pkg.tar.zst 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
             ls ${base}-*.pkg.tar.zst.sig 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
           done
-          rm -f penguins-tailor.db.tar.gz penguins-tailor.files.tar.gz
-          repo-add --sign --key "$GPG_KEY_ID" penguins-tailor.db.tar.gz *.pkg.tar.zst
+          rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
+          repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
           
