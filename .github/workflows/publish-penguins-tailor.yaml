@@ -1,0 +1,254 @@
+# ========================================================
+# NOME: publish-penguins-tailor
+# DESCRIZIONE: Scarica gli archivi zip di penguins-tailor da GitHub Releases,
+#              li estrae e pubblica i pacchetti nella repository VPS.
+# ========================================================
+name: publish-penguins-tailor
+
+on:
+  workflow_dispatch:
+    inputs:
+      penguins_tailor_version:
+        description: 'Tag della release di penguins-tailor (es. v0.9.2)'
+        required: true
+        type: string
+
+jobs:
+  # ========================================================
+  # 1.0 JOB DI PUBBLICAZIONE DEBIAN / DEVUAN / UBUNTU
+  # runs-on: self-hosted (runner vps) CON CONTAINER
+  # ========================================================
+  publish-penguins-tailor-debian:
+    runs-on: self-hosted
+    container:
+      image: debian:13
+      volumes:
+        - /var/www/html/repos/deb:/mnt/deb-repo # HostPath:ContainerPath
+    
+    steps:
+      - name: 1. Install Dependencies
+        run: |
+          apt-get update
+          apt-get install -y apt-utils gnupg dpkg dpkg-dev curl unzip
+          # Installiamo GitHub CLI (gh)
+          curl -sL https://github.com/cli/cli/releases/download/v2.47.0/gh_2.47.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin --strip-components=2 gh_2.47.0_linux_amd64/bin/gh
+
+      - name: 2. Import GPG Key
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          echo "${{ secrets.GPG_SIGNING_KEY }}" | gpg --import --batch
+          mkdir -p ~/.gnupg
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+          gpg-connect-agent reloadagent /bye
+          echo "$GPG_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
+
+      - name: 3. Fetch, Extract & Debug penguins-tailor Debian packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Scaricamento archivi Debian versione ${{ inputs.penguins_tailor_version }}..."
+          mkdir -p /tmp/penguins-tailor
+          
+          # Togliamo il silenziatore: vediamo se GH scarica davvero 3 file
+          gh release download ${{ inputs.penguins_tailor_version }} --repo pieroproietti/penguins-tailor --pattern "penguins-tailor-debian*.zip" --dir /tmp/penguins-tailor
+          
+          echo "--- INVENTARIO ZIP SCARICATI ---"
+          ls -lh /tmp/penguins-tailor/
+          
+          echo "--- ESTRAZIONE PACCHETTI ---"
+          for zipfile in /tmp/penguins-tailor/penguins-tailor-debian*.zip; do
+            [ -f "$zipfile" ] || continue
+            echo "Estraendo: $zipfile"
+            unzip -o "$zipfile" -d /tmp/penguins-tailor/
+          done
+          
+          echo "--- INVENTARIO .DEB ESTRATTI ---"
+          ls -lh /tmp/penguins-tailor/*.deb
+          
+          echo "--- CONTROLLO ARCHITETTURA INTERNA DEI DEB ---"
+          for deb in /tmp/penguins-tailor/*.deb; do
+            echo "File: $deb"
+            dpkg-deb -I "$deb" | grep "Architecture:"
+          done
+          
+          echo "--- COPIA NEL POOL ---"
+          cp /tmp/penguins-tailor/*.deb /mnt/deb-repo/pool/main/
+          
+      - name: 4. Update Debian Repo (NO Pruning)
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        working-directory: /mnt/deb-repo
+        run: |
+          set -e
+          echo "--- DEBIAN: Genero file Packages per le architetture ---"
+          
+          # Creiamo le cartelle se non esistono (fondamentale per le nuove architetture)
+          mkdir -p dists/stable/main/binary-amd64
+          mkdir -p dists/stable/main/binary-arm64
+          mkdir -p dists/stable/main/binary-riscv64
+          
+          # Indicizzazione AMD64
+          dpkg-scanpackages -a amd64 pool/main > dists/stable/main/binary-amd64/Packages
+          gzip -9c dists/stable/main/binary-amd64/Packages > dists/stable/main/binary-amd64/Packages.gz
+          
+          # Indicizzazione ARM64
+          dpkg-scanpackages -a arm64 pool/main > dists/stable/main/binary-arm64/Packages
+          gzip -9c dists/stable/main/binary-arm64/Packages > dists/stable/main/binary-arm64/Packages.gz
+          
+          # Indicizzazione RISCV64
+          dpkg-scanpackages -a riscv64 pool/main > dists/stable/main/binary-riscv64/Packages
+          gzip -9c dists/stable/main/binary-riscv64/Packages > dists/stable/main/binary-riscv64/Packages.gz
+          
+          echo "--- DEBIAN: Genero file Release ---"
+          apt-ftparchive \
+            -o APT::FTPArchive::Release::Origin="penguins-tailor" \
+            -o APT::FTPArchive::Release::Label="penguins-tailor" \
+            -o APT::FTPArchive::Release::Suite="stable" \
+            -o APT::FTPArchive::Release::Codename="stable" \
+            -o APT::FTPArchive::Release::Architectures="amd64 arm64 riscv64 i386" \
+            -o APT::FTPArchive::Release::Components="main" \
+            release dists/stable > dists/stable/Release
+            
+          echo "--- DEBIAN: Firmo file Release (creo InRelease) ---"
+          gpg --default-key "$GPG_KEY_ID" \
+              --clearsign \
+              -o dists/stable/InRelease \
+              --batch --yes --passphrase "$GPG_PASSPHRASE" \
+              dists/stable/Release
+
+  # ========================================================
+  # 2.0 JOB DI PUBBLICAZIONE ALTRE DISTRO
+  # runs-on: self-hosted (runner vps) 
+  # ========================================================
+  publish-penguins-tailor-others:
+    runs-on: self-hosted 
+    container:
+      image: archlinux
+      volumes:
+        - /var/www/html/repos:/mnt/repos # HostPath:ContainerPath
+    
+    steps:
+      - name: 1. Install Dependencies
+        run: |
+          pacman-key --init && pacman-key --populate archlinux
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools github-cli unzip
+
+      - name: 2. Fetch, Extract & Distribute penguins-tailor packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Scaricamento archivi zip penguins-tailor versione ${{ inputs.penguins_tailor_version }}..."
+          mkdir -p /tmp/penguins-tailor
+          # Scarica tutti i file .zip dalla release
+          gh release download ${{ inputs.penguins_tailor_version }} --repo pieroproietti/penguins-tailor --pattern "*.zip" --dir /tmp/penguins-tailor || echo "Nessun file zip trovato"
+          
+          echo "Estrazione e smistamento dei pacchetti penguins-tailor nelle rispettive cartelle..."
+          # Estraiamo in sottocartelle per evitare di mescolare file con la stessa estensione (es. .rpm per fedora e opensuse)
+          unzip -o /tmp/penguins-tailor/penguins-tailor-alpine.zip -d /tmp/penguins-tailor/alpine/ 2>/dev/null || true
+          unzip -o /tmp/penguins-tailor/penguins-tailor-arch.zip -d /tmp/penguins-tailor/arch/ 2>/dev/null || true
+          unzip -o /tmp/penguins-tailor/penguins-tailor-manjaro.zip -d /tmp/penguins-tailor/manjaro/ 2>/dev/null || true
+          unzip -o /tmp/penguins-tailor/penguins-tailor-fedora.zip -d /tmp/penguins-tailor/fedora/ 2>/dev/null || true
+          unzip -o /tmp/penguins-tailor/penguins-tailor-opensuse.zip -d /tmp/penguins-tailor/opensuse/ 2>/dev/null || true
+          
+          echo "Copia nei percorsi del repository..."
+          cp /tmp/penguins-tailor/arch/*.pkg.tar.zst /mnt/repos/arch/ 2>/dev/null || true
+          cp /tmp/penguins-tailor/manjaro/*.pkg.tar.zst /mnt/repos/manjaro/ 2>/dev/null || true
+          cp /tmp/penguins-tailor/fedora/*.rpm /mnt/repos/rpm/fedora/42/x86_64/ 2>/dev/null || true
+          cp /tmp/penguins-tailor/opensuse/*.rpm /mnt/repos/rpm/opensuse/leap/x86_64/ 2>/dev/null || true
+
+      - name: 3. Import GPG Key
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          echo "$GPG_SIGNING_KEY" | gpg --import --batch
+          mkdir -p ~/.gnupg
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+          gpg-connect-agent reloadagent /bye
+          echo "$GPG_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
+
+      - name: 4. Update Alpine Repo (WITH Pruning)
+        env:
+          ALPINE_SIGNING_KEY_PUB: ${{ secrets.ALPINE_SIGNING_KEY_PUB }}
+        run: |
+          set -ex
+          
+          # 1. Esporta la chiave pubblica nella root della repo Alpine
+          echo "$ALPINE_SIGNING_KEY_PUB" > /mnt/repos/alpine/piero.proietti@gmail.com-66b8815d.rsa.pub
+          
+          # 2. Smista i pacchetti scaricati nelle cartelle delle architetture corrette
+          for apk in /tmp/penguins-tailor/alpine/*.apk; do
+            [ -f "$apk" ] || continue
+            
+            # Estrae l'architettura leggendo il file di metadati interno all'apk
+            ARCH=$(tar -zxf "$apk" .PKGINFO -O | grep '^arch = ' | cut -d' ' -f3)
+            # Fallback di sicurezza (se per qualche motivo non la trova)
+            if [ -z "$ARCH" ]; then ARCH="x86_64"; fi
+            
+            echo "Smisto pacchetto $(basename "$apk") -> Architettura: $ARCH"
+            mkdir -p "/mnt/repos/alpine/$ARCH"
+            cp "$apk" "/mnt/repos/alpine/$ARCH/"
+          done
+          
+          # 3. Pulisci e indicizza ogni cartella di architettura trovata
+          for arch_dir in /mnt/repos/alpine/*/; do
+            [ -d "$arch_dir" ] || continue
+            ARCH=$(basename "$arch_dir")
+            echo "--- ALPINE: Elaborazione architettura $ARCH ---"
+            
+            cd "$arch_dir"
+            
+            # Pruning dei vecchi pacchetti in questa specifica architettura
+            PKG_BASES=$(find . -maxdepth 1 -name '*.apk' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
+            for base in $PKG_BASES; do
+              ls ${base}-[0-9]*.apk 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+            done
+            
+            # Generazione del nuovo indice
+            rm -f APKINDEX.tar.gz
+            apk index -o APKINDEX.tar.gz *.apk --allow-untrusted
+          done
+
+      - name: 5. Update Arch Repo (WITH Pruning)
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        run: |
+          set -ex
+          cd /mnt/repos/arch
+          echo '--- ARCH: Cleaning old packages ---'
+          PKG_BASES=$(find . -maxdepth 1 -name '*.pkg.tar.zst' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
+          for base in $PKG_BASES; do
+            ls ${base}-[0-9]*.pkg.tar.zst 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+            ls ${base}-*.pkg.tar.zst.sig 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+          done
+          rm -f penguins-tailor.db.tar.gz penguins-tailor.files.tar.gz
+          repo-add --sign --key "$GPG_KEY_ID" penguins-tailor.db.tar.gz *.pkg.tar.zst
+
+      - name: 6. Update RPM Repos
+        run: |
+          set -e
+          echo "--- RPM: Re-indexing ---"
+          cd /mnt/repos/rpm/fedora/42/x86_64/; rm -rf repodata; createrepo_c .;
+          cd /mnt/repos/rpm/opensuse/leap/x86_64/; rm -rf repodata; createrepo_c .;
+
+      - name: 7. Update Manjaro Repo (WITH Pruning)
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        run: |
+          set -ex
+          cd /mnt/repos/manjaro
+          echo '--- MANJARO: Cleaning old packages ---'
+          PKG_BASES=$(find . -maxdepth 1 -name '*.pkg.tar.zst' -exec basename {} \; | sed -E 's/(.*)-[0-9]+\..*/\1/' | sort -u)
+          for base in $PKG_BASES; do
+            ls ${base}-[0-9]*.pkg.tar.zst 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+            ls ${base}-*.pkg.tar.zst.sig 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
+          done
+          rm -f penguins-tailor.db.tar.gz penguins-tailor.files.tar.gz
+          repo-add --sign --key "$GPG_KEY_ID" penguins-tailor.db.tar.gz *.pkg.tar.zst
+          
