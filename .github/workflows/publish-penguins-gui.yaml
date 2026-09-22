@@ -9,8 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       penguins_gui_version:
-        description: 'Tag della release di penguins-gui (es. v26.9.22)'
-        required: true
+        description: "Tag release (lascia vuoto per l'ultima release)"
+        required: false
+        default: ''
         type: string
 
 jobs:
@@ -49,12 +50,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento archivi Debian versione ${{ inputs.penguins_gui_version }}..."
+          TARGET_TAG="${{ inputs.penguins_gui_version }}"
+          if [ -z "$TARGET_TAG" ]; then
+            TARGET_TAG=$(gh release view --repo pieroproietti/penguins-gui --json tagName --jq .tagName)
+          fi
+          echo "Scaricamento archivi Debian versione $TARGET_TAG..."
           mkdir -p /tmp/penguins-gui
           
           # Scarica sia eventuali archivi zip (es. artifact da GitHub Actions) sia pacchetti .deb diretti
-          gh release download ${{ inputs.penguins_gui_version }} --repo pieroproietti/penguins-gui --pattern "penguins-gui-debian*.zip" --dir /tmp/penguins-gui || true
-          gh release download ${{ inputs.penguins_gui_version }} --repo pieroproietti/penguins-gui --pattern "*.deb" --dir /tmp/penguins-gui || true
+          gh release download "$TARGET_TAG" --repo pieroproietti/penguins-gui --pattern "penguins-gui-debian*.zip" --dir /tmp/penguins-gui || true
+          gh release download "$TARGET_TAG" --repo pieroproietti/penguins-gui --pattern "*.deb" --dir /tmp/penguins-gui || true
           
           echo "--- INVENTARIO FILE SCARICATI ---"
           ls -lh /tmp/penguins-gui/

@@ -9,8 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       penguins_eggs_version:
-        description: 'Tag della release di penguins-eggs (es. v0.9.2)'
-        required: true
+        description: "Tag release (lascia vuoto per l'ultima release)"
+        required: false
+        default: ''
         type: string
 
 jobs:
@@ -49,11 +50,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento archivi Debian versione ${{ inputs.penguins_eggs_version }}..."
+          TARGET_TAG="${{ inputs.penguins_eggs_version }}"
+          if [ -z "$TARGET_TAG" ]; then
+            TARGET_TAG=$(gh release view --repo pieroproietti/penguins-eggs --json tagName --jq .tagName)
+          fi
+          echo "Scaricamento archivi Debian versione $TARGET_TAG..."
           mkdir -p /tmp/penguins-eggs
           
           # Togliamo il silenziatore: vediamo se GH scarica davvero 3 file
-          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian*.zip" --dir /tmp/penguins-eggs
+          gh release download "$TARGET_TAG" --repo pieroproietti/penguins-eggs --pattern "penguins-eggs-debian*.zip" --dir /tmp/penguins-eggs
           
           echo "--- INVENTARIO ZIP SCARICATI ---"
           ls -lh /tmp/penguins-eggs/
@@ -142,10 +147,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Scaricamento archivi zip penguins-eggs versione ${{ inputs.penguins_eggs_version }}..."
+          TARGET_TAG="${{ inputs.penguins_eggs_version }}"
+          if [ -z "$TARGET_TAG" ]; then
+            TARGET_TAG=$(gh release view --repo pieroproietti/penguins-eggs --json tagName --jq .tagName)
+          fi
+          echo "Scaricamento archivi zip penguins-eggs versione $TARGET_TAG..."
           mkdir -p /tmp/penguins-eggs
           # Scarica tutti i file .zip dalla release
-          gh release download ${{ inputs.penguins_eggs_version }} --repo pieroproietti/penguins-eggs --pattern "*.zip" --dir /tmp/penguins-eggs || echo "Nessun file zip trovato"
+          gh release download "$TARGET_TAG" --repo pieroproietti/penguins-eggs --pattern "*.zip" --dir /tmp/penguins-eggs || echo "Nessun file zip trovato"
           
           echo "Estrazione e smistamento dei pacchetti penguins-eggs nelle rispettive cartelle..."
           # Estraiamo in sottocartelle per evitare di mescolare file con la stessa estensione (es. .rpm per fedora e opensuse)
