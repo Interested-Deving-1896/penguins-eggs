@@ -1,0 +1,122 @@
+# ========================================================
+# NOME: publish-penguins-gui
+# DESCRIZIONE: Scarica i pacchetti di penguins-gui da GitHub Releases,
+#              li estrae e pubblica i pacchetti nella repository VPS.
+# ========================================================
+name: publish-penguins-gui
+
+on:
+  workflow_dispatch:
+    inputs:
+      penguins_gui_version:
+        description: 'Tag della release di penguins-gui (es. v26.9.22)'
+        required: true
+        type: string
+
+jobs:
+  # ========================================================
+  # 1.0 JOB DI PUBBLICAZIONE DEBIAN / DEVUAN / UBUNTU
+  # runs-on: self-hosted (runner vps) CON CONTAINER
+  # ========================================================
+  publish-penguins-gui-debian:
+    runs-on: self-hosted
+    container:
+      image: debian:13
+      volumes:
+        - /var/www/html/repos/deb:/mnt/deb-repo # HostPath:ContainerPath
+    
+    steps:
+      - name: 1. Install Dependencies
+        run: |
+          apt-get update
+          apt-get install -y apt-utils gnupg dpkg dpkg-dev curl unzip
+          # Installiamo GitHub CLI (gh)
+          curl -sL https://github.com/cli/cli/releases/download/v2.47.0/gh_2.47.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin --strip-components=2 gh_2.47.0_linux_amd64/bin/gh
+
+      - name: 2. Import GPG Key
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          echo "${{ secrets.GPG_SIGNING_KEY }}" | gpg --import --batch
+          mkdir -p ~/.gnupg
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+          gpg-connect-agent reloadagent /bye
+          echo "$GPG_PASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o /dev/null -s /dev/null
+
+      - name: 3. Fetch, Extract & Debug penguins-gui Debian packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Scaricamento archivi Debian versione ${{ inputs.penguins_gui_version }}..."
+          mkdir -p /tmp/penguins-gui
+          
+          # Scarica sia eventuali archivi zip (es. artifact da GitHub Actions) sia pacchetti .deb diretti
+          gh release download ${{ inputs.penguins_gui_version }} --repo pieroproietti/penguins-gui --pattern "penguins-gui-debian*.zip" --dir /tmp/penguins-gui || true
+          gh release download ${{ inputs.penguins_gui_version }} --repo pieroproietti/penguins-gui --pattern "*.deb" --dir /tmp/penguins-gui || true
+          
+          echo "--- INVENTARIO FILE SCARICATI ---"
+          ls -lh /tmp/penguins-gui/
+          
+          echo "--- ESTRAZIONE PACCHETTI (se presenti file zip) ---"
+          for zipfile in /tmp/penguins-gui/penguins-gui-debian*.zip; do
+            [ -f "$zipfile" ] || continue
+            echo "Estraendo: $zipfile"
+            unzip -o "$zipfile" -d /tmp/penguins-gui/
+          done
+          
+          echo "--- INVENTARIO .DEB ESTRATTI ---"
+          ls -lh /tmp/penguins-gui/*.deb
+          
+          echo "--- CONTROLLO ARCHITETTURA INTERNA DEI DEB ---"
+          for deb in /tmp/penguins-gui/*.deb; do
+            echo "File: $deb"
+            dpkg-deb -I "$deb" | grep "Architecture:"
+          done
+          
+          echo "--- COPIA NEL POOL ---"
+          cp /tmp/penguins-gui/*.deb /mnt/deb-repo/pool/main/
+          
+      - name: 4. Update Debian Repo (NO Pruning)
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        working-directory: /mnt/deb-repo
+        run: |
+          set -e
+          echo "--- DEBIAN: Genero file Packages per le architetture ---"
+          
+          # Creiamo le cartelle se non esistono (fondamentale per le nuove architetture)
+          mkdir -p dists/stable/main/binary-amd64
+          mkdir -p dists/stable/main/binary-arm64
+          mkdir -p dists/stable/main/binary-riscv64
+          
+          # Indicizzazione AMD64
+          dpkg-scanpackages -a amd64 pool/main > dists/stable/main/binary-amd64/Packages
+          gzip -9c dists/stable/main/binary-amd64/Packages > dists/stable/main/binary-amd64/Packages.gz
+          
+          # Indicizzazione ARM64
+          dpkg-scanpackages -a arm64 pool/main > dists/stable/main/binary-arm64/Packages
+          gzip -9c dists/stable/main/binary-arm64/Packages > dists/stable/main/binary-arm64/Packages.gz
+          
+          # Indicizzazione RISCV64
+          dpkg-scanpackages -a riscv64 pool/main > dists/stable/main/binary-riscv64/Packages
+          gzip -9c dists/stable/main/binary-riscv64/Packages > dists/stable/main/binary-riscv64/Packages.gz
+          
+          echo "--- DEBIAN: Genero file Release ---"
+          apt-ftparchive \
+            -o APT::FTPArchive::Release::Origin="Penguins-Eggs" \
+            -o APT::FTPArchive::Release::Label="Penguins-Eggs" \
+            -o APT::FTPArchive::Release::Suite="stable" \
+            -o APT::FTPArchive::Release::Codename="stable" \
+            -o APT::FTPArchive::Release::Architectures="amd64 arm64 riscv64 i386" \
+            -o APT::FTPArchive::Release::Components="main" \
+            release dists/stable > dists/stable/Release
+            
+          echo "--- DEBIAN: Firmo file Release (creo InRelease) ---"
+          gpg --default-key "$GPG_KEY_ID" \
+              --clearsign \
+              -o dists/stable/InRelease \
+              --batch --yes --passphrase "$GPG_PASSPHRASE" \
+              dists/stable/Release
