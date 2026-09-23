@@ -201,3 +201,56 @@ jobs:
           done
           # Aggiorna solo i pacchetti scaricati, conservando le altre voci del database.
           repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz "${published[@]}"
+
+  # ========================================================
+  # 3.0 JOB DI PUBBLICAZIONE FEDORA
+  # runs-on: self-hosted (runner vps) CON CONTAINER
+  # ========================================================
+  publish-penguins-gui-fedora:
+    runs-on: self-hosted
+    container:
+      image: archlinux
+      volumes:
+        - /var/www/html/repos/rpm/fedora/42/x86_64:/mnt/fedora-repo # HostPath:ContainerPath
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: 1. Install Dependencies
+        run: |
+          pacman-key --init
+          pacman-key --populate archlinux
+          pacman -Syu --noconfirm --needed createrepo_c github-cli unzip
+
+      - name: 2. Fetch & Extract penguins-gui Fedora packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_TAG: ${{ inputs.penguins_gui_version }}
+        run: |
+          if [ -z "$TARGET_TAG" ]; then
+            TARGET_TAG=$(gh release view --repo pieroproietti/penguins-gui --json tagName --jq .tagName)
+          fi
+          echo "Scaricamento pacchetti Fedora versione $TARGET_TAG..."
+          mkdir -p /tmp/penguins-gui-fedora
+          gh release download "$TARGET_TAG" --repo pieroproietti/penguins-gui \
+            --pattern "penguins-gui-fedora*.zip" \
+            --pattern "penguins-gui-*.rpm" \
+            --dir /tmp/penguins-gui-fedora
+
+          for zipfile in /tmp/penguins-gui-fedora/penguins-gui-fedora*.zip; do
+            [ -f "$zipfile" ] || continue
+            unzip -o "$zipfile" -d /tmp/penguins-gui-fedora/
+          done
+
+          if ! find /tmp/penguins-gui-fedora -type f -name 'penguins-gui-*.x86_64.rpm' -print -quit | grep -q .; then
+            echo "Errore: nessun pacchetto Fedora x86_64 penguins-gui trovato nella release $TARGET_TAG" >&2
+            exit 1
+          fi
+
+      - name: 3. Publish & Update Fedora Repo (NO Pruning)
+        working-directory: /mnt/fedora-repo
+        run: |
+          mapfile -d '' packages < <(find /tmp/penguins-gui-fedora -type f -name 'penguins-gui-*.x86_64.rpm' -print0)
+          cp "${packages[@]}" /mnt/fedora-repo/
+          createrepo_c .
