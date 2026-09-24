@@ -10,7 +10,7 @@ See AI context: https://penguins-eggs.net/llms.txt
 [![gdrive](https://img.shields.io/badge/gdrive-all-blue)](https://drive.google.com/drive/folders/19fwjvsZiW0Dspu2Iq-fQN0J-PDbKBlYY)
 [![sourceforge](https://img.shields.io/badge/sourceforge-all-blue)](https://sourceforge.net/projects/penguins-eggs/files/)
 [![ver](https://img.shields.io/npm/v/penguins-eggs.svg)](https://npmjs.org/package/penguins-eggs)
-[![Get it as AppImage](https://img.shields.io/badge/Get%20it%20as-AppImage-important.svg)](https://github.com/pieroproietti/penguins-eggs/releases)
+[![Get it as AppImage](https://img.shields.io/badge/Get%20it%20as-AppImage-important.svg)](https://github.com/pieroproietti/penguins-eggs-legacy/releases)
 
 <a href="https://github.com/pieroproietti/coa">
   <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs-legacy/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="penguins-eggs to coa">
@@ -50,7 +50,7 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 - [Cook eggs in 5 minutes!](https://penguins-eggs.net/docs/Tutorial/eggs5)
 - [Users guide](https://penguins-eggs.net/docs/Tutorial/eggs-users-guide)
 - [FAQ](https://penguins-eggs.net/docs/faq)
-- [Changelog](https://github.com/pieroproietti/penguins-eggs/blob/master/CHANGELOG.md#changelog)
+- [Changelog](https://github.com/pieroproietti/penguins-eggs-legacy/blob/master/CHANGELOG.md#changelog)
 
 # penguins-eggs-legacy
 
@@ -101,7 +101,7 @@ sudo ./fresh-eggs.sh
 ### Method 2: AppImage (Universal)
 
 Download the latest AppImage from
-[Releases](https://github.com/pieroproietti/penguins-eggs/releases).
+[Releases](https://github.com/pieroproietti/penguins-eggs-legacy/releases).
 
 **Prerequisites:** Depending on your distro, you may need FUSE:
 
@@ -124,9 +124,9 @@ If you prefer native package managers, specific repositories are available.
 
 | Family            | Instructions                                                                                                                                                                                                        |
 | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Debian/Ubuntu** | [Install Guide](https://github.com/pieroproietti/penguins-eggs/blob/master/DOCS/INSTALL-DEBIAN-DEVUAN-UBUNTU.md) / [PPA Info](https://pieroproietti.github.io/penguins-eggs-ppa)                                    |
+| **Debian/Ubuntu** | [Install Guide](https://github.com/pieroproietti/penguins-eggs-legacy/blob/master/DOCS/INSTALL-DEBIAN-DEVUAN-UBUNTU.md) / [PPA Info](https://pieroproietti.github.io/penguins-eggs-ppa)                                    |
 | **Arch/Manjaro**  | Available in **AUR** and **Manjaro Community**. Use `yay penguins-eggs` or `pamac install penguins-eggs`.                                                                                                           |
-| **Fedora/RHEL**   | [Fedora Guide](https://github.com/pieroproietti/penguins-eggs/blob/master/DOCS/INSTALL-FEDORA.md) / [Enterprise Linux](https://github.com/pieroproietti/penguins-eggs/blob/master/DOCS/INSTALL-ENTERPRISE-LINUX.md) |
+| **Fedora/RHEL**   | [Fedora Guide](https://github.com/pieroproietti/penguins-eggs-legacy/blob/master/DOCS/INSTALL-FEDORA.md) / [Enterprise Linux](https://github.com/pieroproietti/penguins-eggs-legacy/blob/master/DOCS/INSTALL-ENTERPRISE-LINUX.md) |
 | **Alpine**        | Available in the [penguins-alpine](https://github.com/pieroproietti/penguins-alpine) repo.                                                                                                                          |
 
 ---
@@ -257,7 +257,7 @@ EXAMPLES
   eggs adapt
 ```
 
-_See code: [src/commands/adapt.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/adapt.ts)_
+_See code: [src/commands/adapt.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/adapt.ts)_
 
 ## `eggs-legacy autocomplete [SHELL]`
 
@@ -321,7 +321,7 @@ EXAMPLES
   sudo eggs calamares --remove
 ```
 
-_See code: [src/commands/calamares.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/calamares.ts)_
+_See code: [src/commands/calamares.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/calamares.ts)_
 
 ## `eggs-legacy config`
 
@@ -348,7 +348,7 @@ EXAMPLES
   sudo eggs config --clean --nointeractive
 ```
 
-_See code: [src/commands/config.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/config.ts)_
+_See code: [src/commands/config.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/config.ts)_
 
 ## `eggs-legacy cuckoo`
 
@@ -369,7 +369,7 @@ EXAMPLES
   sudo eggs cuckoo
 ```
 
-_See code: [src/commands/cuckoo.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/cuckoo.ts)_
+_See code: [src/commands/cuckoo.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/cuckoo.ts)_
 
 ## `eggs-legacy dad`
 
@@ -398,7 +398,7 @@ EXAMPLES
   sudo eggs dad --default
 ```
 
-_See code: [src/commands/dad.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/dad.ts)_
+_See code: [src/commands/dad.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/dad.ts)_
 
 ## `eggs-legacy export appimage`
 
@@ -424,7 +424,7 @@ EXAMPLES
   eggs export pkg --all
 ```
 
-_See code: [src/commands/export/appimage.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/appimage.ts)_
+_See code: [src/commands/export/appimage.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/export/appimage.ts)_
 
 ## `eggs-legacy export iso`
 
@@ -449,7 +449,7 @@ EXAMPLES
   eggs export iso --clean
 ```
 
-_See code: [src/commands/export/iso.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/iso.ts)_
+_See code: [src/commands/export/iso.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/export/iso.ts)_
 
 ## `eggs-legacy export pkg`
 
@@ -476,7 +476,7 @@ EXAMPLES
   eggs export pkg --all
 ```
 
-_See code: [src/commands/export/pkg.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/pkg.ts)_
+_See code: [src/commands/export/pkg.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/export/pkg.ts)_
 
 ## `eggs-legacy export tarballs`
 
@@ -500,7 +500,7 @@ EXAMPLES
   eggs export tarballs --clean
 ```
 
-_See code: [src/commands/export/tarballs.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/export/tarballs.ts)_
+_See code: [src/commands/export/tarballs.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/export/tarballs.ts)_
 
 ## `eggs-legacy help [COMMAND]`
 
@@ -543,7 +543,7 @@ EXAMPLES
   sudo eggs kill
 ```
 
-_See code: [src/commands/kill.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/kill.ts)_
+_See code: [src/commands/kill.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/kill.ts)_
 
 ## `eggs-legacy krill`
 
@@ -584,7 +584,7 @@ EXAMPLES
   sudo eggs install --chroot
 ```
 
-_See code: [src/commands/krill.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/krill.ts)_
+_See code: [src/commands/krill.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/krill.ts)_
 
 ## `eggs-legacy love`
 
@@ -611,7 +611,7 @@ EXAMPLES
   eggs love
 ```
 
-_See code: [src/commands/love.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/love.ts)_
+_See code: [src/commands/love.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/love.ts)_
 
 ## `eggs-legacy mom`
 
@@ -631,7 +631,7 @@ EXAMPLES
   eggs mom
 ```
 
-_See code: [src/commands/mom.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/mom.ts)_
+_See code: [src/commands/mom.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/mom.ts)_
 
 ## `eggs-legacy produce`
 
@@ -685,7 +685,7 @@ EXAMPLES
   sudo eggs produce --basename=colibri
 ```
 
-_See code: [src/commands/produce.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/produce.ts)_
+_See code: [src/commands/produce.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/produce.ts)_
 
 ## `eggs-legacy setup install`
 
@@ -706,7 +706,7 @@ EXAMPLES
   sudo eggs setup purge                # purge all configurations, autocomplete, man, etc installed from penguins-eggs AppImage
 ```
 
-_See code: [src/commands/setup/install.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/setup/install.ts)_
+_See code: [src/commands/setup/install.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/setup/install.ts)_
 
 ## `eggs-legacy setup purge`
 
@@ -727,7 +727,7 @@ EXAMPLES
   sudo eggs setup purge                # purge all configurations, autocomplete, man, etc installed from penguins-eggs AppImage
 ```
 
-_See code: [src/commands/setup/purge.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/setup/purge.ts)_
+_See code: [src/commands/setup/purge.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/setup/purge.ts)_
 
 ## `eggs-legacy status`
 
@@ -748,7 +748,7 @@ EXAMPLES
   eggs status
 ```
 
-_See code: [src/commands/status.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/status.ts)_
+_See code: [src/commands/status.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/status.ts)_
 
 ## `eggs-legacy tools clean`
 
@@ -770,7 +770,7 @@ EXAMPLES
   sudo eggs tools clean
 ```
 
-_See code: [src/commands/tools/clean.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/clean.ts)_
+_See code: [src/commands/tools/clean.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/tools/clean.ts)_
 
 ## `eggs-legacy tools repo`
 
@@ -796,7 +796,7 @@ EXAMPLES
   sudo eggs tools repo --remove
 ```
 
-_See code: [src/commands/tools/repo.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/repo.ts)_
+_See code: [src/commands/tools/repo.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/tools/repo.ts)_
 
 ## `eggs-legacy tools skel`
 
@@ -820,7 +820,7 @@ EXAMPLES
   sudo eggs tools skel --user user-to-be-copied
 ```
 
-_See code: [src/commands/tools/skel.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/skel.ts)_
+_See code: [src/commands/tools/skel.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/tools/skel.ts)_
 
 ## `eggs-legacy tools stat`
 
@@ -846,7 +846,7 @@ EXAMPLES
   eggs tools stat --year
 ```
 
-_See code: [src/commands/tools/stat.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/stat.ts)_
+_See code: [src/commands/tools/stat.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/tools/stat.ts)_
 
 ## `eggs-legacy tools yolk`
 
@@ -867,7 +867,7 @@ EXAMPLES
   sudo eggs tools yolk
 ```
 
-_See code: [src/commands/tools/yolk.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/tools/yolk.ts)_
+_See code: [src/commands/tools/yolk.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/tools/yolk.ts)_
 
 ## `eggs-legacy update`
 
@@ -888,7 +888,7 @@ EXAMPLES
   eggs update
 ```
 
-_See code: [src/commands/update.ts](https://github.com/pieroproietti/penguins-eggs/blob/v26.8.11/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/update.ts)_
 
 ## `eggs-legacy version`
 
@@ -955,12 +955,12 @@ In addition to the official guide, there are other resources available for
 Penguins Eggs' users, particularly developers. These resources can be found in
 the [penguins-eggs repository](https://github.com/pieroproietti/penguins-eggs)
 under the
-[documents](https://github.com/pieroproietti/penguins-eggs/tree/master/documents)
+[documents](https://github.com/pieroproietti/penguins-eggs-legacy/tree/master/documents)
 section.
 
 Some noteworthy documents include:
 
-- [Hens: Different Species](https://github.com/pieroproietti/penguins-eggs/blob/master//hens-different-species.md):
+- [Hens: Different Species](https://github.com/pieroproietti/penguins-eggs-legacy/blob/master//hens-different-species.md):
   A brief guide on using Penguins Eggs' in Debian, Arch, and Manjaro.
 - [Arch-naked](https://penguins-eggs.net/docs/Tutorial/archlinux-naked.html): A
   blog post detailing how to create an Arch naked live, install it, and
