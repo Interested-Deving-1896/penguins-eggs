@@ -47,9 +47,9 @@ The goal is ambitious: a truly universal approach to Linux remastering. Every di
 ## Links
 
 - [Blog](https://penguins-eggs.net/blog)
-- [Cook eggs in 5 minutes!](https://penguins-eggs.net/docs/Tutorial/eggs5)
-- [Users guide](https://penguins-eggs.net/docs/Tutorial/eggs-users-guide)
-- [FAQ](https://penguins-eggs.net/docs/faq)
+- [Cook eggs in 5 minutes!](https://penguins-eggs.net/penguins-eggs-legacy/Tutorial/eggs-5-minutes)
+- [Users guide](https://penguins-eggs.net/penguins-eggs-legacy/Tutorial/eggs-users-guide)
+- [FAQ](https://penguins-eggs.net/penguins-eggs-legacy/faq)
 - [Changelog](https://github.com/pieroproietti/penguins-eggs-legacy/blob/master/CHANGELOG.md#changelog)
 
 # penguins-eggs-legacy
