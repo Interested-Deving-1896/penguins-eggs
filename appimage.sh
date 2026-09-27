@@ -30,7 +30,7 @@ download_file() {
     echo "Downloading $name..."
     # Prova con wget (mostra progress bar, mostra errori)
     if command -v wget >/dev/null 2>&1; then
-        if ! wget --no-check-certificate -nv --show-progress "$url" -O "$dest"; then
+        if ! wget -nv --show-progress "$url" -O "$dest"; then
             echo "Error downloading $name with wget."
             rm -f "$dest" # Rimuove file parziale
             return 1
@@ -95,7 +95,7 @@ chmod +x appimagetool
 
 # Copia il progetto
 echo "Copying project files..."
-for dir in dist node_modules assets addons bin conf dracut eui manpages mkinitcpio mkinitfs scripts src templates; do
+for dir in dist node_modules assets addons bin conf dracut eui manpages mkinitcpio mkinitfs scripts src templates perrisbrewery spacemit; do
     if [ -d "$dir" ]; then
         cp -r "$dir" AppDir/usr/lib/penguins-eggs/
     fi
@@ -142,7 +142,7 @@ echo "Extracting bootloaders..."
 tar -xzf "$BOOT_PATH" -C AppDir/usr/lib/penguins-eggs/bootloaders --strip-components=1
 
 # Copia package.json
-cp package.json AppDir/usr/lib/penguins-eggs/ 2>/dev/null || true
+cp package.json .oclif.manifest.json AppDir/usr/lib/penguins-eggs/
 
 # --- METADATI E INTEGRAZIONE ---
 if [ -f "appimage/penguins-eggs.appdata.xml" ]; then

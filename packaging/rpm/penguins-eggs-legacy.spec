@@ -136,7 +136,7 @@ cp -r bootloaders %{buildroot}%{nodejs_prefix}/
 
 # Install executable symlink
 install -d -m 755 %{buildroot}%{_bindir}
-ln -s ../lib/penguins-eggs/bin/run.js %{buildroot}%{_bindir}/eggs-legacy
+ln -s ../lib/%{app_name}/bin/run.js %{buildroot}%{_bindir}/eggs-legacy
 
 # Install shell completions
 install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions
