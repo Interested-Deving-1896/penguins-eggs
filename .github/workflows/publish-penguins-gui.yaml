@@ -319,7 +319,7 @@ jobs:
             unzip -o "$zipfile" -d /tmp/penguins-gui-fedora/
           done
 
-          if ! find /tmp/penguins-gui-fedora -type f -name 'penguins-gui-*.x86_64.rpm' -print -quit | grep -q .; then
+          if ! find /tmp/penguins-gui-fedora -type f -name 'penguins-gui-*.x86_64.rpm' ! -name '*.opensuse.*.rpm' -print -quit | grep -q .; then
             echo "Errore: nessun pacchetto Fedora x86_64 penguins-gui trovato nella release $TARGET_TAG" >&2
             exit 1
           fi
@@ -327,6 +327,59 @@ jobs:
       - name: 3. Publish & Update Fedora Repo (NO Pruning)
         working-directory: /mnt/fedora-repo
         run: |
-          mapfile -d '' packages < <(find /tmp/penguins-gui-fedora -type f -name 'penguins-gui-*.x86_64.rpm' -print0)
+          mapfile -d '' packages < <(find /tmp/penguins-gui-fedora -type f -name 'penguins-gui-*.x86_64.rpm' ! -name '*.opensuse.*.rpm' -print0)
           cp "${packages[@]}" /mnt/fedora-repo/
+          createrepo_c .
+
+  # ========================================================
+  # 5.0 JOB DI PUBBLICAZIONE OPENSUSE
+  # runs-on: self-hosted (runner vps) CON CONTAINER
+  # ========================================================
+  publish-penguins-gui-opensuse:
+    runs-on: self-hosted
+    container:
+      image: archlinux
+      volumes:
+        - /var/www/html/repos/rpm/opensuse/leap/x86_64:/mnt/opensuse-repo # HostPath:ContainerPath
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: 1. Install Dependencies
+        run: |
+          pacman-key --init
+          pacman-key --populate archlinux
+          pacman -Syu --noconfirm --needed createrepo_c github-cli unzip
+
+      - name: 2. Fetch & Extract penguins-gui openSUSE packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_TAG: ${{ inputs.penguins_gui_version }}
+        run: |
+          if [ -z "$TARGET_TAG" ]; then
+            TARGET_TAG=$(gh release view --repo pieroproietti/penguins-gui --json tagName --jq .tagName)
+          fi
+          echo "Scaricamento pacchetti openSUSE versione $TARGET_TAG..."
+          mkdir -p /tmp/penguins-gui-opensuse
+          gh release download "$TARGET_TAG" --repo pieroproietti/penguins-gui \
+            --pattern "penguins-gui-opensuse*.zip" \
+            --pattern "penguins-gui-*.opensuse.x86_64.rpm" \
+            --dir /tmp/penguins-gui-opensuse
+
+          for zipfile in /tmp/penguins-gui-opensuse/penguins-gui-opensuse*.zip; do
+            [ -f "$zipfile" ] || continue
+            unzip -o "$zipfile" -d /tmp/penguins-gui-opensuse/
+          done
+
+          if ! find /tmp/penguins-gui-opensuse -type f -name 'penguins-gui-*.opensuse.x86_64.rpm' -print -quit | grep -q .; then
+            echo "Errore: nessun pacchetto openSUSE x86_64 penguins-gui trovato nella release $TARGET_TAG" >&2
+            exit 1
+          fi
+
+      - name: 3. Publish & Update openSUSE Repo (NO Pruning)
+        working-directory: /mnt/opensuse-repo
+        run: |
+          mapfile -d '' packages < <(find /tmp/penguins-gui-opensuse -type f -name 'penguins-gui-*.opensuse.x86_64.rpm' -print0)
+          cp "${packages[@]}" /mnt/opensuse-repo/
           createrepo_c .
