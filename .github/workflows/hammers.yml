@@ -53,40 +53,9 @@ jobs:
           path: artifacts/*
           if-no-files-found: error
 
-  appimage:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.22.0'
-      - run: npm install -g pnpm@10
-      - run: sudo apt-get update && sudo apt-get install -y squashfs-tools desktop-file-utils
-      - run: pnpm install --frozen-lockfile
-      - name: Build AppImage without FUSE
-        env:
-          APPIMAGE_EXTRACT_AND_RUN: '1'
-        run: pnpm appimage
-      - name: Check CLI extracted from the AppImage
-        run: |
-          image_path=$(realpath ./*.AppImage)
-          smoke_dir=$(mktemp -d)
-          cd "$smoke_dir"
-          "$image_path" --appimage-extract >/dev/null
-          squashfs-root/usr/lib/penguins-eggs/node/bin/node squashfs-root/usr/lib/penguins-eggs/bin/run.js --version
-      - name: Checksum
-        run: sha256sum ./*.AppImage > AppImage-SHA256SUMS
-      - uses: actions/upload-artifact@v4
-        with:
-          name: penguins-eggs-legacy-appimage
-          path: |
-            *.AppImage
-            AppImage-SHA256SUMS
-          if-no-files-found: error
-
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [packages, appimage]
+    needs: [packages]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -106,7 +75,6 @@ jobs:
           for distro in debian arch manjaro fedora el9 opensuse; do
             (cd "release-artifacts/penguins-eggs-legacy-$distro" && zip -r "../../release-assets/penguins-eggs-legacy-$distro.zip" .)
           done
-          cp release-artifacts/penguins-eggs-legacy-appimage/* release-assets/
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}

@@ -10,7 +10,6 @@ See AI context: https://penguins-eggs.net/llms.txt
 [![gdrive](https://img.shields.io/badge/gdrive-all-blue)](https://drive.google.com/drive/folders/19fwjvsZiW0Dspu2Iq-fQN0J-PDbKBlYY)
 [![sourceforge](https://img.shields.io/badge/sourceforge-all-blue)](https://sourceforge.net/projects/penguins-eggs/files/)
 [![ver](https://img.shields.io/npm/v/penguins-eggs.svg)](https://npmjs.org/package/penguins-eggs)
-[![Get it as AppImage](https://img.shields.io/badge/Get%20it%20as-AppImage-important.svg)](https://github.com/pieroproietti/penguins-eggs-legacy/releases)
 
 <a href="https://github.com/pieroproietti/coa">
   <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs-legacy/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="penguins-eggs to coa">
@@ -82,7 +81,7 @@ system, replicating the setup easily.
 
 # Installation
 
-There are three main ways to install `eggs`. Choose the one that fits your
+There are two main ways to install `eggs`. Choose the one that fits your
 workflow.
 
 ### Method 1: The "Fresh Eggs" Script (Recommended)
@@ -98,27 +97,7 @@ cd fresh-eggs
 sudo ./fresh-eggs.sh
 ```
 
-### Method 2: AppImage (Universal)
-
-Download the latest AppImage from
-[Releases](https://github.com/pieroproietti/penguins-eggs-legacy/releases).
-
-**Prerequisites:** Depending on your distro, you may need FUSE:
-
-- **Debian/Ubuntu:** `sudo apt-get install fuse libfuse2`
-- **Arch:** `sudo pacman -S fuse2`
-- **Fedora:** `sudo dnf install fuse fuse-libs`
-
-**Run:**
-
-```bash
-chmod +x penguins-eggs-*.AppImage
-sudo ./penguins-eggs-*.AppImage
-```
-
-_The AppImage will automatically configure itself as `/usr/bin/eggs`._
-
-### Method 3: Native Packages
+### Method 2: Native Packages
 
 If you prefer native package managers, specific repositories are available.
 
