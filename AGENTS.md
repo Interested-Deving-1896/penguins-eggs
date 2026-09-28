@@ -24,7 +24,7 @@
 - **Stack:** Written in **TypeScript / Node.js**, built on **oclif** CLI framework; TUI wizards (`krill`, `mom`, `dad`) use **Ink** (React rendered in the terminal) and Inquirer for prompts.
 - **Distro support:** Almalinux, Alpine, Arch, Debian, Devuan, Fedora, Manjaro, openSUSE, Ubuntu and derivatives.
 - **Architectures:** amd64, arm64, armel, armhf, and riscv64 boards (see `architectures/`, `spacemit/`).
-- **Distribution formats:** npm package, native `.deb` (built by `perrisbrewery/`), and AppImage.
+- **Distribution formats:** npm package and native packages (`.deb` built by `perrisbrewery/`).
 
 ---
 
@@ -51,12 +51,11 @@
 Ink/React wizard — components `welcome`, `location`, `keyboard`, `partitions`, `network`, `users`, `summary`, `install`, `finished`; `classes/sequence.tsx` orchestrates the actual installation, `classes/prepare.ts`/`prepare.d/` the gathering. Invoked as `eggs install` (alias krill). Supports unattended mode.
 
 ### Command Surface (`src/commands/`)
-`produce` (the remaster itself), `kill` (destroy workdir), `love` (one-shot: the simplest way to get an egg), `dad` (TUI configuration helper), `mom` (TUI help), `krill.ts` (installer), `calamares`, `adapt` (VM display), `cuckoo` (PXE proxy-DHCP), `export iso|pkg|tarballs|appimage`, `tools clean|repo|skel|stat|yolk`, `config`, `update`, `status`, `setup install|purge`.
+`produce` (the remaster itself), `kill` (destroy workdir), `love` (one-shot: the simplest way to get an egg), `dad` (TUI configuration helper), `mom` (TUI help), `krill.ts` (installer), `calamares`, `adapt` (VM display), `cuckoo` (PXE proxy-DHCP), `export iso|pkg|tarballs`, `tools clean|repo|skel|stat|yolk`, `config`, `update`, `status`.
 
 ### Packaging & Unattended
 - **`perrisbrewery/`**: templates and maintainer scripts to brew the Debian package.
 - **`eui/`**: unattended-install images — autostart scripts that launch the installer at live login.
-- **`appimage*/`**, `releases/`: AppImage build and published artifacts.
 
 ---
 

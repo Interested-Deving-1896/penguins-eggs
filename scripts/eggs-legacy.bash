@@ -16,7 +16,6 @@ calamares --help --install --nointeractive --policies --release --remove --theme
 config --clean --help --nointeractive --verbose
 cuckoo --help --verbose
 dad --clean --default --file --help --nointeractive --verbose
-export:appimage --clean --help --verbose
 export:iso --checksum --clean --help --verbose
 export:pkg --all --clean --help --verbose
 export:tarballs --clean --help --verbose
@@ -25,8 +24,6 @@ krill --btrfs --chroot --crypted --domain --halt --help --ip --nointeractive --n
 love --clone --fdt --fullcrypt --help --hidden --homecrypt --nointeractive --verbose
 mom --help
 produce --addons --basename --clone --excludes --fdt --fullcrypt --help --hidden --homecrypt --includeRootHome --kernel --links --max --noicon --nointeractive --pendrive --prefix --release --script --standard --theme --verbose --yolk
-setup:install 
-setup:purge 
 status --help --verbose
 tools:clean --help --nointeractive --verbose
 tools:repo --add --help --nointeractive --remove --verbose

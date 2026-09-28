@@ -8,7 +8,6 @@ See AI context: https://penguins-eggs.net/llms.txt
 [![drive](https://img.shields.io/badge/drive-isos-blue)](https://penguins-eggs.net/drive)
 [![sourceforge](https://img.shields.io/badge/sourceforge-all-blue)](https://sourgeforge.net/project/penguins-eggs)
 [![ver](https://img.shields.io/npm/v/penguins-eggs.svg)](https://npmjs.org/package/penguins-eggs)
-[![Get it as AppImage](https://img.shields.io/badge/Get%20it%20as-AppImage-important.svg)](https://github.com/pieroproietti/penguins-eggs/releases)
 
 <a href="https://drive.google.com/drive/folders/19fwjvsZiW0Dspu2Iq-fQN0J-PDbKBlYY">
   <img src="https://raw.githubusercontent.com/pieroproietti/penguins-eggs-legacy/master/assets/penguins-eggs-logo.png" width="280" height="300" alt="CD-ROM">
@@ -26,7 +25,7 @@ The version is based on the year, month, day, and release number. They are liste
 Just an update of node packages.
 
 # v26.7.18
-- Simplified export commands (iso, pkg, appimage, tarballs) by replacing sshfs with scp/ssh.
+- Simplified export commands (iso, pkg, tarballs) by replacing sshfs with scp/ssh.
 - Fixed package matching regex in export:pkg to properly identify deb packages containing revision numbers.
 - Added missing await to cliAutologin.add in produce to prevent race conditions during console autologin setup.
 
@@ -132,7 +131,6 @@ This is the first version of penguins-eggs able to remaster bianbuos, Debian tri
 # v26.1.24
 * **Snap**: Resolved compatibility issues with snap applications;
 * **Manjaro/Arch**: Fixed package creation workflow;
-* **AppImage**: Added check for Node.js version;
 * **Debian**: Enforced dependency on Node.js >= 22.
 
 # v26.1.21
@@ -214,7 +212,6 @@ tested on QEMU with Debian `sid`/`trixie`.
 **Live User Autologin**: Resolved an issue preventing automatic login for the live user on POP_OS Noble COSMIC. The environment now correctly initializes the graphical session without requiring manual credentials.
 
 ## Known Issues & Workarounds
-**AppImage**: On pop_up! cosmic AppImage is not working, use native package.
 
 **Calamares Installer Compatibility**: Identified a critical bug where Calamares fails to detect storage devices (reporting 0 devices detected). This is due to a conflict between the KPMCore backend and the Wayland security protocols/runtime directory permissions in the COSMIC desktop environment.
 
@@ -257,91 +254,17 @@ Please excuse me, eggs is running away everywhere, rebelling against its author.
 
  
 # v25.12.7
-* Refactored for AppImage compatibility: Completely removed the shelljs dependency and ensured all external calls are purged of AppImage environment variables;
+* Completely removed the shelljs dependency;
 * Reintroduced `--fullcrypt`: This option is now enabled exclusively for native installations on Debian Trixie or Devuan Excalibur;
-* Reintroduced `--homecrypt`: Unlike `--fullcrypt`, this option is available for use on AppImages and across other distributions.
+* Reintroduced `--homecrypt`: This option is available across distributions.
 
 # v25.12.3
 This release introduces a direct user provisioning strategy, replacing high-level commands with direct manipulation of system database files (`/etc/passwd`, `/etc/shadow`) to ensure deterministic and host-independent user creation. We resolved critical boot freezes on Devuan (SysVinit) by hardening init scripts against race conditions and implementing self-healing for dbus and machine-id. Fedora 43 (Rawhide) compatibility has also been verified.
 
-**IMPORTANT**: For Devuan and Fedora 43, usage of native packages (.deb/.rpm) is strongly recommended to avoid AppImage environment leakage. If using AppImage on Fedora, setting enforcing=0 may be required during the build.
-
-## v25.11.29
-I am continuing the transition to adopting AppImages as the standard release method for penguins-eggs.
-
-The reason is simple: a single package works for everything, and using native meta-packages within the AppImage for dependencies we work always with original packages on every distro.
-
-I have tested it extensively on Arch, Debian, Fedora, Manjaro, and Opesuse, leaving out Alpine for the moment, which has some peculiarities.
-
-I also tested AppImage for the `eggs cuckoo` command. It works great on Debian, the same cannot be said for the other distributions. We'll just have to live with that for now.
-
-I decided to remove the label “AppImage” from the AppImage version and introduced a new label “native” next to the version for the native packages (the traditional one), to highlight that we will continue along this path.
-
-The installation and updating of AppImage has been improved. Just download it from GitHub and run it with sudo. The executable is copied to `/usr/bin/eggs` and is automatically configured. 
-
-After that, just type: `eggs love` to get the ISO of the installed system.
-
-The AppImage is updated with the command: `sudo eggs update`. just select internet and the latest release available on GitHub will be downloaded and installed.
-
-The AppImage must be removed using the command: `sudo eggs setup remove`, which will remove all dependencies, the manual page, desktop icon and autocomplete.
-
-Manuals and information would need to be rewritten, but fortunately the README.md, autocompletion (bash and zsh) and eggs man page are constantly updated.
-
-
-## v25.11.27
-I spent a couple of days trying to create an even more generic appimage, using Debian bookwork and trixie bootloaders as a basis. The result was far from satisfactory, with long AppImage build times and limited portability: specifically, it worked on Debian and Arch, but I couldn't get it to work on Fedora and Opensuse.
-
-At this point, I realized that the method for obtaining a lightweight and portable AppImage was precisely this: put the bare minimum in the AppImage—nodejs—and delegate the installation/removal of dependencies to native meta-packages.
-
-This way, you get the best of both worlds.
-
 
 ## v25.11.24
-* on the command: `sudo eggs setup`, I corrected the abbreviations for the flags `--install` and `--uninstall` to `-i` and `-u`, respectively;
 * added Linuxmint 22.3 code name zena. Thanks to [@rreyn331](https://github.com/rreyn331);
-* I modified `penguins-eggs-deps.spec` - for creating rpm meta-packages for Fedora, El9, and Opensuse. Opensuse slowroll, in the latest installed version, only uses `sshfs` and no longer `fuse-sshfs`. There was also a duplication, as the dependency for `nodejs`, which is not necessary for AppImage, had been left by mistake;
-* all official ISOs have been updated and created with the AppImage version. I would say that the experiment on the possibility of AppImage has been amply demonstrated, and therefore I will continue along this path.
-* added the release number to the appimage in addition to the version number, so today's version will be `penguins-eggs-25.11.24-1-x86_64.AppImage`. This gives me more freedom, as I often notice an error immediately after publication. This way, I can correct it by simply changing the release number;
 * while rebuilding all naked and colibri ISOs for ALL supported distributions, I encountered a problem in Devuan excalibut: I cannot boot the generated ISO. It freezes when starting dbus. As always in my Devuan naked images, I chose `sysvinit`. I tried modifying `/src/classes/ovary.d/edit-live-fs.ts` to remove `/etc/machine-id` and `/var/lib/dbus/machine-id`, but so far without success. 
-
-## v25.11.23
-I have introduced dependency management in the AppImage version using native meta-packages for each supported distribution. This resolves any incompatibilities at the root and has the advantage of allowing easy removal of dependencies installed by penguins-eggs AppImage, without the risk of removing pre-existing packages.
-
-Essentially, at this point, using native penguins-eggs or penguins-eggs AppImage should give exactly the same results and behave in exactly the same way.
-
-The meta-packages incorporated into the AppImage were built on specific distributions, while my tests - so far - are mainly related to Debian and - in particular - to the trixie version, but it should reasonably apply to all supported distributions. 
-
-Conceptually, I am even thinking of discontinuing the native packages altogether and releasing only the AppImage for all distributions, then perhaps trying to extend support to others.
-
-However, proving this takes time, so I am relying heavily on your opinions and the results of your suggestions.
-
-## v25.11.22
-Minor tweaks to the sudo eggs setup command, with the definition of two new flags: --install and --uninstall, necessary for installing and removing the AppImage, autocomplete scripts, and the egs man page.
-
-## v25.11.21
-Starting with this version, penguins-eggs is also released as an AppImage in addition to being a native package for various distributions.
-
-The source is the same, as are the features. I had to add a new `setup` command that is only used for the AppImage version and tweaked or removed other minor commands that are no longer used.
-
-The AppImage is perfectly equivalent to the native package.
-
-There is nothing particularly magical about this; I used a well-known technique and continue to use the package managers of the various distributions, but this will probably make it easier both to create your own packages and — for those who wish to do so — to extend penguins-eggs to make it compatible with other original distributions or even help create new ones.
-
-### AppImage requisites
-Before to try AppImage depending on your distro, you need this packages installed:
-* Alpine: `sudo apk add fuse`
-* Arch/Manjaro: `sudo pacman -S fuse2`
-* Debian/Devuan/Ubuntu: `sudo apt-get install fuse libfuse2`
-* Fedora/RHEL: `sudo dnf install fuse fuse-libs`
-* Opensuse: `sudo zypper install fuse fuse-libs`
-
-### AppImage installation
-penguins-eggs as an AppImage, it can be installed on all supported distributions. Download it from https://github.com/pieroproietti/penguins-eggs/releases, then run the following commands:
-```
-$ chmod +x penguins-eggs-25.11.21-x86_64.AppImage
-$ sudo mv /usr/bin
-$ sudo eggs setup
-```
 
 ## v25.11.14
 * Almalinux, Fedora, Opensuse, Rocky Linux: rewrote the code to add or remove the repository for pre-compiled penguins-eggs packages;

@@ -2,7 +2,6 @@
 
 The source code is located under `/src` and is organized into the following main directories:
 
-*   **appimage**: Utilities for managing AppImage dependencies.
 *   **classes**: Core logic and business rules of the application.
 *   **commands**: Implementation of the CLI commands (e.g., `eggs produce`, `eggs dad`).
 *   **dhcpd-proxy**: Proxy implementation for DHCP, likely used for PXE boot features.

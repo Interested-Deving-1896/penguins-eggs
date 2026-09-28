@@ -1,5 +1,5 @@
 /**
- * ./src/commands/export/appimage.ts
+ * ./src/commands/export/pkg.ts
  * penguins-eggs-legacy v.25.7.x / ecmascript 2020
  * author: Piero Proietti
  * email: piero.proietti@gmail.com

@@ -113,9 +113,8 @@
     },
     "repository": "pieroproietti/penguins-eggs",
     "scripts": {
-        "appimage": "pnpm build && ./appimage.sh",
         "build": "pnpm clean && shx rm -rf dist && tsc -p . && oclif manifest",
-        "clean": "rm -rf build dist *.AppImage AppDir",
+        "clean": "rm -rf build dist",
         "deb": "pnpm build && pb deb --release $(cat ./release)",
         "format": "prettier --write \"+(src|test)/**/*.+(ts|js|json)\"",
         "lint": "eslint .",

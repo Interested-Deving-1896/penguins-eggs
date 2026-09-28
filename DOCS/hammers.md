@@ -10,7 +10,6 @@ Produce:
 - Debian: `.deb` per le architetture gestite da `pnpm deb -a` (perrisbrewery).
 - Arch e Manjaro: `.pkg.tar.zst`.
 - Fedora 42, AlmaLinux 9 e openSUSE Tumbleweed: `.rpm` su x86_64.
-- AppImage x86_64, con Node.js incluso, e checksum SHA-256.
 
 Alpine resta esclusa: la relativa build era già disabilitata nel workflow legacy
 per problemi di compatibilità dell'ambiente Node/musl. Le build non richiedono
@@ -24,9 +23,8 @@ committare le modifiche e inviare un tag corrispondente, ad esempio
 GitHub Release, dopo il successo di tutte le build. Il tag deve corrispondere
 alla versione del pacchetto.
 
-La release contiene un archivio ZIP per ciascuna famiglia di pacchetti e
-l'AppImage direttamente tra gli allegati, per consentirne il rilevamento nel
-catalogo AppImage. Una nuova esecuzione sullo stesso tag sostituisce gli allegati
+La release contiene un archivio ZIP per ciascuna famiglia di pacchetti.
+Una nuova esecuzione sullo stesso tag sostituisce gli allegati
 omonimi. L'avvio manuale produce solo artefatti, senza pubblicare una release.
 
 Il workflow `publish-penguins-eggs-legacy.yaml` che aggiorna i repository sul VPS
@@ -34,7 +32,6 @@ rimane separato e manuale. Hammers non modifica i repository del VPS.
 
 ## Verifica
 
-La build AppImage controlla l'avvio della CLI inclusa con `--version`, senza
-eseguire il setup automatico di AppRun. Prima di distribuire una nuova versione,
+Prima di distribuire una nuova versione,
 provare installazione e remaster in VM delle distribuzioni interessate.
 Le build CI e i checksum non sostituiscono queste prove funzionali.

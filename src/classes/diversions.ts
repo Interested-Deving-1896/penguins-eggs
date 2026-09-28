@@ -5,15 +5,8 @@
  * license: MIT
  */
 
-import fs from 'fs'
-import path from 'path'
-
 import { IDistro } from '../interfaces/index.js'
 import Distro from './distro.js'
-import Utils from './utils.js'
-
-// _dirname
-const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 export default class Diversions {
   /**
@@ -23,11 +16,7 @@ export default class Diversions {
   static bootloaders(familyId: string): string {
     let pathBootloaders = '/usr/lib/'
     if (familyId !== 'debian') {
-      if (Utils.isAppImage()) {
-        pathBootloaders = path.join(__dirname, '..', '..', 'bootloaders/')
-      } else {
-        pathBootloaders = '/usr/lib/penguins-eggs/bootloaders/'
-      }
+      pathBootloaders = '/usr/lib/penguins-eggs/bootloaders/'
     }
 
     return pathBootloaders

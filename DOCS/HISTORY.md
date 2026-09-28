@@ -35,7 +35,6 @@ Focus shifts to security, distribution methods, and infrastructure consolidation
 
 * **Encryption Features:** Introduction of advanced options like `--homecrypt` (encrypted user home via LUKS) and `--fullcrypt` (full root filesystem encryption). These features underwent several iterations to resolve sizing (`resize2fs`), boot (`mkinitramfs`), and autologin issues.
 * **Unified Repositories:** Consolidation of packages into new centralized repositories (`penguins-eggs-repo`), deprecating chaotic PPA/AUR sources.
-* **AppImage:** Introduction of an AppImage version to offer a single portable executable across distros, supported by native meta-packages for dependencies.
 * **Secure Boot:** Enhancements for Secure Boot support on Debian/Ubuntu systems.
 
 ### 🚀 Recent Developments (v26.x) - RISC-V and Refactoring

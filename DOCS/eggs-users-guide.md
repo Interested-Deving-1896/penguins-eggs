@@ -39,17 +39,6 @@ cd fresh-eggs
 sudo ./fresh-eggs.sh
 ```
 
-### Tramite AppImage (Standalone)
-È possibile utilizzare e installare l'AppImage standalone senza alcuna interferenza con la versione Go/C:
-
-```bash
-# Rendi l'AppImage eseguibile
-chmod +x penguins-eggs-legacy-*.AppImage
-
-# Integra l'AppImage nel sistema (installa man pages, completamenti e binario come eggs-legacy)
-sudo ./penguins-eggs-legacy-*.AppImage setup install
-```
-
 ---
 
 ## Configurazione iniziale

@@ -2,7 +2,7 @@
 
 `penguins-eggs` is a versatile tool for remastering Linux distributions. It supports multiple families: **Alpine**, **Arch**, **Debian/Devuan/Ubuntu** and **Fedora/RHEL9** and **openSUSE** and multiple architectures: `x86_64`, `aarch64` and `riscv64`.
 
-All packages are managed using the native package manager of the distribution, in addiction we have AppImage packages support for all distributions. 
+All packages are managed using the native package manager of the distribution.
 
 Debian packages are released for `x86_64`, `aarch64` and `riscv64` architectures, others packages are released for `x86_64` only.
 

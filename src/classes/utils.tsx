@@ -206,9 +206,7 @@ export default class Utils {
     */
    static flag(): string {
       let arch = "-"
-      if (Utils.isAppImage()) {
-         arch += "AppImage"
-      } else switch (process.arch) {
+      switch (process.arch) {
          case "arm64": {
             arch += "arm64"
 
@@ -685,15 +683,6 @@ export default class Utils {
     */
    static initrdImg(kernel = ''): string {
       return Kernel.initramfs(kernel)
-   }
-
-   /**
-    * isAppImage
-    */
-   static isAppImage(): boolean {
-      return Boolean(process.env.APPIMAGE) ||
-         process.execPath.includes('.AppImage') ||
-         process.execPath.includes('/tmp/.mount_');
    }
 
    /**

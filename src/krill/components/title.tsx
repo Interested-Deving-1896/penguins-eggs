@@ -11,7 +11,6 @@ import { Box, Newline, render, Text } from 'ink'
 import { createRequire } from 'module';
 import React from 'react'
 
-import Utils from '../../classes/utils.js';
 const require = createRequire(import.meta.url);
 const pjson = require('../../../package.json')
 
@@ -22,9 +21,7 @@ type TitleProps = {
 
 export default function Title({ title = "", version = "" }): React.JSX.Element {
    let arch = "-"
-   if (Utils.isAppImage()) {
-      arch += "AppImage"
-   } else switch (process.arch) {
+   switch (process.arch) {
       case "arm64": {
          arch += "arm64"
 

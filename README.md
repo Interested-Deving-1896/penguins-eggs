@@ -196,7 +196,6 @@ manager and repository lists.
 * [`eggs-legacy config`](#eggs-legacy-config)
 * [`eggs-legacy cuckoo`](#eggs-legacy-cuckoo)
 * [`eggs-legacy dad`](#eggs-legacy-dad)
-* [`eggs-legacy export appimage`](#eggs-legacy-export-appimage)
 * [`eggs-legacy export iso`](#eggs-legacy-export-iso)
 * [`eggs-legacy export pkg`](#eggs-legacy-export-pkg)
 * [`eggs-legacy export tarballs`](#eggs-legacy-export-tarballs)
@@ -206,8 +205,6 @@ manager and repository lists.
 * [`eggs-legacy love`](#eggs-legacy-love)
 * [`eggs-legacy mom`](#eggs-legacy-mom)
 * [`eggs-legacy produce`](#eggs-legacy-produce)
-* [`eggs-legacy setup install`](#eggs-legacy-setup-install)
-* [`eggs-legacy setup purge`](#eggs-legacy-setup-purge)
 * [`eggs-legacy status`](#eggs-legacy-status)
 * [`eggs-legacy tools clean`](#eggs-legacy-tools-clean)
 * [`eggs-legacy tools repo`](#eggs-legacy-tools-repo)
@@ -378,32 +375,6 @@ EXAMPLES
 ```
 
 _See code: [src/commands/dad.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/dad.ts)_
-
-## `eggs-legacy export appimage`
-
-export penguins-eggs AppImage to the destination host
-
-```
-USAGE
-  $ eggs-legacy export appimage [-c] [-h] [-v]
-
-FLAGS
-  -c, --clean    remove old .AppImage before to copy
-  -h, --help     Show CLI help.
-  -v, --verbose  verbose
-
-DESCRIPTION
-  export penguins-eggs AppImage to the destination host
-
-EXAMPLES
-  eggs export pkg
-
-  eggs export pkg --clean
-
-  eggs export pkg --all
-```
-
-_See code: [src/commands/export/appimage.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/export/appimage.ts)_
 
 ## `eggs-legacy export iso`
 
@@ -665,48 +636,6 @@ EXAMPLES
 ```
 
 _See code: [src/commands/produce.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/produce.ts)_
-
-## `eggs-legacy setup install`
-
-Automatically check and install system prerequisites
-
-```
-USAGE
-  $ eggs-legacy setup install
-
-DESCRIPTION
-  Automatically check and install system prerequisites
-
-EXAMPLES
-  eggs setup                           # this help
-
-  sudo eggs setup install              # install native dependencies, autocomplete, man, etc
-
-  sudo eggs setup purge                # purge all configurations, autocomplete, man, etc installed from penguins-eggs AppImage
-```
-
-_See code: [src/commands/setup/install.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/setup/install.ts)_
-
-## `eggs-legacy setup purge`
-
-Automatically check and install system prerequisites
-
-```
-USAGE
-  $ eggs-legacy setup purge
-
-DESCRIPTION
-  Automatically check and install system prerequisites
-
-EXAMPLES
-  eggs setup                           # this help
-
-  sudo eggs setup install              # install native dependencies, autocomplete, man, etc
-
-  sudo eggs setup purge                # purge all configurations, autocomplete, man, etc installed from penguins-eggs AppImage
-```
-
-_See code: [src/commands/setup/purge.ts](https://github.com/pieroproietti/penguins-eggs-legacy/blob/v26.8.11/src/commands/setup/purge.ts)_
 
 ## `eggs-legacy status`
 

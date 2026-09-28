@@ -32,10 +32,6 @@ mychroot/ci/*.tar.gz
 mychroot/ci/iso/*
 
 
-# AppImage stuffs
-AppDir
-*.AppImage
-appimagetool
 
 cache/*
 nodejs.tar.xz

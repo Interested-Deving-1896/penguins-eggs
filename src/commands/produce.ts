@@ -253,16 +253,7 @@ export default class Produce extends Command {
         Utils.warning(message)
       }
 
-      /**
-       * se è appImage e fullcrypt esce
-       */
-      if (Utils.isAppImage() && fullcrypt) {
-        Utils.warning('eggs produce --fullcrypt cannot be used on AppImage')
-        console.log(`\nyou can try: "sudo eggs produce --homecrypt"`)
-        process.exit(9)
-      }
-
-      if (!Utils.isAppImage() && fullcrypt) {
+      if (fullcrypt) {
         const distro = new Distro()
         if (distro.familyId === 'debian' && (distro.codenameId === 'trixie' || distro.codenameId === 'excalibur')) {
           Utils.info('Use eggs --fullcrypt with extreme caution, and ALWAYS first try it out in a test environment.')

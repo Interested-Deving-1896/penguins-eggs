@@ -12,17 +12,6 @@ import path from 'path'
 
 import { IExec } from '../interfaces/index.js'
 
-const APPIMAGE_ENV_BLACKLIST = ['LD_LIBRARY_PATH', 'LD_PRELOAD', 'PYTHONPATH', 'PERLLIB', 'GSETTINGS_SCHEMA_DIR', 'QT_PLUGIN_PATH', 'XDG_DATA_DIRS', 'LIBRARY_PATH', 'PKG_CONFIG_PATH', 'GIO_MODULE_DIR', 'APPIMAGE', 'APPDIR']
-
-function getCleanEnv(): NodeJS.ProcessEnv {
-  const env = { ...process.env }
-  if (process.env.APPIMAGE) {
-    for (const key of APPIMAGE_ENV_BLACKLIST) delete env[key]
-  }
-
-  return env
-}
-
 interface ShellExecResult {
   code: number
   stderr: string
@@ -46,7 +35,7 @@ export function spawnSync(command: string, arg2?: SpawnSyncOptions | string[], a
     options = arg2 as SpawnSyncOptions
   }
 
-  const env = getCleanEnv()
+  const env = { ...process.env }
   const finalEnv = { ...env, ...options.env }
 
   return nodeSpawnSync(command, args, {
@@ -66,7 +55,7 @@ export function spawn(command: string, arg2?: readonly string[] | SpawnOptions, 
     options = arg2 as SpawnOptions
   }
 
-  const env = getCleanEnv()
+  const env = { ...process.env }
   const finalEnv = { ...env, ...options.env }
 
   return nodeSpawn(command, args, {
@@ -117,7 +106,7 @@ export const shx = {
   },
 
   exec(command: string, options: { silent?: boolean } = {}): ShellExecResult {
-    const env = getCleanEnv()
+    const env = { ...process.env }
     const spawnOpts: SpawnSyncOptions = {
       encoding: 'utf-8',
       env,
@@ -253,7 +242,7 @@ export async function exec(command: string, { capture = false, echo = false, ign
   return new Promise((resolve, reject) => {
     if (echo) console.log(command)
 
-    const env = getCleanEnv()
+    const env = { ...process.env }
     const child = nodeSpawn(command, [], {
       env,
       shell: '/bin/bash',

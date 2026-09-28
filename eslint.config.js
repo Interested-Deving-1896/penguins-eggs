@@ -25,7 +25,6 @@ export default [
             "dist/**",
             "perribrewery/working/**",
             "testing/**",
-            "AppDir/**",
             "**/*.d.ts"
         ]
     },
