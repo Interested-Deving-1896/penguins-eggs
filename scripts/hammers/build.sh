@@ -6,6 +6,7 @@ version=$(node -p 'require("./package.json").version')
 release=$(tr -d '[:space:]' < release)
 [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ && $release =~ ^[0-9]+$ ]]
 mkdir -p artifacts
+pnpm config set minimum-release-age 0 --location global 2>/dev/null || true
 case "$family" in
   debian)
     pnpm install --frozen-lockfile
@@ -19,6 +20,7 @@ case "$family" in
     echo 'builder ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/hammers
     chmod 0440 /etc/sudoers.d/hammers
     chown -R builder:builder "$PWD"
+    sudo -u builder pnpm config set minimum-release-age 0 --location global 2>/dev/null || true
     # Build dependencies only; runtime dependencies need not be installed to package JS.
     sudo -u builder bash -euo pipefail -c 'cd "$1"; updpkgsums; makepkg --nodeps --nosign --force --noconfirm' bash "packaging/$family"
     cp packaging/"$family"/*.pkg.tar.zst artifacts/

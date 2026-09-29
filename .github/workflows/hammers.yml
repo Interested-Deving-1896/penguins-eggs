@@ -44,6 +44,8 @@ jobs:
       - name: Install pnpm where not provided by the distribution
         if: matrix.distro == 'debian' || matrix.distro == 'el9'
         run: npm install -g pnpm@10
+      - name: Force minimum release age to zero
+        run: pnpm config set minimum-release-age 0 --location global
       - name: Build packages
         shell: bash
         run: bash scripts/hammers/build.sh "${{ matrix.distro }}"
