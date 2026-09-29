@@ -30,7 +30,9 @@ jobs:
     #       apk add alpine-sdk git nodejs npm sudo device-mapper jq
 
     #   - name: 3. Install PNPM
-    #     run: npm install -g pnpm
+    #     run: |
+    #       npm install -g pnpm
+    #       pnpm config set minimum-release-age 0 --location global
 
     #   - name: 4. Create Build User, Keys, and Fix Environment
     #     run: |
@@ -81,6 +83,7 @@ jobs:
         run: |
           pacman -Syu --noconfirm
           pacman -S --noconfirm base-devel git pnpm jq pacman-contrib gnupg
+          pnpm config set minimum-release-age 0 --location global
       
       - name: 2a. Update PKGBUILD
         run: |
@@ -96,6 +99,7 @@ jobs:
           useradd -m builder
           echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown -R builder:builder "$GITHUB_WORKSPACE"
+          sudo -u builder pnpm config set minimum-release-age 0 --location global || true
 
       - name: 4. Import GPG Key and Prime Agent (for builder)
         run: |
@@ -140,6 +144,7 @@ jobs:
           apt-get update
           apt-get install -y nodejs
           npm install -g pnpm
+          pnpm config set minimum-release-age 0 --location global
       - name: 3. Import GPG Key and Prime Agent
         run: |
           echo "${{ secrets.GPG_SIGNING_KEY }}" | gpg --import --batch
@@ -187,6 +192,7 @@ jobs:
           dnf module enable nodejs:22 -y
           dnf install -y nodejs npm
           npm install -g pnpm
+          pnpm config set minimum-release-age 0 --location global
           echo "Installing RPM build dependencies from spec file..."
           for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs-legacy.spec | grep -v 'pnpm' | awk '{print $2}'); do
             echo "Installing $package..."
@@ -259,6 +265,7 @@ jobs:
           for package in $(grep '^BuildRequires:' packaging/rpm/penguins-eggs-legacy.spec | awk '{print $2}'); do
             dnf install -y "$package"
           done
+          pnpm config set minimum-release-age 0 --location global
       - name: 3. Get Package Version from package.json
         id: version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
@@ -336,6 +343,7 @@ jobs:
         run: |
           pacman -Syu --noconfirm
           pacman -S --noconfirm base-devel git pnpm jq pacman-contrib gnupg
+          pnpm config set minimum-release-age 0 --location global
 
       - name: 3. Update PKGBUILD with version and release
         run: |
@@ -352,6 +360,7 @@ jobs:
         run: |
           echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
           chown -R builder:builder "$GITHUB_WORKSPACE"
+          sudo -u builder pnpm config set minimum-release-age 0 --location global || true
       
       - name: 5. Import GPG Key and Prime Agent (for builder)
         run: |
@@ -399,6 +408,7 @@ jobs:
           zypper --non-interactive install rpm-build curl gpg2 rsync nodejs-devel jq
           zypper --non-interactive refresh
           npm install -g pnpm
+          pnpm config set minimum-release-age 0 --location global
 
       - name: 3. Get Package Version from package.json
         id: version
