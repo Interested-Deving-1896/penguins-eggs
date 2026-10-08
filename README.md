@@ -110,8 +110,38 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-- [Interested-Deving-1896](https://github.com/Interested-Deving-1896) - 42 commits
-
+| Contributor | Commits |
+|---|---|
+| [@monstermunchkin](https://github.com/monstermunchkin) | 818 |
+| [@stgraber](https://github.com/stgraber) | 785 |
+| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 373 |
+| [@itoffshore](https://github.com/itoffshore) | 155 |
+| [@pieroproietti](https://github.com/pieroproietti) | 56 |
+| [@ona-agent](https://github.com/ona-agent) | 50 |
+| [@simondeziel](https://github.com/simondeziel) | 32 |
+| [@nanjj](https://github.com/nanjj) | 23 |
+| [@masnax](https://github.com/masnax) | 16 |
+| [@brauner](https://github.com/brauner) | 13 |
+| [@mjrider](https://github.com/mjrider) | 11 |
+| [@tew42](https://github.com/tew42) | 10 |
+| [@chaosoffire](https://github.com/chaosoffire) | 9 |
+| [@ona-bot](https://github.com/ona-bot) | 9 |
+| [@stefanor](https://github.com/stefanor) | 6 |
+| [@Obirvalger](https://github.com/Obirvalger) | 5 |
+| [@nbuwe](https://github.com/nbuwe) | 5 |
+| [@adamcstephens](https://github.com/adamcstephens) | 5 |
+| [@gibmat](https://github.com/gibmat) | 5 |
+| [@hallyn](https://github.com/hallyn) | 5 |
+| [@dependabot[bot]](https://github.com/apps/dependabot) | 4 |
+| [@web-flow](https://github.com/web-flow) | 4 |
+| [@geaaru](https://github.com/geaaru) | 4 |
+| [@eddyg](https://github.com/eddyg) | 3 |
+| [@tenforward](https://github.com/tenforward) | 3 |
+| [@marcosps](https://github.com/marcosps) | 3 |
+| [@stiltr](https://github.com/stiltr) | 3 |
+| [@timbretimber](https://github.com/timbretimber) | 3 |
+| [@foxtrotcz](https://github.com/foxtrotcz) | 3 |
+| [@gnustomp](https://github.com/gnustomp) | 2 |
 <!-- AI:end:contributors -->
 
 ## Origins
