@@ -114,7 +114,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 |---|---|
 | [@monstermunchkin](https://github.com/monstermunchkin) | 818 |
 | [@stgraber](https://github.com/stgraber) | 785 |
-| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 434 |
+| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 435 |
 | [@itoffshore](https://github.com/itoffshore) | 155 |
 | [@pieroproietti](https://github.com/pieroproietti) | 56 |
 | [@ona-agent](https://github.com/ona-agent) | 50 |
