@@ -137,11 +137,11 @@ jobs:
         - /var/www/html/repos:/mnt/repos # HostPath:ContainerPath
     
     steps:
-      - name: 1. Install Dependencies
-        run: |
-          pacman-key --init && pacman-key --populate archlinux
-          pacman -Syu --noconfirm
-          pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools github-cli unzip
+    - name: 1. Install Dependencies
+      run: |
+        pacman-key --init && pacman-key --populate archlinux
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm pacman-contrib gnupg createrepo_c apk-tools github-cli unzip rpm
 
       - name: 2. Fetch, Extract & Distribute penguins-eggs packages
         env:
@@ -239,10 +239,24 @@ jobs:
           rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
           repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
 
-      - name: 6. Update RPM Repos (WITH Pruning)
+      - name: 6. Update RPM Repos (WITH Pruning & Signing)
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           set -ex
-          echo "--- RPM: Cleaning & Re-indexing ---"
+          KEY_UID=$(gpg --list-secret-keys --with-colons "$GPG_KEY_ID" 2>/dev/null | awk -F: '/^uid:/ {print $10; exit}')
+          [ -z "$KEY_UID" ] && KEY_UID="$GPG_KEY_ID"
+
+          cat <<EOF > ~/.rpmmacros
+      %_signature gpg
+      %_gpg_path $HOME/.gnupg
+      %_gpg_name $KEY_UID
+      %__gpg /usr/bin/gpg
+      %__gpg_sign_cmd %{__gpg} --batch --pinentry-mode loopback --passphrase "${GPG_PASSPHRASE}" --no-armor --no-secmem-warning -u "%{_gpg_name}" --detach-sign --output %{__signature_filename} %{__plaintext_filename}
+      EOF
+
+          echo "--- RPM: Cleaning, Signing & Re-indexing ---"
           for repo_dir in /mnt/repos/rpm/fedora/42 /mnt/repos/rpm/opensuse/leap; do
             [ -d "$repo_dir/x86_64" ] || continue
             cd "$repo_dir/x86_64"
@@ -250,12 +264,18 @@ jobs:
             for base in $PKG_BASES; do
               ls ${base}-[0-9]*.rpm 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
             done
+
+            if ls ./*.rpm >/dev/null 2>&1; then
+              rpmsign --addsign ./*.rpm
+              rpm --checksig ./*.rpm
+            fi
+
             rm -rf "$repo_dir/x86_64/repodata"
             createrepo_c "$repo_dir/x86_64"
             rm -rf "$repo_dir/repodata"
             createrepo_c "$repo_dir"
           done
-
+                
       - name: 7. Update Manjaro Repo (WITH Pruning)
         env:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
@@ -270,4 +290,4 @@ jobs:
           done
           rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
           repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
-          
+
