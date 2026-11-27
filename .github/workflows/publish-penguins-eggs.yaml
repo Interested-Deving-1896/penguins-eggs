@@ -239,21 +239,28 @@ jobs:
           rm -f penguins-eggs.db.tar.gz penguins-eggs.files.tar.gz
           repo-add --sign --key "$GPG_KEY_ID" penguins-eggs.db.tar.gz *.pkg.tar.zst
 
+
       - name: 6. Update RPM Repos (WITH Pruning & Signing)
         env:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           set -ex
-          KEY_UID=$(gpg --list-secret-keys --with-colons "$GPG_KEY_ID" 2>/dev/null | awk -F: '/^uid:/ {print $10; exit}')
-          [ -z "$KEY_UID" ] && KEY_UID="$GPG_KEY_ID"
+          export GPG_TTY=$(tty 2>/dev/null || true)
+
+          # Assicuriamoci che gpg-agent accetti passphrase da batch/loopback senza tty
+          mkdir -p ~/.gnupg
+          chmod 700 ~/.gnupg
+          echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          gpg-connect-agent reloadagent /bye || true
 
           cat <<EOF > ~/.rpmmacros
           %_signature gpg
           %_gpg_path $HOME/.gnupg
-          %_gpg_name $KEY_UID
+          %_gpg_name $GPG_KEY_ID
           %__gpg /usr/bin/gpg
-          %__gpg_sign_cmd %{__gpg} --batch --pinentry-mode loopback --passphrase "${GPG_PASSPHRASE}" --no-armor --no-secmem-warning -u "%{_gpg_name}" --detach-sign --output %{__signature_filename} %{__plaintext_filename}
+          %_gpg_sign_cmd_extra_args --batch --pinentry-mode loopback --passphrase "${GPG_PASSPHRASE}"
           EOF
 
           echo "--- RPM: Cleaning, Signing & Re-indexing ---"
