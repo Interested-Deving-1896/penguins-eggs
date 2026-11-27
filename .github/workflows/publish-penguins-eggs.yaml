@@ -256,25 +256,25 @@ jobs:
       %__gpg_sign_cmd %{__gpg} --batch --pinentry-mode loopback --passphrase "${GPG_PASSPHRASE}" --no-armor --no-secmem-warning -u "%{_gpg_name}" --detach-sign --output %{__signature_filename} %{__plaintext_filename}
       EOF
 
-          echo "--- RPM: Cleaning, Signing & Re-indexing ---"
-          for repo_dir in /mnt/repos/rpm/fedora/42 /mnt/repos/rpm/opensuse/leap; do
-            [ -d "$repo_dir/x86_64" ] || continue
-            cd "$repo_dir/x86_64"
-            PKG_BASES=$(find . -maxdepth 1 -name '*.rpm' -exec basename {} \; | sed -E 's/-[0-9]+.*//' | sort -u)
-            for base in $PKG_BASES; do
-              ls ${base}-[0-9]*.rpm 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
-            done
-
-            if ls ./*.rpm >/dev/null 2>&1; then
-              rpmsign --addsign ./*.rpm
-              rpm --checksig ./*.rpm
-            fi
-
-            rm -rf "$repo_dir/x86_64/repodata"
-            createrepo_c "$repo_dir/x86_64"
-            rm -rf "$repo_dir/repodata"
-            createrepo_c "$repo_dir"
+        echo "--- RPM: Cleaning, Signing & Re-indexing ---"
+        for repo_dir in /mnt/repos/rpm/fedora/42 /mnt/repos/rpm/opensuse/leap; do
+          [ -d "$repo_dir/x86_64" ] || continue
+          cd "$repo_dir/x86_64"
+          PKG_BASES=$(find . -maxdepth 1 -name '*.rpm' -exec basename {} \; | sed -E 's/-[0-9]+.*//' | sort -u)
+          for base in $PKG_BASES; do
+            ls ${base}-[0-9]*.rpm 2>/dev/null | sort -V | head -n -1 | xargs -r rm -vf
           done
+
+          if ls ./*.rpm >/dev/null 2>&1; then
+            rpmsign --addsign ./*.rpm
+            rpm --checksig ./*.rpm
+          fi
+
+          rm -rf "$repo_dir/x86_64/repodata"
+          createrepo_c "$repo_dir/x86_64"
+          rm -rf "$repo_dir/repodata"
+          createrepo_c "$repo_dir"
+        done
                 
       - name: 7. Update Manjaro Repo (WITH Pruning)
         env:
